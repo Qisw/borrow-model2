@@ -1,0 +1,2875 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+%\input{/Users/lutz/Dropbox/hc/borrow_constraints/model1/out/set007/exp001/preamble1.tex}
+\input{PaperFigures/symbols.tex}
+
+% Model notation
+
+% Pref shock at college entry
+% \newcommand{\prefShockEntry}{\eta}
+% Params of pi(a) start with this
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Model 2 (Borrowing Constraints)
+\end_layout
+
+\begin_layout Section
+Elements
+\end_layout
+
+\begin_layout Subsection
+Changes relative to model 1
+\end_layout
+
+\begin_layout Standard
+Transfers are fixed
+\end_layout
+
+\begin_layout Itemize
+function of parental income, tuition, ability (signal)
+\end_layout
+
+\begin_layout Standard
+Students start out as HSD
+\end_layout
+
+\begin_layout Itemize
+graduation is probabilistic, function of ability signal
+\end_layout
+
+\begin_layout Standard
+For graduates, college can last 4 or 5 years
+\end_layout
+
+\begin_layout Itemize
+to prevent overborrowing and to fix hours of high ability students
+\end_layout
+
+\begin_layout Subsection
+We need
+\end_layout
+
+\begin_layout Standard
+important for efficiency: heterogeneity in returns to college
+\end_layout
+
+\begin_layout Itemize
+first order reason: graduation rates depend on ability
+\end_layout
+
+\begin_layout Standard
+borrowing constraints
+\end_layout
+
+\begin_layout Itemize
+therefore consumption and hours in college
+\end_layout
+
+\begin_layout Standard
+uncertain ability
+\end_layout
+
+\begin_layout Itemize
+gets us imperfect ability sorting at entry
+\end_layout
+
+\begin_layout Itemize
+important for efficiency, but not for fitting data (until we have earnings
+ that depend on ability)
+\end_layout
+
+\begin_layout Itemize
+having ability and learning about it will only matter with endogenous dropouts
+ (which we will eventually need for comparative statics)
+\end_layout
+
+\begin_layout Standard
+preference shocks at entry
+\end_layout
+
+\begin_layout Itemize
+given ability uncertainty, they only serve a numerical purpose (make sure
+ someone enters college for all param values)
+\end_layout
+
+\begin_layout Standard
+I write the model for one cohort.
+ There are no interactions between cohorts at this point
+\end_layout
+
+\begin_layout Subsection
+Notation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ability$
+\end_inset
+
+: ability
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\age$
+\end_inset
+
+: age
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hhType$
+\end_inset
+
+: type
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $J$
+\end_inset
+
+: number of types
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k$
+\end_inset
+
+: assets
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $l$
+\end_inset
+
+: work time in college
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $N_{a}$
+\end_inset
+
+: size of ability grid
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\collCost$
+\end_inset
+
+: college cost
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\tSchool$
+\end_inset
+
+: time spent in college
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t$
+\end_inset
+
+: time
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pvEarn$
+\end_inset
+
+: lifetime earnings
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pTransfer$
+\end_inset
+
+: parental transfer for college
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefShockEntry$
+\end_inset
+
+: pref shock at entry
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probContinue\left(\ability\right)$
+\end_inset
+
+: prob of graduating (not dropping out after year 2)
+\end_layout
+
+\begin_layout Section
+Demographics
+\end_layout
+
+\begin_layout Standard
+model period is 1 year
+\end_layout
+
+\begin_layout Itemize
+not needed but simplifies notation and mapping into data
+\end_layout
+
+\begin_layout Standard
+agents enter the model at model age 1 (age 17) as HS students
+\end_layout
+
+\begin_layout Standard
+they live for 
+\begin_inset Formula $\ageMax$
+\end_inset
+
+ periods
+\end_layout
+
+\begin_layout Section
+Endowments 
+\end_layout
+
+\begin_layout Standard
+Each agent is endowed with a type 
+\begin_inset Formula $j\in\left\{ 1,...,J\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All agents of type 
+\begin_inset Formula $j$
+\end_inset
+
+ share the same values for
+\end_layout
+
+\begin_layout Itemize
+parental income 
+\begin_inset Formula $\famIncome$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+ability signal 
+\begin_inset Formula $\abilSignal$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+college cost 
+\begin_inset Formula $\collCost$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+college wage 
+\begin_inset Formula $\collegeWage$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+parental transfer 
+\begin_inset Formula $\pTransfer$
+\end_inset
+
+ (not conditional on college entry)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+free
+\begin_inset Quotes erd
+\end_inset
+
+ consumption in college and leisure in college: 
+\begin_inset Formula $\cColl\left(j\right),\lColl\left(j\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+purpose: reduce marginal utility of consumption and leisure of high ability
+ students in college, so they do not work to little, consume too much
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We may not want all of those to vary by type, but we can allow for this.
+\end_layout
+
+\begin_layout Standard
+The agents also has an ability 
+\begin_inset Formula $\ability$
+\end_inset
+
+ that is correlated with 
+\begin_inset Formula $m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Ability is not observed until the start of work
+\end_layout
+
+\begin_layout Itemize
+The agent knows 
+\begin_inset Formula $\Pr\left(\ability|j\right)$
+\end_inset
+
+ -- a model primitive
+\end_layout
+
+\begin_layout Section
+Preferences
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\mathbb{E}\sum_{\age=1}^{\tSchool}\beta^{\age-1}u\left(c_{\age}+\cColl\left(j\right),1+\lColl\left(j\right)-l_{\age}\right)+\mathbb{E}\sum_{\age=\tSchool+1}^{\ageMax}\beta^{\age-1}u_{w}\left(c_{\age}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition, there are preference shocks for college.
+\end_layout
+
+\begin_layout Section
+Sequence of events
+\end_layout
+
+\begin_layout Standard
+Household is born at age 
+\begin_inset Formula $\age=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+He observes 
+\begin_inset Formula $\hhType$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+He graduates high school with probability 
+\begin_inset Formula $\probGradHs\left(\abilSignal\right)$
+\end_inset
+
+.
+ If he fails to graduate, he works as HSD with value 
+\begin_inset Formula $V_{HSD}\left(j\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+If he graduates:
+\end_layout
+
+\begin_layout Itemize
+he observes a preference shock.
+\end_layout
+
+\begin_layout Itemize
+Household decides whether to enter college (value 
+\begin_inset Formula $\valueEntry$
+\end_inset
+
+) or work as HSG with value 
+\begin_inset Formula $V_{HSG}\left(j\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If the child enters college, he is committed to staying in college for 2
+ years.
+ He chooses consumption, hours, saving subject to a borrowing constraint.
+\end_layout
+
+\begin_layout Standard
+At the end of year 2, he drops out with probability 
+\begin_inset Formula $1-\probContinue\left(\ability\right)$
+\end_inset
+
+; he then must work as a college dropout.
+ Value 
+\begin_inset Formula $V_{CD}\left(k,j\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Otherwise, he must stay in college for 2 more years, again choosing consumption,
+ hours, and saving subject to a borrowing constraint.
+ 
+\end_layout
+
+\begin_layout Standard
+Beliefs about ability are updated based on the fact that a favorable continuatio
+n shock was drawn.
+ Beliefs are now 
+\begin_inset Formula $\prAbilGrad$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+At the end of 4 years in college, graduation is certain.
+ But the timing is not.
+ With probability 
+\begin_inset Formula $\probGradFour$
+\end_inset
+
+, he graduates in 4 years.
+ Otherwise, he graduates in 5 years.
+\end_layout
+
+\begin_layout Standard
+Once a household starts working, all uncertainty is resolved.
+ He maximizes lifetime utility subject to a lifetime budget constraint.
+\end_layout
+
+\begin_layout Section
+Household solution
+\end_layout
+
+\begin_layout Subsection
+Probability of HS graduation
+\end_layout
+
+\begin_layout Standard
+Depends on 
+\begin_inset Formula $\abilSignal$
+\end_inset
+
+ (to avoid belief updating).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probGradHs\left(\abilSignal\right)=\left[1+\exp\left(-\probHsgMult\left[\abilSignal-\probHsgOffset\right]\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probHsgOffset$
+\end_inset
+
+ varies across cohorts (to match HSG rate).
+\end_layout
+
+\begin_layout Subsection
+College entry decision
+\end_layout
+
+\begin_layout Itemize
+observe 
+\begin_inset Formula $j$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+observe pref shocks 
+\end_layout
+
+\begin_layout Itemize
+decide college entry
+\end_layout
+
+\begin_layout Subsubsection
+Equations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\max\{\underset{\mbox{work as HSG}}{\underbrace{V_{HS}\left(j\right)-\prefScaleEntry\prefShockEntry_{w}}},\underset{\mbox{enter college}}{\underbrace{\valueEntry\left(j\right)-\prefScaleEntry\prefShockEntry_{c}}}\}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+test: no test; only used through entry probability below
+\end_layout
+
+\begin_layout Standard
+Probability of entry is then given by
+\begin_inset Formula 
+\begin{equation}
+\Pr\left(college|j\right)=\frac{\exp\left(\valueEntry/\prefScaleEntry\right)}{\exp\left(\valueEntry/\prefScaleEntry\right)+\exp\left(V_{HS}/\prefScaleEntry\right)}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test: no test; directly implemented in 
+\family typewriter
+college_entry
+\end_layout
+
+\begin_layout Subsubsection
+Notation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefShockEntry$
+\end_inset
+
+ are type I extreme value shocks.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Algorithm
+\end_layout
+
+\begin_layout Standard
+Computational note: 
+\end_layout
+
+\begin_layout Itemize
+if all / none go to college with nonnegligible probability, bound entry
+ probs away from 0 and 1.
+\end_layout
+
+\begin_layout Subsection
+Years 1-2 in college:
+\end_layout
+
+\begin_layout Standard
+Household who has decided to enter college.
+ Household is committed to remain in college for 2 years.
+\end_layout
+
+\begin_layout Itemize
+state: 
+\begin_inset Formula $j$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+everyone has the same inital assets (given 
+\begin_inset Formula $j$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+choose 
+\begin_inset Formula $c_{\age},l_{\age}$
+\end_inset
+
+ (constant across first 2 years in college)
+\end_layout
+
+\begin_layout Subsubsection
+Equations
+\end_layout
+
+\begin_layout Standard
+period length = 
+\begin_inset Formula $\Delta\age=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+budget constraint in college: 
+\begin_inset Formula 
+\begin{equation}
+k_{\age+\Delta\age}=R^{\Delta\age}k_{\age}+\left(1+R\left[\Delta\age-1\right]\right)\left(\collegeWage l_{\age}+\pTransfer-c_{\age}-\collCost\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or 
+\begin_inset Formula 
+\begin{equation}
+c=(R^{\Delta\age}k-k')/\left(1+R\left[\Delta\age-1\right]\right)+\collegeWage l+\pTransfer_{j}-\collCost_{j}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+borrowing limit: 
+\begin_inset Formula $k_{\age+\Delta\age}\ge k_{min,\age+\Delta\age}$
+\end_inset
+
+, 
+\begin_inset Formula $l\in\left[0,1\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Bellman
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\valueEntry\left(j\right)=\max_{k',l}\left(1+\beta\left[\Delta\age-1\right]\right)u\left(c+\cColl_{j},1+\lColl_{j}-l\right)+\beta^{\Delta\age}V_{m}\left(k',j\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test: 
+\family typewriter
+test_bc1.test_saved12
+\family default
+ .
+\end_layout
+
+\begin_layout Itemize
+tests that RHS is maximized and that value is correct.
+\end_layout
+
+\begin_layout Subsubsection
+Algorithm:
+\end_layout
+
+\begin_layout Standard
+This is the same problem as years 3-4, except for the continuation value.
+\end_layout
+
+\begin_layout Standard
+But I don't have a representation for the marginal value of 
+\begin_inset Formula $k'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Easier to max the RHS over 
+\begin_inset Formula $c$
+\end_inset
+
+, where 
+\begin_inset Formula $l$
+\end_inset
+
+ is chosen from static condition
+\end_layout
+
+\begin_layout Subsection
+End of periods 1-2 in college
+\end_layout
+
+\begin_layout Standard
+Draw graduation shock: with probability 
+\begin_inset Formula $1-\probContinue\left(\ability\right)$
+\end_inset
+
+ drop out
+\end_layout
+
+\begin_layout Itemize
+or choose to drop out (we don't have that yet)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ability$
+\end_inset
+
+ is NOT known to agent, but he updated beliefs about it in light of graduation
+ outcome
+\end_layout
+
+\begin_layout Standard
+If agent drops out, he starts work at age 3 and receives remaining parental
+ transfers until age 5.
+\end_layout
+
+\begin_layout Standard
+Value:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{m}\left(k,j\right)=\sum_{\ability}\Pr\left(\ability|j\right)\left[\left(1-\probContinue\left[\ability\right]\right)V_{w}\left(k+\sum_{\age=3}^{5}R^{3-\age}\pTransfer_{j},\ability,CD,3\right)+\probContinue\left[\ability\right]V_{3}\left(k,j\right)\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Algorithm
+\end_layout
+
+\begin_layout Standard
+Compute a matrix by 
+\begin_inset Formula $[k,\hhType]$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X\left(k,\hhType\right)=\sum_{\ability}\Pr\left(\ability|j\right)\probContinue\left[\ability\right]V_{3}\left(k,j\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Loop over 
+\begin_inset Formula $\hhType$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Compute present value of transfers
+\end_layout
+
+\begin_layout Itemize
+Loop over ability
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+compute the 1st term
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\family typewriter
+coll_value_m
+\end_layout
+
+\begin_layout Standard
+Test: none.
+ directly implemented equations.
+\end_layout
+
+\begin_layout Subsection
+Years 3-4 in college
+\end_layout
+
+\begin_layout Standard
+Student has drawn a successful graduation outcome at the end of period 2.
+ He is committed to staying in college for 2 more years
+\end_layout
+
+\begin_layout Standard
+graduation at end of periods 4 or 5 is certain
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Budget constraint is the same as in years 1-2
+\end_layout
+
+\begin_layout Standard
+Bellman
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{3}\left(k,j\right)=\max_{k',l}\left(1+\beta\right)u\left(c+\cColl_{j},1+\lColl_{j}-l\right)+\beta^{2}V_{5}\left(k',j\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+subject to 
+\begin_inset Formula $k'\ge k_{min,5}$
+\end_inset
+
+, 
+\begin_inset Formula $l\ge0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test: 
+\family typewriter
+test_bc1.college
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+coll_pd3
+\family default
+ tests that budget constraint and static condition hold
+\end_layout
+
+\begin_layout Standard
+FOC:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k'$
+\end_inset
+
+: 
+\begin_inset Formula $\left(1+\beta\right)u_{c}/2\ge\beta^{2}\mathbb{E}_{a}\partial V_{5}\left(k',j\right)/\partial k'$
+\end_inset
+
+ with equality if bc does not bind (
+\family typewriter
+hh_eedev_coll3
+\family default
+) (not used)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $l$
+\end_inset
+
+: 
+\begin_inset Formula $u_{c}w_{coll}\le u_{l}$
+\end_inset
+
+ with equality if 
+\begin_inset Formula $l>0$
+\end_inset
+
+ (tested in 
+\family typewriter
+hh_static_bc1
+\family default
+)
+\end_layout
+
+\begin_layout Standard
+Assuming that utility is additively separable
+\end_layout
+
+\begin_layout Subsubsection
+Algorithm:
+\end_layout
+
+\begin_layout Enumerate
+Try 
+\begin_inset Formula $k'=k_{min}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+find 
+\begin_inset Formula $c,l$
+\end_inset
+
+ that satisfy budget constraint, static condition
+\end_layout
+
+\begin_layout Enumerate
+if Euler deviation > 0: done
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Interior solution
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Search over 
+\begin_inset Formula $c\in\left[c_{floor},c_{max}\right]$
+\end_inset
+
+.
+ At 
+\begin_inset Formula $c_{max}$
+\end_inset
+
+ we hit corner.
+\end_layout
+
+\begin_layout Enumerate
+Get 
+\begin_inset Formula $l$
+\end_inset
+
+ from static condition.
+ Bound below from 0.
+\end_layout
+
+\begin_layout Enumerate
+Get 
+\begin_inset Formula $k'$
+\end_inset
+
+ from budget constraint
+\end_layout
+
+\begin_layout Enumerate
+find 0 of Euler dev
+\end_layout
+
+\begin_layout Enumerate
+Closed form solution for 
+\begin_inset Formula $V_{k'}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Value at start of period 5
+\end_layout
+
+\begin_layout Standard
+Before learning whether student graduates today or tomorrow.
+\end_layout
+
+\begin_layout Standard
+Assume: 
+\begin_inset Formula $\probGradFour$
+\end_inset
+
+ is simply a number.
+\end_layout
+
+\begin_layout Standard
+If graduate today: receive the last transfer from the parent in addition
+ to 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{5}\left(k,j\right)=\probGradFour V_{CG}\left(k,\hhType,5\right)+\left[1-\probGradFour\right]V_{5}^{c}\left(k,j\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Value of studying in period 5
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{5}^{c}\left(k,j\right)=\max_{c,l}u\left(c,l\right)+\beta V_{CG}\left(k,j,6\right)
+\end{equation}
+
+\end_inset
+
+subject to the same budget constraint as always.
+ But now 1 period decision rather than 2
+\end_layout
+
+\begin_layout Standard
+Test:
+\end_layout
+
+\begin_layout Itemize
+uses same code as other periods in college
+\end_layout
+
+\begin_layout Subsubsection
+Beliefs after learning graduation outcome
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prAbilGrad=\Pr\left(\ability,j,grad\right)/\Pr\left(j,grad\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(j,grad\right)=\Pr\left(grad|j\right)\Pr\left(j\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(j|grad\right)=\sum_{\ability}\Pr\left(\ability|j\right)\Pr\left(grad|\ability\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(\ability,j,grad\right)=\Pr\left(j\right)\Pr\left(\ability|j\right)\Pr\left(grad|\ability\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test: 
+\family typewriter
+pr_a_jgrad_test.m
+\family default
+ by simulation
+\end_layout
+
+\begin_layout Subsection
+Value of working as CG
+\end_layout
+
+\begin_layout Standard
+Can start at age 5 or 6.
+ Beliefs are the same.
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\begin{equation}
+V_{CG}\left(k,j,\age\right)=\sum_{\ability}\prAbilGrad V_{w}\left(k+Z,\ability,CG,\age\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\age=6$
+\end_inset
+
+: 
+\begin_inset Formula $Z=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\age=5$
+\end_inset
+
+: 
+\begin_inset Formula $Z=\pTransfer_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Beliefs: 
+\begin_inset Formula $\prAbilGrad$
+\end_inset
+
+, takes into account that student did not drop out at end of year 2.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+value_work
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Test:
+\end_layout
+
+\begin_layout Itemize
+no test.
+ Equations are directly implemented
+\end_layout
+
+\begin_layout Subsection
+Value of working as HSG / HSD
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{s}\left(j\right)=\sum_{\ability}\Pr\left(\ability|j\right)V_{w}\left(k,\ability,s,1\right)+\prefHS_{c}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefHS_{c}$
+\end_inset
+
+ is the mean preference for working as HSG.
+ Its model purpose is to match college entry rates.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k=\sum_{\age=1}^{5}R^{1-\age}\pTransfer_{j}$
+\end_inset
+
+: present value of parental transfers
+\end_layout
+
+\begin_layout Standard
+Test: none.
+ Equation is directly implemented.
+ 
+\family typewriter
+value_hsg
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+Value of Work
+\end_layout
+
+\begin_layout Standard
+state: 
+\begin_inset Formula $k,\ability,s,\age$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Except for CG: 
+\begin_inset Formula $\age=\tSchool+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For CG: 
+\begin_inset Formula $\age=5$
+\end_inset
+
+ or 6.
+\end_layout
+
+\begin_layout Standard
+receive present value of lifetime earnings 
+\begin_inset Formula $\pvEarn\left(\ability,s,\age\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+choose consumption the usual way (perfect credit markets)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+V_{w}\left(k,\ability,s,\age\right)=\sum_{\hat{\age}=\age}^{\ageMax}\beta^{\hat{\age}-\age}u_{w}\left(c_{\hat{\age}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+subject to 
+\begin_inset Formula 
+\begin{equation}
+Rk+\pvEarn\left(\ability,s,\age\right)=\sum_{\hat{\age}=\age}^{\ageMax}R^{\age-\hat{\age}}c_{\age}g_{c}^{\hat{\age}-\age}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Euler: 
+\begin_inset Formula $c^{-\sigma}=\beta R\left(c'\right)^{-\sigma}$
+\end_inset
+
+.
+ Therefore 
+\begin_inset Formula $g_{c}=c'/c=\left(\beta R\right)^{1/\sigma}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Closed form solution.
+ Uses general purpose code (
+\family typewriter
+UtilCrraLH
+\family default
+).
+\end_layout
+
+\begin_layout Standard
+Test: 
+\family typewriter
+test_bc1.work
+\end_layout
+
+\begin_layout Subsection
+IQ
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $IQ=m+\varepsilon_{IQ}$
+\end_inset
+
+ (up to scale)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\varepsilon_{IQ}\sim N\left(0,\sigma_{IQ}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Divide into percentile groups (e.g.
+ quartiles).
+\end_layout
+
+\begin_layout Standard
+All I need to know is Pr(IQ group | j)
+\end_layout
+
+\begin_layout Standard
+Test: 
+\family typewriter
+test_bc1.pr_xgroup_by_type
+\family default
+ (simulation)
+\end_layout
+
+\begin_layout Section
+Computing Aggregates
+\end_layout
+
+\begin_layout Standard
+Need aggregates by [IQ, school, type].
+ Type determines parental income etc.
+\end_layout
+
+\begin_layout Standard
+These can be computed from aggregates by [s, a, j]
+\end_layout
+
+\begin_layout Standard
+Mass(s,a,j) has closed form solution.
+\end_layout
+
+\begin_layout Standard
+Mass(s,IQ,j) = sum over a (mass(s,a,j) * pr(IQ|a))
+\end_layout
+
+\begin_layout Subsection
+Stats by type
+\end_layout
+
+\begin_layout Standard
+Prob(grad | entry, j) = 
+\begin_inset Formula $\sum_{\ability}\Pr\left(\ability|j\right)\probContinue\left(j\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Stats by ability
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(HSD,\ability\right)=\sum_{\hhType}\mbox{\Pr\left(\hhType\right)}\Pr\left(\ability|\hhType\right)\left[1-\probGradHs\left(\hhType\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $s\in\left\{ HSD,HSG\right\} $
+\end_inset
+
+: (because HS graduation depends on type, not ability)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(s,\ability\right)=\sum_{\hhType}\Pr\left(s,\hhType\right)\Pr\left(\ability|\hhType\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Pr\left(college,\ability\right)$
+\end_inset
+
+: works the same way b/c college entry depends on type not ability
+\end_layout
+
+\begin_layout Subsection
+Debt stats
+\end_layout
+
+\begin_layout Standard
+Counting all transfers as paid out in period 1 understates debt (before
+ the end of college).
+\end_layout
+
+\begin_layout Standard
+Correct budget constraint:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{k}_{d+1}=R\hat{k}_{d}+2\left(w_{coll}l_{d}-c_{d}-p+z\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Iterate on this, starting from 
+\begin_inset Formula $\hat{k}_{1}=0$
+\end_inset
+
+, to find correct debt stats.
+\end_layout
+
+\begin_layout Standard
+This makes surprisingly little difference (
+\family typewriter
+aggr_show
+\family default
+).
+\end_layout
+
+\begin_layout Section
+Calibration
+\end_layout
+
+\begin_layout Subsection
+Functional Forms
+\end_layout
+
+\begin_layout Subsubsection
+Preferences: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u\left(c,l\right)=\left[\prefWt\frac{c^{1-\prefSigma}}{1-\prefSigma}-1\right]+\prefWtLeisure\frac{\left(1-l\right)^{1-\prefRho}}{1-\prefRho}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+u_{w}\left(c\right)=\prefWtWork\frac{c^{1-\prefSigma}}{1-\prefSigma}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Normalize 
+\begin_inset Formula $\prefWt=1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Note: we want the household to value leisure rather than dislike work.
+ Otherwise the household never chooses 
+\begin_inset Formula $l=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Endowments:
+\end_layout
+
+\begin_layout Standard
+Joint Normal: 
+\begin_inset Formula $\pTransfer,\abilSignal,\collCost$
+\end_inset
+
+,
+\begin_inset Formula $\famIncome$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I implement this by drawing independent standard Normal random variables
+ for each endowment.
+ Then correlate them using weights called 
+\begin_inset Formula $\alpha_{x.y}$
+\end_inset
+
+.
+ This is a detail.
+ In effect, we are getting a joint Normal distribution.
+\end_layout
+
+\begin_layout Itemize
+correlation parameters: 
+\begin_inset Formula $\alpha_{m,\collCost}$
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Itemize
+marginal distributions: 
+\begin_inset Formula $\mu_{\collCost},\sigma_{\collCost}$
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $m\sim N\left(0,1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ability\sim N\left(0,1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+correlation with 
+\begin_inset Formula $m$
+\end_inset
+
+ governed by 
+\begin_inset Formula $\alpha_{\ability,m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Free college consumption / leisure: 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\cColl\left(j\right)=\left(m_{j}-m_{\min}\right)\times\beta_{c}/\left(m_{\max}-m_{\min}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In words: 
+\begin_inset Formula $\cColl$
+\end_inset
+
+ is linear in 
+\begin_inset Formula $m$
+\end_inset
+
+ such that the lowest type gets 0 and the highest type gets 
+\begin_inset Formula $\beta_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Analogous for 
+\begin_inset Formula $\lColl$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+With small 
+\begin_inset Formula $J$
+\end_inset
+
+ (e.g.
+ 80), the realized means and std devs can be quite far from the targets.
+ To avoid that, I scale all random vars to be N(0,1).
+\end_layout
+
+\begin_layout Subsubsection
+High school graduation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\probGradHs\left(\abilSignal\right)=\probHsgInter+\probHsgSlope\abilSignal
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+truncated in [0, 1]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+prob_hsg.m
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+College
+\end_layout
+
+\begin_layout Standard
+Graduation probability is logistic:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\probContinue\left(\ability;t\right)=\prGradParam_{0}+\frac{\prGradParam_{1}-\prGradParam_{0}}{\left[1+\prGradParam_{a}/\exp\left(\prGradParam_{b}\left[\ability-\ability_{0}\right]\right)\right]^{1/\prGradParam_{c}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $\prGradParam_{c}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\ability_{0}=0$
+\end_inset
+
+.
+ Calibrate the rest.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+pr_grad_a.m
+\end_layout
+
+\begin_layout Subsubsection
+Work
+\end_layout
+
+\begin_layout Standard
+CPS: median earnings by [age, school, year].
+ Base year prices.
+\end_layout
+
+\begin_layout Standard
+For each cohort: compute present value using fixed interest rate (still
+ in base year prices): 
+\begin_inset Formula $\bar{\pvEarn}\left(s,c\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Detrend the present value, using detrending factor for work start age.
+\end_layout
+
+\begin_layout Standard
+CPS measures average log lifetime earnings by 
+\begin_inset Formula $\left(s,c\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pvEarn\left(\ability,s,c\right)=\phi_{s}\left(a-\bar{a}\right)+\hat{e}\left(s,c\right)+\bar{\pvEarn}\left(s,c\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+ from one of our previous papers
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{e}\left(s,c\right)$
+\end_inset
+
+ is calibrated to match 
+\begin_inset Formula $\bar{\pvEarn}\left(s,c\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+skill premium for given 
+\begin_inset Formula $a$
+\end_inset
+
+: 
+\begin_inset Formula $\Delta\phi_{s}\left(a-\bar{a}\right)$
+\end_inset
+
+ + common stuff
+\end_layout
+
+\begin_layout Itemize
+set 
+\begin_inset Formula $\bar{a}$
+\end_inset
+
+ arbitrarily so that 
+\begin_inset Formula $a-\bar{a}>0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Calibration needs to ensure that lifetime earnings are rising in schooling
+ (at least for most agents).
+\end_layout
+
+\begin_layout Standard
+For now impose:
+\end_layout
+
+\begin_layout Enumerate
+Not discounting to age 1, going to school longer raises lifetime earnings
+ for all abilities (a bit strong b/c schooling shortens work lives).
+ That requires 
+\begin_inset Formula $a-\bar{a}\ge0$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{e}+\bar{Y}$
+\end_inset
+
+ rising in 
+\begin_inset Formula $s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+HSD and HSG start working at age 1.
+ CD start at age 3.
+ CG start at ages 5 or 6.
+ Starting at age 6 reduces lifetime earnings by factor 
+\begin_inset Formula $1/R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Fixed Parameters
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Fixed-Model-Parameters"
+
+\end_inset
+
+ shows fixed model parameters.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fixed Model Parameters
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fixed-Model-Parameters"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "PaperFigures/param_fixed_tb.tex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mostly standard choices.
+\end_layout
+
+\begin_layout Standard
+Directly from data
+\end_layout
+
+\begin_layout Itemize
+borrowing limits 
+\begin_inset Formula $k_{min,d,c}$
+\end_inset
+
+ (finaid.org)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefRho$
+\end_inset
+
+: we don't really have any evidence on this.
+ Set arbitrary for now.
+\end_layout
+
+\begin_layout Subsection
+Calibrated parameters for the NLSY79 or 97 cohort
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Cal-Model-Parameters"
+
+\end_inset
+
+ shows calibrated parameters.
+ The values are of course still invented.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calibrated Model Parameters
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Cal-Model-Parameters"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "PaperFigures/param_tb.tex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Calibration targets for NLSY79 or 97 cohort
+\end_layout
+
+\begin_layout Standard
+Complete summary in this table (showing model fit):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calibrated Model Parameters
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Cal-Fit"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset include
+LatexCommand include
+filename "PaperFigures/fit.tex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Schooling
+\end_layout
+
+\begin_layout Standard
+fraction by schooling overall
+\end_layout
+
+\begin_layout Standard
+by IQ, and yp quartile
+\end_layout
+
+\begin_layout Itemize
+fraction HSG+
+\end_layout
+
+\begin_layout Itemize
+fraction entering college and graduating (conditional on HSG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\betaIq,\betaYp$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+one could just target the entire matrix of mass by (school, IQ, yp), but
+ this seems more transparent
+\end_layout
+
+\begin_layout Subsubsection
+Lifetime earnings
+\end_layout
+
+\begin_layout Standard
+Mean log lifetime earnings by schooling
+\end_layout
+
+\begin_layout Subsubsection
+College earnings and hours
+\end_layout
+
+\begin_layout Itemize
+mean by IQ, 
+\begin_inset Formula $y_{p}$
+\end_inset
+
+ (NLSY)
+\end_layout
+
+\begin_layout Itemize
+unconditional mean hours: set to 20/week, unless we have direct data (NLSY
+ only)
+\end_layout
+
+\begin_layout Subsubsection
+College costs
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p_{t}$
+\end_inset
+
+: tuition + fees + room/board (?) - scholarships - grants + supplies
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+ mean: match mean from time series source (Chris?)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+ std dev: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+take ratio of std dev / mean from HS&B
+\end_layout
+
+\begin_layout Itemize
+assume constant over time
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+also try with room and board; and excluding private
+\end_layout
+
+\begin_layout Subsubsection
+College debt
+\end_layout
+
+\begin_layout Subsubsection
+Parental income
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y_{p}$
+\end_inset
+
+ quartile means (NLSY) -> 
+\begin_inset Formula $\mu_{y},\sigma_{y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Parental transfers
+\end_layout
+
+\begin_layout Standard
+means by IQ, yp
+\end_layout
+
+\begin_layout Subsection
+Intuition on how parameters are identified
+\end_layout
+
+\begin_layout Subsubsection
+Correlations:
+\end_layout
+
+\begin_layout Itemize
+p,m and (p,y): would like to match mean 
+\begin_inset Formula $p$
+\end_inset
+
+ by IQ quartile and by yp quartile (HSB)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+but not clear how to scale that consistently with the mean series
+\end_layout
+
+\begin_layout Itemize
+possible: rescale so that mean equals time series
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+a,m: match fraction CD, CG by IQ quartile (NLSY)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sigma_{IQ}$
+\end_inset
+
+: fix for now at what we estimate from other papers (either Todd and Lutz's
+ or Oksana and Lutz's)
+\end_layout
+
+\begin_layout Subsubsection
+Preferences
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefScaleEntry$
+\end_inset
+
+: size of pref shocks at college entry; match fraction CD, CG by IQ quartile
+\end_layout
+
+\begin_layout Itemize
+currently fixed at 0.2; model wants something very small (0.05) which implies
+ that college entry rates are at corners for most types
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefWtLeisure$
+\end_inset
+
+: weight on leisure; match hours worked in college (NLSY)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefWt$
+\end_inset
+
+: match average 
+\series bold
+debt
+\series default
+ (at end of college, grads and dropouts) (NLSY)
+\end_layout
+
+\begin_layout Itemize
+earlier cohorts: average student debt (Trends in Student Aid)
+\end_layout
+
+\begin_layout Standard
++++ match mean transfer by 
+\begin_inset Formula $y_{p}$
+\end_inset
+
+, IQ quartile (could also be used to match curvature of 
+\begin_inset Formula $u_{p}$
+\end_inset
+
+) (NELS)
+\end_layout
+
+\begin_layout Subsubsection
+College
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pi\left(a\right)$
+\end_inset
+
+ parameters: match fraction CD, CG by IQ quartile
+\end_layout
+
+\begin_layout Subsubsection
+Other
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $w_{coll}$
+\end_inset
+
+: match college earnings and hours (NLSY)
+\end_layout
+
+\begin_layout Standard
+College earnings:
+\end_layout
+
+\begin_layout Itemize
+NLSY: mean by IQ, yp
+\end_layout
+
+\begin_layout Subsubsection
+Detrending
+\end_layout
+
+\begin_layout Standard
+We have preference shocks and the preference for working as HSG.
+ So detrending affects choices.
+\end_layout
+
+\begin_layout Standard
+Disposable income per capita has doubled since 1960.
+ Median (or mean log) CPS wages are roughly constant.
+ 
+\end_layout
+
+\begin_layout Standard
+If we detrend by CPI, present value of lifetime earnings falls by half across
+ cohorts we use.
+\end_layout
+
+\begin_layout Standard
+Probably better to not detrend at all.
+\end_layout
+
+\begin_layout Section
+Time series calibration
+\end_layout
+
+\begin_layout Standard
+Detrending is important because it scales preference shocks (such as pref
+ for HS work, but that is actually time varying; but also 
+\begin_inset Formula $\cColl$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+We want to replicate
+\end_layout
+
+\begin_layout Itemize
+college entry pattern by IQ, fam income
+\end_layout
+
+\begin_layout Itemize
+college graduation pattern by IQ, fam income
+\end_layout
+
+\begin_layout Itemize
+average debt
+\end_layout
+
+\begin_layout Itemize
+financing shares
+\end_layout
+
+\begin_layout Itemize
+hours worked in college
+\end_layout
+
+\begin_layout Subsection
+Time varying parameters
+\end_layout
+
+\begin_layout Subsubsection
+Directly from data
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $k_{min,d,c}$
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Itemize
+directly from statutory borrowing limits
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $w_{coll}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+match earnings in college (source?)
+\end_layout
+
+\begin_layout Itemize
+for now: keep constant (in stationary model)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\pi\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+could have one parameter time varying to match graduation rate (not done)
+\end_layout
+
+\begin_layout Subsubsection
+Calibrated
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\hat{e}\left(s\right)$
+\end_inset
+
+: match lifetime earnings by 
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mu_{p}$
+\end_inset
+
+: match mean college cost
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\prefHS_{c}$
+\end_inset
+
+: preference for work as HSG
+\end_layout
+
+\begin_layout Itemize
+match college entry rate overall
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\alpha_{a,m}$
+\end_inset
+
+: signal precision: 
+\end_layout
+
+\begin_layout Itemize
+match college entry rates, graduation rates by 
+\begin_inset Formula $IQ$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Currently fixed
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mu_{y}$
+\end_inset
+
+: mean log parental income: treat as fixed (stationary model)
+\end_layout
+
+\begin_layout Subsubsection
+Group sizes vary with cohort
+\end_layout
+
+\begin_layout Standard
+E.g.
+ family income is not in quartiles.
+\end_layout
+
+\begin_layout Standard
+If close to quartiles: interpolate (e.g.
+ Project Talent)
+\end_layout
+
+\begin_layout Subsection
+Time series calibration targets
+\end_layout
+
+\begin_layout Standard
+All targets that are available.
+\end_layout
+
+\begin_layout Standard
+Not available:
+\end_layout
+
+\begin_layout Itemize
+financing: transfers, earnings
+\end_layout
+
+\begin_layout Subsubsection
+How college is financed
+\end_layout
+
+\begin_layout Standard
+share of total spending from earnings and loans
+\end_layout
+
+\begin_layout Standard
+Data 
+\family typewriter
+(cal_targets)
+\end_layout
+
+\begin_layout Itemize
+for cohorts born before 1950: Hollis (1957)
+\end_layout
+
+\begin_layout Itemize
+total = 100 - scholarships - veterans
+\end_layout
+
+\begin_layout Itemize
+family = family + 0.5 * other
+\end_layout
+
+\begin_layout Itemize
+earnings = earnings + 0.5 * other
+\end_layout
+
+\begin_layout Standard
+Model
+\end_layout
+
+\begin_layout Itemize
+Total spending = 
+\begin_inset Formula $2\left(c+p\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Earnings: 
+\begin_inset Formula $2w_{coll}l$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Debt: 
+\begin_inset Formula $k'$
+\end_inset
+
+ (if < 0)
+\end_layout
+
+\begin_layout Itemize
+Family: the rest.
+\end_layout
+
+\begin_layout Section
+Interesting counterfactuals
+\end_layout
+
+\begin_layout Enumerate
+Vary one observable input at a time
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+college premium (really: earnings profiles)
+\begin_inset Newline newline
+\end_inset
+
+BUT: must also vary 
+\begin_inset Formula $\hat{e}$
+\end_inset
+
+.
+ That requires to first calibrate each cohort.
+\end_layout
+
+\begin_layout Enumerate
+borrowing limits
+\end_layout
+
+\begin_layout Enumerate
+college costs (need to recalibrate that one parameter to match 1 target)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Hold all parameters fixed, except those taken directly from data (e.g.
+ college costs, earnings profiles and 
+\begin_inset Formula $\hat{e}$
+\end_inset
+
+, borrowing limits)
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Also vary 
+\begin_inset Formula $\prefHS$
+\end_inset
+
+ so that model matches schooling.
+ Otherwise the college premium produces a large change in schooling, which
+ makes results hard to interpret.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Notes
+\end_layout
+
+\begin_layout Subsection
+Organization
+\end_layout
+
+\begin_layout Standard
+Steps:
+\end_layout
+
+\begin_layout Enumerate
+Calibrate all params for reference cohort (NLSY79)
+\end_layout
+
+\begin_layout Enumerate
+Calibrate a subset of parameters for every other cohort (experiments)
+\end_layout
+
+\begin_layout Enumerate
+Counterfactuals: Set selected parameters to values for other cohorts (e.g.
+ borrowing limits or present value of earnings by ability / schooling).
+\end_layout
+
+\begin_layout Subsection
+Years with small college premium
+\end_layout
+
+\begin_layout Standard
+Model fails to match small college premium (or dropout premium is 0).
+\end_layout
+
+\begin_layout Standard
+Reason:
+\end_layout
+
+\begin_layout Itemize
+when college premium gets small, high ability agents stay out of college
+ (which is painful)
+\end_layout
+
+\begin_layout Itemize
+because of selection into graduation, the college premium cannot get too
+ small
+\end_layout
+
+\begin_layout Itemize
+for the same reason, when entry selection is weak, the CD premium goes negative
+\end_layout
+
+\begin_layout Subsubsection
+Modeling dropout
+\end_layout
+
+\begin_layout Standard
+would weaken selection into graduation => CD premium can rise, CG premium
+ can fall
+\end_layout
+
+\begin_layout Subsubsection
+Allow for shallower 
+\begin_inset Formula $\pi\left(\ability\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+tried that - effect was pretty small
+\end_layout
+
+\begin_layout Subsubsection
+Calibrate 
+\begin_inset Formula $\prefScaleEntry$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+tried that - effect pretty small
+\end_layout
+
+\begin_layout Subsubsection
+Psychic costs correlated with 
+\begin_inset Formula $\abilSignal$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and time varying
+\end_layout
+
+\begin_layout Standard
+Idea:
+\end_layout
+
+\begin_layout Standard
+have a fudge factor that allows the model to 
+\begin_inset Quotes eld
+\end_inset
+
+exactly
+\begin_inset Quotes erd
+\end_inset
+
+ match entry by IQ for each cohort
+\end_layout
+
+\begin_layout Standard
+then we could get positive selection with small college premium
+\end_layout
+
+\begin_layout Standard
+Problem:
+\end_layout
+
+\begin_layout Standard
+CD premium would likely remain low
+\end_layout
+
+\begin_layout Subsection
+Parental transfers
+\end_layout
+
+\begin_layout Standard
+Key: how responsive to changes in tuition, borrowing ...?
+\end_layout
+
+\begin_layout Standard
+Altruism cannot work
+\end_layout
+
+\begin_layout Standard
+Transfers are a tiny fraction of parental income.
+\end_layout
+
+\begin_layout Standard
+They will (at least for rich parents) almost fully offset changes in financial
+ conditions of the child (e.g.
+ tuition).
+ At least for the NLSY cohort (few borrowing limits).
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+With altruism, transfers are too steep in parental income.
+\end_layout
+
+\begin_layout Standard
+Transfers approximately equal MU(c) across generations.
+\end_layout
+
+\begin_layout Standard
+Double parental income => double parental and child consumption.
+\end_layout
+
+\begin_layout Standard
+Child hours fall (static condition)
+\end_layout
+
+\begin_layout Standard
+The entire increase in consumption must come out of transfers.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+We need to fundamentally rethink transfers.
+\end_layout
+
+\begin_layout Standard
+We should really use better data to pin this down (NELS).
+ It's important for our paper.
+\end_layout
+
+\begin_layout Subsection
+Time series scaling
+\end_layout
+
+\begin_layout Standard
+Everything, including preference shocks, must scale properly as we take
+ the model back in time.
+\end_layout
+
+\begin_layout Standard
+How to scale pref shocks is not clear.
+\end_layout
+
+\begin_layout Standard
+Sidestep this problem by detrending the model.
+\end_layout
+
+\begin_layout Enumerate
+Compute average earnings for the baseline cohort
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+weights: for now simple; age range 30-50; school weights = fraction by s
+ from base cohort
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+For each cohort: compute a scale factor that makes average earnings the
+ same as base cohort
+\end_layout
+
+\begin_layout Enumerate
+Multiply all dollar variables by that scale factor
+\end_layout
+
+\begin_layout Standard
+Result display: divide all dollar figures by the scale factor (inconvenient)
+\end_layout
+
+\begin_layout Subsection
+Corners
+\end_layout
+
+\begin_layout Standard
+For calibration, should prevent a situation where nobody /everybody enters
+ college for some parameter values.
+\end_layout
+
+\begin_layout Subsubsection
+Debt corners
+\end_layout
+
+\begin_layout Standard
+Can have parameter values where everyone maxes out on debt in year 4.
+\end_layout
+
+\begin_layout Standard
+Then using only debt tg for grads gets stuck.
+\end_layout
+
+\begin_layout Standard
+Using aggregate debt does not help all that much either.
+ Can have params where (nearly) only grads borrow.
+\end_layout
+
+\begin_layout Standard
+Solution:
+\end_layout
+
+\begin_layout Itemize
+start from a guess where not everyone hits the borrowing limit
+\end_layout
+
+\begin_layout Itemize
+penalty when more than a fixed fraction hits borrowing limit
+\end_layout
+
+\begin_layout Itemize
+only when borrowing limit is positive
+\end_layout
+
+\begin_layout Section
+eof
+\end_layout
+
+\end_body
+\end_document
