@@ -33,8 +33,8 @@ iqUbV = [32 47 62 74 85 100] ./ 100;
 
 fh = output_bc1.fig_new(saveFigures, []);
 output_bc1.bar_graph_qy(entry_qyM, 'Entry rate', saveFigures, cS)
-xlabel(figS.ypGroupStr);
-ylabel(figS.iqGroupStr);
+xlabel(cS.formatS.ypGroupStr);
+ylabel(cS.formatS.iqGroupStr);
 set(gca, 'XTickLabel', string_lh.vector_to_string_array(ypUbV .* 100, '%.0f'));
 set(gca, 'YTickLabel', string_lh.vector_to_string_array(iqUbV .* 100, '%.0f'));
 % output_bc1.fig_format(fh, 'bar');

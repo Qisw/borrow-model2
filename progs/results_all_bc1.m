@@ -5,8 +5,12 @@ cS = const_bc1(setNo, expNo);
 % paramS = param_load_bc1(setNo, expNo);
 saveFigures = 1;
 
+
+%% Preparation
+
 % Make dirs
 helper_bc1.mkdir(setNo, expNo);
+
 if cS.runLocal == 1
    % If local: delete older result files
    results_bc1.delete_old_results(setNo, expNo, 7, 'noconfirm');
@@ -15,24 +19,32 @@ else
    results_bc1.delete_results(setNo, expNo, 'noconfirm');
 end
 
+preamble_lh.initialize(var_fn_bc1(cS.vPreambleData, cS), cS.preambleFn);
+
 if expNo == cS.expBase
    % Create symbol table
    helper_bc1.symbol_table(setNo);
 end
 
-preamble_lh.initialize(var_fn_bc1(cS.vPreambleData, cS), cS.preambleFn);
 
-% Fit
-% Figures
-results_bc1.fit(saveFigures, setNo, expNo);
-% Table with all deviations from cal targets
-results_bc1.fit_tb(setNo, expNo);
+%% Parameters
 
 for showCalibrated = [0 1]
    calibr_bc1.param_tb(showCalibrated, setNo, expNo);
 end
 results_bc1.param_show(saveFigures, setNo, expNo);
+results_bc1.endow_corr_show(setNo, expNo);
 results_bc1.lty_show(saveFigures, setNo, expNo);
+
+
+
+%% Main plots
+
+% Fit
+results_bc1.fit(saveFigures, setNo, expNo);
+% Table with all deviations from cal targets
+results_bc1.fit_tb(setNo, expNo);
+
 
 % Show policy functions
 results_bc1.hh_show(saveFigures, setNo, expNo);

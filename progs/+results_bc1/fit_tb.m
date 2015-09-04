@@ -13,17 +13,27 @@ cS = const_bc1(setNo, expNo);
 %  Each element describes a deviation from targets
 outS = var_load_bc1(cS.vCalResults, cS);
 
+% For entry also show scalar deviation
+% For tweaking model fit
+showScalarDev = true;
+
 
 %% Table structure
 
 % Each row is a devation
 nr = 1 + outS.devV.n;
 nc = 3;
+if showScalarDev
+   nc = nc + 1;
+end
 
 tbM = cell([nr, nc]);
 tbS.rowUnderlineV = zeros([nr,1]);
 
-tbM(1,:) = {'Description', 'Model', 'Data'};
+tbM(1,1:3) = {'Description', 'Model', 'Data'};
+if showScalarDev
+   tbM{1,4} = 'Dev';
+end
 tbS.rowUnderlineV(1) = 1;
 
 
@@ -44,6 +54,10 @@ for i1 = 1 : outS.devV.n
       % Show directly
       tbM{ir,2} = output_bc1.formatted_vector(modelV, devS.fmtStr, cS);
       tbM{ir,3} = output_bc1.formatted_vector(devS.dataV, devS.fmtStr, cS);
+   end
+   
+   if showScalarDev
+      tbM{ir,4} = sprintf('%.2f', devS.scalar_dev);
    end
 end
 

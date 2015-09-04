@@ -35,7 +35,7 @@ for iCase = 1 : 2
 end
 
 hold off;
-xlabel(figS.cohortXLabelStr);
+xlabel(cS.formatS.cohortXLabelStr);
 
    
 end

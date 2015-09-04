@@ -24,7 +24,7 @@ if 1
       mV = modelV{iPlot};
       dV = dataV{iPlot};
       bar(1 : nIq, [mV(:), dV(:)]);
-      xlabel(figS.iqGroupStr);
+      xlabel(cS.formatS.iqGroupStr);
       ylabel(yStrV{iPlot});
       legend({'Model', 'Data'}, 'location', 'northwest');
       figures_lh.axis_range_lh([NaN NaN 0 1]);

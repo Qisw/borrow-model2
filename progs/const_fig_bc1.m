@@ -1,6 +1,8 @@
 function cS = const_fig_bc1
 % Figure options
-% --------------------------------
+%{
+Notation and labels in formatting
+%}
 
 fileFormat = 'pdf';
 
@@ -118,14 +120,6 @@ end
 
 cS.barWidth = 1;
 
-
-
-%% Notation and labels
-
-cS.iqGroupStr = 'Ability';
-cS.ypGroupStr = 'Family background';
-
-cS.cohortXLabelStr = 'Cohort';
 
 
 end

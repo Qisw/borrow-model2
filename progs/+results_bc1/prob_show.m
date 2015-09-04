@@ -95,14 +95,15 @@ end
 
 %% Prob grad | j
 if 1
-   % Sort types by prob grad (conditional on entry)
-   sortM = sortrows([prGrad_jV, aggrS.aggr_jS.mass_jV]);
-   
-   fh = output_bc1.fig_new(saveFigures, []);
-   plot(cumsum(sortM(:,2)), sortM(:,1), 'o', 'color', figS.colorM(1,:));
-   xlabel('Signal percentile');
+   fh = results_bc1.plot_by_m(prGrad_jV, saveFigures, cS);
+%    % Sort types by prob grad (conditional on entry)
+%    sortM = sortrows([prGrad_jV, aggrS.aggr_jS.mass_jV]);
+%    
+%    fh = output_bc1.fig_new(saveFigures, []);
+%    plot(cumsum(sortM(:,2)), sortM(:,1), 'o', 'color', figS.colorM(1,:));
+%    xlabel('Signal percentile');
    ylabel('Graduation probability');
-   figures_lh.axis_range_lh([NaN NaN 0 1]);
+   figures_lh.axis_range_lh([0 1 0 1]);
    output_bc1.fig_format(fh, 'line');
    output_bc1.fig_save(fullfile(cS.paramDir, 'prob_grad_j'), saveFigures, cS);
 end

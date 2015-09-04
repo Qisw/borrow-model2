@@ -3,6 +3,10 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\input{PaperFigures/preamble1.tex}
+\input{PaperFigures/symbols.tex}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -134,6 +138,10 @@ NLSY: HSB targets from Oksana.
 Student debt
 \end_layout
 
+\begin_layout Subsubsection
+Mean debt of all college students
+\end_layout
+
 \begin_layout Standard
 Trends in Student Aid
 \end_layout
@@ -146,6 +154,10 @@ Student debt per undergraduate.
 Early years only have federal debt.
  I assume that the ratio of total to federal debt is the same as in the
  first year with data.
+\end_layout
+
+\begin_layout Subsubsection
+Debt of college graduates
 \end_layout
 
 \begin_layout Subsection

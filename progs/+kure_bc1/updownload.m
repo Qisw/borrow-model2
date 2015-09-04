@@ -15,6 +15,7 @@ for expNo = expNoV(:)'
    
    % Out files (down only)
    if strcmp(upDownStr, 'down')
+      disp('Downloading out files');
       kure_lh.updownload(dirLocalS.outDir, dirKureS.outDir, upDownStr);
    end
 end

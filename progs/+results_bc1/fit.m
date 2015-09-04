@@ -12,7 +12,7 @@ if 1
    % What can be on the x axis
    xIq = 1;
    xYp = 2;
-   xStrV = {figS.iqGroupStr, figS.ypGroupStr};
+   xStrV = {cS.formatS.iqGroupStr, cS.formatS.ypGroupStr};
    xValueV = {1 : nIq,  1 : nYp};
    prefixStrV = {'iq_',  'yp_'};
    

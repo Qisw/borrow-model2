@@ -13,9 +13,9 @@ end
 
 
 sourceV = {cS.symbolFn,    fullfile(cS.paramDir, 'param_tb.tex'),    fullfile(cS.paramDir, 'param_fixed_tb.tex'), ...
-   fullfile(cS.fitDir, 'fit.tex')};
+   fullfile(cS.fitDir, 'fit.tex'),  fullfile(cS.outDir, 'preamble1.tex')};
 tgV     = {'symbols.tex',  'param_tb.tex',   'param_fixed_tb.tex', ...
-   'fit.tex'};
+   'fit.tex',  'preamble1.tex'};
 
 for i1 = 1 : length(sourceV)
    if exist(sourceV{i1}, 'file')

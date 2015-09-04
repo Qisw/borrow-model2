@@ -100,7 +100,7 @@ pvec = pvec.change('sigmaIQ', '\sigma_{IQ}', 'Std of IQ noise',  0.35, 0.2, 2, c
 % pvec = pvec.change('probHsgMult', '\bar{\pi}_{HSG}', 'Prob of HSG', 0.5, 0.1, 2, cS.calBase);
 % pvec = pvec.change('probHsgOffset', 'm_{0}', 'Prob of HSG', 0.1, -3, 1, cS.calBase);
 symStr = symS.retrieve('probGradHs');
-pvec = pvec.change('probHsgInter',  [symStr, '^0'], 'Prob HSG intercept', 0.8, 0.1, 0.9, cS.calBase);
+pvec = pvec.change('probHsgInter',  [symStr, '^0'], 'Prob HSG intercept', 0.8, 0.1, 0.95, cS.calBase);
 pvec = pvec.change('probHsgSlope',  [symStr, '^1'], 'Prob HSG slope', 0.1, 0.01, 0.9, cS.calBase);
 
 

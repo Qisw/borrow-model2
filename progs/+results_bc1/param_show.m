@@ -7,7 +7,6 @@ Checked: 2015-Sep-1
 cS = const_bc1(setNo, expNo);
 figS = const_fig_bc1;
 paramS = param_load_bc1(setNo, expNo);
-statsS = var_load_bc1(cS.vAggrStats, cS);
 % aggrS = var_load_bc1(cS.vAggregates, cS);
 % tgS = var_load_bc1(cS.vCalTargets, cS);
 % iCohort = cS.iCohort; 
@@ -16,7 +15,6 @@ outDir = cS.paramDir;
 
 % Mean ability by m
 mean_abil_j(saveFigures, paramS, cS);
-
 
 
 %% Return to schooling by ability
@@ -43,15 +41,6 @@ if 1
 end
 
 
-%% Endowment correlations
-% By simulation
-if 01
-   corrS = statsS.endowCorrS;
-
-   [tbM, tbS] = latex_lh.corr_table(corrS.corrM, corrS.varNameV);
-   latex_lh.latex_texttb_lh(fullfile(outDir, 'endow_corr.tex'), tbM, 'Caption', 'Label', tbS);
-   clear corrS;
-end
 
 
 %%  Plot(pr(iq | j))

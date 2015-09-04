@@ -1,3 +1,2 @@
 
 Parameters that are close to bounds
-  cCollMax:    [0.000 9.965 10.000]

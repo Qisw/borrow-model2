@@ -3,6 +3,13 @@ function formatS = formatting(cS)
 symS = helper_bc1.symbols;
 
 
+formatS.iqGroupStr = symS.retrieve('IQ');
+formatS.ypGroupStr = 'Family background';
+
+formatS.cohortXLabelStr = 'Cohort';
+
+
+
 %% IQ labels
 
 iqStr = symS.retrieve('IQ');

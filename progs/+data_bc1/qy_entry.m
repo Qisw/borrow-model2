@@ -19,8 +19,8 @@ for iStudy = 1 : length(studyFnV)
    end
    
    output_bc1.bar_graph_qy(entryS.perc_coll_qyM, 'Entry rate', saveFigures, cS);
-   xlabel(figS.ypGroupStr);
-   ylabel(figS.iqGroupStr);
+   xlabel(cS.formatS.ypGroupStr);
+   ylabel(cS.formatS.iqGroupStr);
    set(gca, 'XTickLabel', string_lh.vector_to_string_array(entryS.ypUbV .* 100, '%.0f'));
    set(gca, 'YTickLabel', string_lh.vector_to_string_array(entryS.iqUbV .* 100, '%.0f'));
    output_bc1.fig_save(fullfile(cS.dataOutDir, ['qy_entry_', studyFnV{iStudy}]), saveFigures, cS);

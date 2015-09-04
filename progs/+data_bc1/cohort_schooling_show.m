@@ -53,7 +53,7 @@ for iCase = 1 : 2
 end
 
 hold off;
-xlabel(figS.cohortXLabelStr);
+xlabel(cS.formatS.cohortXLabelStr);
 legend({'College entry', 'College graduation'}, 'Location', 'Best');
 ylabel('Fraction');
 output_bc1.fig_format(fh, 'line');
