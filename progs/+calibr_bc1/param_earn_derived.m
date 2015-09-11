@@ -39,6 +39,19 @@ if isempty(cS.expS.earnExpNo)
       end
    end
    
+   if cS.dbg > 10
+      % Check that log earnings gains from schooling are increasing in ability
+      % For 1st work start age
+      % Log gains by schooling
+      diffM = diff(log(pvEarn_saM), 1, 1);
+      % Change of those by ability
+      diff2M = diff(diffM, 1, 2);
+      if any(diff2M(:) < -1e-3)
+         disp(log(pvEarn_saM));
+         error_bc1('Earnings gains decreasing in ability', cS);
+      end
+   end
+   
    % Add the time dimension
    tMax = max(cS.ageWorkStartM(:));
    earnS.pvEarn_tsaM = nan(tMax, cS.nSchool, cS.nAbil);
@@ -54,8 +67,19 @@ else
    % Copy from another experiment
    c2S = const_bc1(cS.setNo, cS.expS.earnExpNo);
    param2S = var_load_bc1(cS.vParams, c2S);
-   earnS.tgPvEarn_sV = param2S.tgS.pvEarn_sV;
-   earnS.pvEarn_tasM = param2S.pvEarn_tasM;
+   earnS = param2S.earnS;
+%    earnS.tgPvEarn_sV = param2S.earnS.tgPvEarn_sV;
+%    earnS.pvEarn_tasM = param2S.earnS.pvEarn_tasM;
+   clear param2S;
+end
+
+
+%% Experiment: change in college premium
+if cS.expS.cgPremChange ~= 0
+   earnS.pvEarn_tsaM(:,cS.iCG,:) = earnS.pvEarn_tsaM(:,cS.iCG,:) .* exp(cS.expS.cgPremChange);
+end
+if cS.expS.cdPremChange ~= 0
+   earnS.pvEarn_tsaM(:,cS.iCD,:) = earnS.pvEarn_tsaM(:,cS.iCD,:) .* exp(cS.expS.cdPremChange);
 end
 
 
@@ -63,6 +87,7 @@ end
    
 if cS.dbg > 10
    % Contains nans for invalid work start ages
+   tMax = max(cS.ageWorkStartM(:));
    validateattributes(earnS.pvEarn_tsaM, {'double'}, {'nonempty', 'real', ...
       'positive', 'size', [tMax, cS.nSchool, cS.nAbil]})
 
@@ -83,16 +108,6 @@ if cS.dbg > 10
    end
  
    
-   % Check that log earnings gains from schooling are increasing in ability
-   % For 1st work start age
-   % Log gains by schooling
-   diffM = diff(log(pvEarn_saM), 1, 1);
-   % Change of those by ability
-   diff2M = diff(diffM, 1, 2);
-   if any(diff2M(:) < -1e-3)
-      disp(log(pvEarn_saM));
-      error_bc1('Earnings gains decreasing in ability', cS);
-   end
 end
 
 end

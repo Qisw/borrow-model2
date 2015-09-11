@@ -1,6 +1,11 @@
-function [dev, outS, hhS, aggrS] = cal_dev(tgS, paramS, cS)
+function [dev, outS, hhS, aggrS] = cal_dev(doShow, tgS, paramS, cS)
 % Calibration objective function for reference cohort
 %{
+IN
+   doShow
+      show results?
+      if not: show at random
+
 Checked: 2015-Apr-3
 %}
 
@@ -11,13 +16,15 @@ if xRand < cS.dbgFreq
 else
    cS.dbg = 1;
 end
-if xRand < 0.05
-   doShow = 1;
-else
-   doShow = 0;
+if ~doShow
+   if xRand < 0.05
+      doShow = true;
+   else
+      doShow = 0;
+   end
 end
 % Save intermediate results
-if xRand < 0.02  % +++ try this with parallel (docu not clear) &&  (cS.runParallel == 0)
+if xRand < 0.02 
    doSave = true;
 else
    doSave = false;
@@ -44,7 +51,7 @@ outS.devV = devvectLH(100);
 %% College outcomes
 
 % Overall
-outS.devFracS = dev_add(paramS.tgS.frac_sV, aggrS.frac_sV, 1,  2 * pctFactor, cS.tgS.tgFracS, ...
+outS.devFracS = dev_add(paramS.schoolS.tgFrac_sV, aggrS.frac_sV, 1,  2 * pctFactor, cS.tgS.tgFracS, ...
    'frac s', 'Fraction by schooling', '%.2f');
 
 % By [s,q,y]
@@ -107,6 +114,14 @@ outS.devFracHsgIq = dev_add(tgS.schoolS.fracHsg_qcM(:, iCohort), modelV(:), 1, .
    'hsg/iq',  'Fraction graduating high school by IQ quartile', '%.2f');
 
 
+
+%% Endowment distributions
+
+% Mass by [q, y]
+outS.devMassQy = dev_add(tgS.qyS.mass_qycM(:,:,iCohort),  aggrS.qyS.mass_qyM ./ sum(aggrS.qyS.mass_qyM(:)),  1,  ...
+   10 * pctFactor,  cS.tgS.tgMass_qy,  'mass qy',  'Joint distribution of q,y',  '%.2f');
+
+
 %% Lifetime earnings
 
 % Target level for CD
@@ -138,9 +153,9 @@ outS.devYpYp = dev_add(tgS.ypS.logYpMean_ycM(:,iCohort), aggrS.ypS.logYpMean_yV,
 
 % College costs
 % Mean and std dev among college students
-outS.devPMean = dev_add(paramS.tgS.pMean, aggrS.entrantYear2S.pMean, 1, dollarFactor, cS.tgS.tgPMean, 'pMean', ...
+outS.devPMean = dev_add(paramS.costS.tgPMean, aggrS.entrantYear2S.pMean, 1, dollarFactor, cS.tgS.tgPMean, 'pMean', ...
    'Mean of college cost', 'dollar');
-outS.devPStd  = dev_add(paramS.tgS.pStd,  aggrS.entrantYear2S.pStd,  1, dollarFactor, cS.tgS.tgPStd,  'pStd', ...
+outS.devPStd  = dev_add(paramS.costS.tgPStd,  aggrS.entrantYear2S.pStd,  1, dollarFactor, cS.tgS.tgPStd,  'pStd', ...
    'Std of college cost', 'dollar');
 
 outS.devPMeanIq = dev_add(tgS.costS.pMean_qcM(:,iCohort), aggrS.iqYear2S.pMean_qV, 1, dollarFactor, ...

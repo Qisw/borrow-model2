@@ -2,7 +2,7 @@
 Summary of calibration targets for 1997 cohort
 
 All detrended
-College cost: mean / std  5.0 / NaN 
+College cost: mean / std  5.1 / NaN 
 In college: mean hours: 0.08   mean earnings: NaN 
 
 By parental income quartile

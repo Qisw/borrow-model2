@@ -11,9 +11,10 @@ paramS = param_load_bc1(setNo, expNo);
 tgS = var_load_bc1(cS.vCalTargets, cS);
 % This determines which params are calibrated
 doCalV = cS.doCalV;
+doShow = true;
 
 % Objective with baseline parameters
-dev0 = calibr_bc1.cal_dev(tgS, paramS, cS);
+dev0 = calibr_bc1.cal_dev(doShow, tgS, paramS, cS);
 
 
 % Make guesses from param vector
@@ -42,7 +43,7 @@ if 01
       param2S = cS.pvector.guess_extract(guess2V, paramS, doCalV);
       param2S = param_derived_bc1(param2S, cS);
       
-      devV(i1) = calibr_bc1.cal_dev(tgS, param2S, cS);
+      devV(i1) = calibr_bc1.cal_dev(false, tgS, param2S, cS);
       fprintf('  Change in dev for guess %i: %.4f \n',  i1, devV(i1) - dev0);
       if abs(devV(i1) - dev0) < 1e-3
          fprintf('Parameter %i: %s  \n',  i1, pNameV{i1});

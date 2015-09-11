@@ -1,6 +1,5 @@
 function transferS = transfer_tg(tgS, cS)
 
-dollarFactor = tgS.hsbCpiFactor;
 
 %% Allocate outputs
 
@@ -18,6 +17,7 @@ transferS.transferMean_qcM = nan([nIq, cS.nCohorts]);
 %  Transfer PER YEAR
 %  Is this in base year prices? +++
 
+dollarFactor = tgS.hsbCpiFactor;
 transferS.transferMean_ycM(:, tgS.icHSB) = [2358.477; 3589.882; 5313.561; 7710.767] ...
    ./ dollarFactor;
 

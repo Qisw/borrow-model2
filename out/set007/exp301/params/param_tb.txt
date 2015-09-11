@@ -1,0 +1,20 @@
+
+---------------------------------------------------------------------------
+         Parameter                      Description                   Value
+---------------------------------------------------------------------------
+        Endowments                                                         
+                    Marginal distribution of $\tau$                2.4, 2.8
+                       Marginal distribution of $z$              1.66, 0.52
+                                           IQ noise                    1.63
+       Preferences                                                         
+      $\omega_{l}$                Weight on leisure                    0.12
+      $\omega_{w}$           Weight on u(c) at work                    9.85
+      $\bar{\eta}$                Preference for HS                   24.30
+   $\bar{c}_{max}$             Max free consumption                     9.8
+   $\bar{l}_{max}$                 Max free leisure                    0.15
+              Work                                                         
+     $\bar{Y}_{s}$                 Log skill prices  6.13, 6.48, 6.50, 6.74
+             Other                                                         
+           $w_{c}$                     College wage                    29.0
+                             High school graduation              0.90, 0.10
+---------------------------------------------------------------------------

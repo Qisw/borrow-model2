@@ -17,7 +17,8 @@ init_bc1;
 % configCluster; 
 
 % If an existing matlabpool is open: close it
-matlabpool close force local;
+% Does not work
+% matlabpool close force local;
 
 
 cS = const_bc1(setNoV(1), expNo);

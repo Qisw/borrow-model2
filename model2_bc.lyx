@@ -339,7 +339,11 @@ college cost
 \begin_inset Formula $\collCost$
 \end_inset
 
+ (currently not varying with 
+\begin_inset Formula $\hhType$
+\end_inset
 
+)
 \end_layout
 
 \begin_layout Itemize
@@ -1941,6 +1945,17 @@ borrowing limits
  Set arbitrary for now.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Formula $\probGradFour$
+\end_inset
+
+: matches average duration of college
+\end_layout
+
+\begin_layout Itemize
+set to 0.5 to get duration of 4.5 years (HS&B)
+\end_layout
+
 \begin_layout Subsection
 Calibrated parameters for the NLSY79 or 97 cohort
 \end_layout
@@ -2107,28 +2122,27 @@ unconditional mean hours: set to 20/week, unless we have direct data (NLSY
 College costs
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $p_{t}$
 \end_inset
 
 : tuition + fees + room/board (?) - scholarships - grants + supplies
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $p$
 \end_inset
 
  mean: match mean from time series source (Chris?)
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $p$
 \end_inset
 
  std dev: 
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 take ratio of std dev / mean from HS&B
 \end_layout
@@ -2137,8 +2151,11 @@ take ratio of std dev / mean from HS&B
 assume constant over time
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
+currently set to 0.
+\end_layout
+
+\begin_layout Standard
 also try with room and board; and excluding private
 \end_layout
 
@@ -2147,22 +2164,28 @@ College debt
 \end_layout
 
 \begin_layout Standard
-by IQ, yp: mean debt, fraction in debt (when? +++)
+by IQ, yp: mean debt, fraction in debt (college graduates, end of college)
+ (NLSY)
 \end_layout
 
 \begin_layout Subsubsection
 Parental income
 \end_layout
 
+\begin_layout Standard
+Target joint distribution of 
+\begin_inset Formula $\famIncome,\IQ$
+\end_inset
+
+ (quartiles).
+\end_layout
+
 \begin_layout Itemize
-\begin_inset Formula $y_{p}$
-\end_inset
+matched by endowment correlation matrix
+\end_layout
 
- quartile means (NLSY) -> 
-\begin_inset Formula $\mu_{y},\sigma_{y}$
-\end_inset
-
-.
+\begin_layout Standard
+Scale no longer matters.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2247,18 +2270,6 @@ debt
 
 \begin_layout Itemize
 earlier cohorts: average student debt (Trends in Student Aid)
-\end_layout
-
-\begin_layout Standard
-+++ match mean transfer by 
-\begin_inset Formula $y_{p}$
-\end_inset
-
-, IQ quartile (could also be used to match curvature of 
-\begin_inset Formula $u_{p}$
-\end_inset
-
-) (NELS)
 \end_layout
 
 \begin_layout Subsubsection
@@ -2394,7 +2405,21 @@ for now: keep constant (in stationary model)
 \end_layout
 
 \begin_layout Itemize
-could have one parameter time varying to match graduation rate (not done)
+\begin_inset Formula $\prGradMin$
+\end_inset
+
+ matches college graduation rate
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probGradFour$
+\end_inset
+
+: matches average duration of college (source?)
+\end_layout
+
+\begin_layout Itemize
+currently set to 0.5 to get duration of 4.5 years (HS&B)
 \end_layout
 
 \begin_layout Subsubsection
@@ -2417,6 +2442,13 @@ Calibrated
 \end_inset
 
 : match mean college cost
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probHsgInter$
+\end_inset
+
+: match high school graduation rate
 \end_layout
 
 \begin_layout Standard
@@ -2443,6 +2475,10 @@ match college entry rates, graduation rates by
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+anything to match hours? +++
 \end_layout
 
 \begin_layout Subsubsection
@@ -2487,7 +2523,35 @@ financing: transfers, earnings
 \end_layout
 
 \begin_layout Subsubsection
-How college is financed
+Hours worked in college
+\end_layout
+
+\begin_layout Standard
+Currently set to 
+\begin_inset Formula $\hoursPerWeekDefault$
+\end_inset
+
+ (arbitrary)
+\end_layout
+
+\begin_layout Subsubsection
+College earnings
+\end_layout
+
+\begin_layout Standard
+No data.
+\end_layout
+
+\begin_layout Subsubsection
+Transfers
+\end_layout
+
+\begin_layout Standard
+No data.
+\end_layout
+
+\begin_layout Subsubsection
+Financing shares
 \end_layout
 
 \begin_layout Standard
@@ -2623,6 +2687,209 @@ Calibrate a subset of parameters for every other cohort (experiments)
 \begin_layout Enumerate
 Counterfactuals: Set selected parameters to values for other cohorts (e.g.
  borrowing limits or present value of earnings by ability / schooling).
+\end_layout
+
+\begin_layout Subsection
+Identification
+\end_layout
+
+\begin_layout Standard
+Key: how responsive is entry of different students to changing college costs,
+ debt limits, college premium?
+\end_layout
+
+\begin_layout Standard
+We don't have anything that identifies these responses.
+\end_layout
+
+\begin_layout Standard
+In the baseline cohort, costs are essentially irrelevant.
+ Nobody is borrowing constrained and costs are a tiny fraction of the reward
+ (positive or negative) from going to college.
+ 
+\end_layout
+
+\begin_layout Standard
+As a result, there is nearly perfect sorting by 
+\begin_inset Formula $\abilSignal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This would change in a model with dropout decisions.
+ Then we could identify the distribution of surplus by matching dropout
+ rates.
+\end_layout
+
+\begin_layout Subsection
+Modeling Dropout Decisions
+\end_layout
+
+\begin_layout Standard
+At the end of year 2, each students receives an additional ability signal
+ 
+\begin_inset Formula $\hat{m}$
+\end_inset
+
+.
+ We need that to get dropouts.
+ Or we could have preference shocks, but that seems hokey.
+\end_layout
+
+\begin_layout Standard
+From then on the state is 
+\begin_inset Formula $\left(k,\hat{m},\abilSignal,t\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If the signal is discrete, we can calculate 
+\begin_inset Formula $\Pr\left(\ability|\hat{m},\abilSignal\right)$
+\end_inset
+
+.
+ Very much like in the current model we update beliefs after receiving the
+ dropout shock.
+\end_layout
+
+\begin_layout Standard
+The dropout problem is then easy.
+\end_layout
+
+\begin_layout Standard
+Value functions in years 3+ are not changed much.
+ Just have the additional state that affects beliefs.
+\end_layout
+
+\begin_layout Standard
+Aggregation: All we need is 
+\begin_inset Formula $\Pr\left(\ability|s,\age\right)$
+\end_inset
+
+, which we can compute from 
+\begin_inset Formula $\Pr\left(grad|\abilSignal\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Endowments
+\end_layout
+
+\begin_layout Subsubsection
+An alternative way of drawing endowments.
+\end_layout
+
+\begin_layout Standard
+Each agent draws 
+\begin_inset Formula $\left(\ability,\abilSignal,\pTransfer,\famIncome,\IQ\right)$
+\end_inset
+
+ from a joint normal distribution.
+\end_layout
+
+\begin_layout Standard
+The household observes all endowments except for ability.
+\end_layout
+
+\begin_layout Standard
+We draw 
+\begin_inset Formula $J$
+\end_inset
+
+ realizations.
+ 
+\end_layout
+
+\begin_layout Standard
+For each 
+\begin_inset Formula $\hhType$
+\end_inset
+
+, 
+\begin_inset Formula $\ability$
+\end_inset
+
+ is a Normal random variable.
+\end_layout
+
+\begin_layout Standard
+it should be possible to compute its mean and std deviation, so we have
+ the entire distribution.
+\end_layout
+
+\begin_layout Standard
+This gives us the beliefs of the household.
+\end_layout
+
+\begin_layout Standard
+Now we make an ability grid and compute 
+\begin_inset Formula $\Pr\left(\ability|\hhType\right)$
+\end_inset
+
+.
+ Done.
+\end_layout
+
+\begin_layout Paragraph
+Code:
+\end_layout
+
+\begin_layout Standard
+Define a lower diagonal weight matrix 
+\begin_inset Formula $W$
+\end_inset
+
+.
+ 5x5
+\end_layout
+
+\begin_layout Standard
+compute the implied Cov matrix.
+ Compute the implied scaled weight matrix such that 
+\begin_inset Formula $VV'=Cov$
+\end_inset
+
+ using Cholesky.
+\end_layout
+
+\begin_layout Standard
+Endowment draws: 
+\begin_inset Formula $y_{is}=\mu_{s}+\sum_{k}V_{sk}\varepsilon_{ik}$
+\end_inset
+
+ with 
+\begin_inset Formula $\varepsilon\sim N(0,1)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathbb{E}y_{is}|rest=\mu_{s}+\sum_{k\ne s}V_{sk}\varepsilon_{ik}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Var\left(y_{is}|rest\right)=V_{ss}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test this by simulation.
+\end_layout
+
+\begin_layout Standard
+Now we have the entire conditional distribution of each variable.
 \end_layout
 
 \begin_layout Subsection

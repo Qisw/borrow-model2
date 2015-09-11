@@ -16,6 +16,8 @@ cS = const_bc1(setNo);
 % nIq = length(cS.iqUbV);
 
 
+%% Detrending factors for micro datasets
+
 % *** CPI
 cpiS = econ_lh.CpiLH(cS.cpiBaseYear);
 cpiYearV = 1920 : 2010;
@@ -39,6 +41,10 @@ validateattributes(hsbCpiFactor, {'double'}, {'finite', 'nonnan', 'nonempty', 'r
 [~, dFactor] = data_bc1.detrending_factors(1982, setNo);
 tgS.nlsyCpiFactor = cpiV(cpiYearV == 2010) ./ cpiV(cpiYearV == cS.cpiBaseYear) .* dFactor;
 
+% NLSY97 cohort
+[~, tgS.icNlsy97] = min(abs(cS.bYearV - 1979));
+tgS.nlsy97CpiFactor = cpiV(cpiYearV == 2010) ./ cpiV(cpiYearV == cS.cpiBaseYear) .* dFactor;
+
 %  Load file with all NLSY79 targets
 n79S = data_bc1.nlsy79_targets_load(cS);
 
@@ -47,22 +53,25 @@ n79S = data_bc1.nlsy79_targets_load(cS);
 
 tgS.schoolS = data_bc1.school_targets(tgS, cS);
 
+% Joint distribution IQ, yq
+tgS.qyS = data_bc1.qy_targets(tgS, cS);
+
 % Lifetime earnings 
 tgS.pvEarn_scM = data_bc1.earn_tg(tgS, cS);
 
 tgS.debtS = data_bc1.debt_tg(tgS, cS);
 
-tgS.hoursS = data_bc1.college_hours(n79S, tgS, cS);
+tgS.hoursS = data_bc1.college_hours(tgS, cS);
 
-tgS.collEarnS = data_bc1.college_earn_tg(n79S, tgS, cS);
-
-tgS.finShareS = data_bc1.finshare_tg(cS);
+tgS.collEarnS = data_bc1.college_earn_tg(tgS, cS);
 
 tgS.transferS = data_bc1.transfer_tg(tgS, cS);
 
+tgS.finShareS = data_bc1.finshare_tg(cS);
+
 % Parental income
-% Scaled to be stationary
 % We actually use medians to avoid outlier effects
+% No longer needed
 tgS.ypS = data_bc1.yp_targets(n79S, tgS, cS);
 
 % College costs

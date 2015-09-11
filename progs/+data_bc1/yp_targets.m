@@ -16,16 +16,30 @@ ypS.logYpStd_cV  = nan([cS.nCohorts, 1]);
 
 
 
-%% NLSY 79
+%% NLSY 79 and 97
 
-ic = tgS.icNlsy79;
-ypS.logYpMean_qcM(:, ic) = n79S.median_parent_inc_byafqt - log(tgS.nlsyCpiFactor);
-ypS.logYpMean_ycM(:, tgS.icNlsy79) = n79S.median_parent_inc_byinc  - log(tgS.nlsyCpiFactor);
+for ic = [tgS.icNlsy79, tgS.icNlsy97]
+   if ic == tgS.icNlsy79
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy79_targets_load(cS);
+      dFactor = tgS.nlsyCpiFactor;
+   elseif ic == tgS.icNlsy97
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy97_targets_load(cS);
+      dFactor = tgS.nlsy97CpiFactor;
+   else
+      error('Invalid');
+   end
+
+   ypS.logYpMean_qcM(:, ic) = n79S.median_parent_inc_byafqt - log(dFactor);
+   ypS.logYpMean_ycM(:, ic) = n79S.median_parent_inc_byinc  - log(dFactor);
 
 
-ypS.logYpMean_cV(ic) = n79S.median_parent_inc - log(tgS.nlsyCpiFactor);
-% Std log(yp) - no need to account for units
-ypS.logYpStd_cV(ic)  = n79S.sd_parent_inc; 
+   ypS.logYpMean_cV(ic) = n79S.median_parent_inc - log(dFactor);
+   % Std log(yp) - no need to account for units
+   ypS.logYpStd_cV(ic)  = n79S.sd_parent_inc; 
+end
+
 
 
 %% Earlier cohorts

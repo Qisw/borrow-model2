@@ -1,6 +1,10 @@
-function tgS = caltg_defaults(caseStr)
+function tgS = caltg_defaults(caseStr, modelS)
 % Default: what moments are targeted?
 %{
+IN:
+   modelS :: Model
+      model features
+
 Checked: 2015-Aug-20
 %}
 
@@ -10,15 +14,11 @@ Checked: 2015-Aug-20
 % PV of lifetime earnings by schooling
 tgS.tgPvLty = true;
 
-% College costs
-   % add target by yp +++
-tgS.tgPMean  = 1;
-tgS.tgPStd   = 1;
-tgS.tgPMeanIq = 1;
-tgS.tgPMeanYp = 0;
+% Joint distribution [iq, yp]
+tgS.tgMass_qy = true;
 
 
-% ***** College outcomes
+%% College outcomes
 
 % Overall school fractions
 tgS.tgFracS = 1;
@@ -45,9 +45,19 @@ tgS.tgCollegeQy = 1;
 tgS.tgRegrIqYp = 1;
 
 
+
+%% Financing
+
+% *****  College costs
+tgS.tgPMean  = 1;
+tgS.tgPStd   = modelS.hasCollCostHetero;
+tgS.tgPMeanIq = modelS.hasCollCostHetero;
+tgS.tgPMeanYp = modelS.hasCollCostHetero;
+
 % *****  Parental income
-tgS.tgYpIq = 1;
-tgS.tgYpYp = 1;
+% Only correlation with other endowments matters
+tgS.tgYpIq = false;
+tgS.tgYpYp = false;
 
 % *****  Hours and earnings
 tgS.tgHours = 1;
@@ -102,6 +112,10 @@ elseif strcmpi(caseStr, 'timeSeriesPartial')
    tgS.tgFracGradYp = 0;
    % Targets by [iq, yp]: entry and graduation rates
    tgS.tgCollegeQy = 0;
+
+   % Fraction by [s,q,y]
+   tgS.tgFrac_sqy = false;
+
    
 elseif strcmpi(caseStr, 'timeSeries')
    % Time series calibration
@@ -116,6 +130,8 @@ elseif strcmpi(caseStr, 'timeSeries')
    tgS.tgFracGradYp = 0;
    % Targets by [iq, yp]: entry and graduation rates
    tgS.tgCollegeQy = 0;
+   % Fraction by [s,q,y]
+   tgS.tgFrac_sqy = false;
    
    
 elseif strcmpi(caseStr, 'onlySchoolFrac')
@@ -124,9 +140,9 @@ elseif strcmpi(caseStr, 'onlySchoolFrac')
    % Check that this actually switches everything off!
    nameV = fieldnames(tgS);
    for i1 = 1 : length(nameV)
-      tgS.(nameV{i1}) = 0;
+      tgS.(nameV{i1}) = false;
    end
-   tgS.tgFracS = 1;
+   tgS.tgFracS = true;
    
 else
    error('Invalid');

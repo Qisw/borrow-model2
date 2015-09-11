@@ -1,0 +1,21 @@
+
+Summary of calibration targets for 1997 cohort
+
+All detrended
+College cost: mean / std  5.1 / NaN 
+In college: mean hours: 0.25   mean earnings: 6.5 
+
+By parental income quartile
+   Q  ypMean   zMean
+   1    40.1     NaN
+   2    72.0     NaN
+   3    91.0     NaN
+   4   126.6     NaN
+
+
+By IQ quartile
+   Q  CD+CG    CG  ypMean  zMean
+   1   0.60  0.15    58.2    NaN
+   2   0.80  0.26    73.6    NaN
+   3   0.88  0.45    81.5    NaN
+   4   0.96  0.67    92.4    NaN

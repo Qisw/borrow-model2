@@ -36,24 +36,6 @@ detrendV = cpiS.retrieve(yearV);
 % Common year range
 yrIdxV = find(~isnan(detrendV));
 saveS.yearV = yearV(yrIdxV);
-
-
-% % ******  Make into base year prices
-% 
-% % Load cpi data (to get common year range)
-% % cpiS = econ_lh.CpiLH(cS.cpiBaseYear);
-% 
-% % % Common year range
-% % year1 = max(cpiS.yearV(1), yearV(1));
-% % year2 = min(cpiS.yearV(end), yearV(end));
-% % fprintf('College cost year range: %i to %i \n', year1, year2);
-
-% saveS.yearV = (year1 : year2)';
-
-% cpiYrIdxV = saveS.yearV - cpiS.yearV(1) + 1;
-% yrIdxV = saveS.yearV - yearV(1) + 1;
-
-% saveS.tuitionV = tuitionV(yrIdxV) ./ cpiS.retrieve(saveS.yearV);
 saveS.tuitionV = tuitionV(yrIdxV) ./ detrendV(yrIdxV);
 
 validateattributes(saveS.tuitionV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'positive'})

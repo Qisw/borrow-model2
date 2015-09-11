@@ -44,11 +44,11 @@ if 0
    % Calibration runs this
    % results_all_bc1(setNo, cS.expBase);
    
-   % Copy results to paper dir
-   paper_figures_bc1;
-
    % Show results for experiments
    exper_results_bc1('all', setNo);
+
+   % Copy results to paper dir
+   paper_figures_bc1;
 end
 
 

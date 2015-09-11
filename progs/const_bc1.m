@@ -8,9 +8,6 @@ Index order: k, age, school, iq, yp, abil, j, cohort
 
 Checked: 2015-Mar-18
 %}
-% -----------------------------
-
-% global lhS;
 
 % Default set and exp numbers
 cS.setDefault = 7;
@@ -26,17 +23,19 @@ if isempty(expNo)
 end
 cS.setNo = setNo;
 cS.expNo = expNo;
-% setStr = sprintf('set%03i', setNo);
-% expStr = sprintf('exp%03i', expNo);
 
 cS.dbg = 111; 
 cS.missVal = -9191;
 cS.pauseOnError = 1;
 % How often to run full debug mode during calibration?
-cS.dbgFreq = 0.5;  % +++
+% Changes on server
+cS.dbgFreq = 0.5; 
 
 
 %% Miscellaneous
+
+% Default model features
+cS.modelS = calibr_bc1.Model;
 
 % How many nodes to use on kure
 cS.kureS.nNodes = 8;
@@ -72,11 +71,6 @@ cS.fzeroOptS.TolX = 1e-6;
 cS.fminbndOptS = optimset('fminbnd');
 cS.fminbndOptS.TolX = 1e-6;
 
-% cS.raceWhite = 23;
-
-% Bounds for transformed guesses
-cS.guessLb = 1;
-cS.guessUb = 2;
 
 % Gross interest rate (if not calibrated)
 cS.R = 1.04;
@@ -91,9 +85,9 @@ cS.bYearV = [1915, 1942, 1961, 1979]';
 % Year to be displayed for each cohort (high school graduation)
 cS.cohYearV = cS.bYearV + 18;
 % For each cohort: calibrate time varying parameters with these experiments
-cS.bYearExpNoV = [203, 202, NaN, NaN];
+cS.bYearExpNoV = [203, 202, NaN, 204];
 % Data sources
-cS.dataSource_cV = {'Updegraff (1936)', 'Project Talent', 'NLSY79'};
+cS.dataSource_cV = {'Updegraff (1936)', 'Project Talent', 'NLSY79', 'NLSY97'};
 % Cross sectional calibration for this cohort
 cS.iRefCohort = find(cS.bYearV == 1961);
 cS.nCohorts = length(cS.bYearV);
@@ -175,10 +169,6 @@ cS.workS = calibr_bc1.param_work(cS);
 % Vector of calibrated params
 pvec = calibr_bc1.pvector_default(cS);
 
-% Which calibration targets to use?
-% These are targets we would like to match. Targets that are NaN are ignored.
-cS.tgS = calibr_bc1.caltg_defaults('default');
-
 % Formatting info for figures etc
 cS.formatS = helper_bc1.formatting(cS);
 
@@ -188,6 +178,7 @@ cS = struct_lh.merge(cS, dirS, cS.dbg);
 
 
 %% Parameter sets
+% Each calibrates to a fixed reference cohort
 
 if setNo == 1
    cS.setStr = 'Default';
@@ -209,36 +200,23 @@ elseif setNo == 4
     % Curvature of u(c) in college
    pvec = pvec.change('prefSigma', '\varphi_{c}', 'Curvature of utility', 4, 1, 5, cS.calNever);
    
-% elseif setNo == 5
-%    cS.setStr = 'SES stats';
-%    cS.tgS.useSesTargets = 1;
+elseif setNo == 5
+   cS.setStr = 'No free college consumption';
+   cS.modelS.hasCollCons = false;
    
-elseif setNo == 6
-   cS.setStr = 'Alt debt stats';
-   pvec = pvec.calibrate('cCollMax', cS.calBase);
-   pvec = pvec.calibrate('lCollMax', cS.calBase);
-
 elseif setNo == 7
    cS.setStr = 'Default';
-%    pvec = pvec.calibrate('cCollMax', cS.calBase);
-%    pvec = pvec.calibrate('lCollMax', cS.calBase);
-%    pvec = pvec.change('puWeightStd',  '\sigma_{p}', 'Std of weight on parental utility', 0.05, 0.001, 2, cS.calBase);
-%    pvec = pvec.change('alphaPuM', '\alpha_{y,m}', 'Correlation, $\omega_{p},m$', 0.5, -5, 5, cS.calBase);
-%    % Penalize transfers > data transfers?
-%    cS.tgPenalizeLargeTransfers = 0;
 
 else
    error('Invalid');
 end
 
 
-%% Experiment settings
-% Can modify calibration targets (e.g. just target school fractions)
 
-[expS, tgS, pvec, cS.doCalV, cS.iCohort] = calibr_bc1.exp_settings(pvec, cS);
-if ~isempty(tgS)
-   cS.tgS = tgS;
-end
+% *****  Experiment settings
+% Also determines which calibration targets to use
+
+[expS, cS.tgS, pvec, cS.doCalV, cS.iCohort] = calibr_bc1.exp_settings(pvec, cS);
 
 
 %% Derived constants
@@ -270,6 +248,22 @@ cS.yearStartCollege_cV = cS.bYearV + 18;
 cS.ageMax = cS.physAgeLast - cS.age1 + 1;
 cS.ageRetire = cS.physAgeRetire - cS.age1 + 1;
 
+% Changes if model does not have college cost hetero
+if ~cS.modelS.hasCollCostHetero
+   pvec = pvec.change('pStd', [], [], 0,  0, 1e4 ./ cS.unitAcct, cS.calNever);
+   pvec = pvec.change('alphaPY', [], [], 0,  [], [], cS.calNever);
+   pvec = pvec.change('alphaPM', [], [], 0,  [], [], cS.calNever);
+   pvec = pvec.change('alphaZP', [], [], 0,  [], [], cS.calNever);
+end
+
+
+
+if ~cS.modelS.hasCollCons
+   pvec = pvec.change('cCollMax', [], [],  0,  [], [], cS.calNever);
+end
+if ~cS.modelS.hasCollLeisure
+   pvec = pvec.change('lCollMax', [], [],  0,  [], [], cS.calNever);
+end
 
 if cS.abilAffectsEarnings == 0   
    pvec = pvec.change('phiHSG', '\phi_{HSG}', 'Return to ability, HSG', 0,  0.02, 0.2, cS.calNever);
@@ -339,6 +333,7 @@ cS.vBorrowLimits = 407;
 
 cS.expS = expS;
 cS.pvector = pvec;
+cS.modelS.validate;
 
 
 end

@@ -20,6 +20,7 @@ go_cpsbc;
 data_bc1.median_wage_show(saveFigures, setNo);
 % Construct cohort earnings profiles. Constant prices. Not detrended.
 data_bc1.cohort_earnings_profiles(setNo);
+% CPS cohort schooling
 data_bc1.cohort_schooling(setNo);
 cd(cS.progDir);
 

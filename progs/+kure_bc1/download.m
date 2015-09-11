@@ -2,7 +2,7 @@ function download(setNoV, expNoV)
 % Down mat files for several sets
 % -----------------------------------------
 
-ans1 = input('Download these sets?', 's');
+ans1 = input('Download these sets?  ', 's');
 if ~strcmpi(ans1, 'yes')
    return
 end

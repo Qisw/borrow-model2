@@ -6,6 +6,11 @@ Graduation fractions are NOT conditional on entry
 Currently only nlsy79 is up to date +++++
 %}
 
+
+% CPS school fractions by cohort
+cpsS = var_load_bc1(cS.vCohortSchooling, cS);
+
+
 %% Allocate outputs
 
 nIq = length(cS.iqUbV);
@@ -51,85 +56,152 @@ schoolS.frac_sqcM = nan([cS.nSchool, nIq, cS.nCohorts]);
 schoolS.frac_sycM = nan([cS.nSchool, nYp, cS.nCohorts]);
 
 
-%%  Nlsy79
+%%  Nlsy79 and Nlsy97
 % In original file and in output: frac grad not conditional on entry
 
-%  Load file with all NLSY79 targets
-n79S = data_bc1.nlsy79_targets_load(cS);
-ic = tgS.icNlsy79;
-
-frac_sqyM = nan(cS.nSchool, nIq, nYp);
-frac_sqyM(cS.iHSD, :, :) = n79S.hsd_share_byinc_and_byafqt';
-frac_sqyM(cS.iHSG, :, :) = n79S.hsg_share_byinc_and_byafqt';
-frac_sqyM(cS.iCD, :, :)  = n79S.cd_share_byinc_and_byafqt';
-frac_sqyM(cS.iCG, :, :)  = n79S.cg_share_byinc_and_byafqt';
-validateattributes(frac_sqyM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
-   '<=', 1})
-frac_sqyM = frac_sqyM ./ sum(frac_sqyM(:));
-
-schoolS.frac_sqycM(:,:,:,ic) = frac_sqyM;
-
-% Compute marginals implied by this
-schoolS = marginals_from_sqy(ic, schoolS, cS);
-
-
-
-
-%%  Early cohorts
-
-% Needs updating +++++
-
-for iCohort = 1 : 2
-   bYear = cS.bYearV(iCohort);
-   if abs(bYear - 1940) < 3
-      % Project talent
-      dataFn = 'flanagan 1971.csv';   
-   elseif abs(bYear - 1915) < 3
-      % Updegraff
-      dataFn = 'updegraff_quartiles.csv'; 
+for ic = [tgS.icNlsy79, tgS.icNlsy97]
+   if ic == tgS.icNlsy79
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy79_targets_load(cS);
+   elseif ic == tgS.icNlsy97
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy97_targets_load(cS);
    else
       error('Invalid');
    end
    
-   loadS = data_bc1.load_income_iq_college(dataFn, cS.setNo);
-   
-   schoolS.massHsgPlus_qycM(:,:,iCohort) = loadS.mass_qyM ./ sum(loadS.mass_qyM(:));
+   frac_sqyM = nan(cS.nSchool, nIq, nYp);
+   frac_sqyM(cS.iHSD, :, :) = n79S.hsd_share_byinc_and_byafqt';
+   frac_sqyM(cS.iHSG, :, :) = n79S.hsg_share_byinc_and_byafqt';
+   frac_sqyM(cS.iCD, :, :)  = n79S.cd_share_byinc_and_byafqt';
+   frac_sqyM(cS.iCG, :, :)  = n79S.cg_share_byinc_and_byafqt';
+   validateattributes(frac_sqyM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+      '<=', 1})
+   frac_sqyM = frac_sqyM ./ sum(frac_sqyM(:));
 
-   schoolS.fracEnter_qycM(:,:,iCohort) = loadS.entry_qyM;
-   schoolS.fracEnter_qcM(:,iCohort) = loadS.entry_qV;
-   schoolS.fracEnter_ycM(:,iCohort) = loadS.entry_yV;
-   if ~isempty(loadS.grad_qyM)
-      schoolS.fracGrad_qycM(:,:,iCohort)  = loadS.grad_qyM;
-      schoolS.fracGrad_qcM(:,iCohort) = loadS.grad_qV;
-      schoolS.fracGrad_ycM(:,iCohort) = loadS.grad_yV;
-   end
+   schoolS.frac_sqycM(:,:,:,ic) = frac_sqyM;
+
+   % Compute marginals implied by this
+   schoolS = marginals_from_sqy(ic, schoolS, cS);
 end
 
-% 
-% % HSB data, hsb_fam_income.xlsx
-% fracEnter_yqM = [0.1910305	0.3404084	0.4616973	0.7431248
-%    0.2746048	0.3476628	0.5838453	0.8174849
-%    0.3067916	0.4374966	0.6217784	0.8587366
-%    0.2960698	0.5814796	0.7817845	0.9273478];
-% % Fraction graduate conditional on entry
-% fracGrad_yqM = [0.1987562	0.1296711	0.4773349	0.6385519
-%    0.0779666	0.3380288	0.5016366	0.7053534
-%    0.1137461	0.3146327	0.5340976	0.7627105
-%    0.0291045	0.2856211	0.5979195	0.8423696];
-% fracHsgPlus_yqM = 1 - fracEnter_yqM;
-% fracCG_yqM  = fracEnter_yqM .* fracGrad_yqM;
-% fracCD_yqM  = 1 - fracHsgPlus_yqM - fracCG_yqM;
-% schoolS.fracS_qycM(cS.iHSG, :, :, icHSB) = fracHsgPlus_yqM';
-% schoolS.fracS_qycM(cS.iCD,  :, :, icHSB) = fracCD_yqM';
-% schoolS.fracS_qycM(cS.iCG,  :, :, icHSB) = fracCG_yqM';
-% 
-% validateattributes(schoolS.fracS_qycM(:,:,:,icHSB), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-%    '>', 0', '<', 1, 'size', [cS.nSchool, nIq, nYp]})
 
+%% Updegraff
+% No info on graduation rates. Can only use CPS to infer the aggregate
+
+% *****  Load data
+
+bYear = 1915;
+iCohort = find(cS.bYearV == bYear);
+if length(iCohort) ~= 1
+   error('Not found');
+end
+
+dataFn = 'updegraff_quartiles.csv'; 
+loadS = data_bc1.load_income_iq_college(dataFn, cS.setNo);
+
+
+% ******  Directly loaded fields
+
+% Mass of HSG+, sums to 1
+schoolS.massHsgPlus_qycM(:,:,iCohort) = loadS.mass_qyM ./ sum(loadS.mass_qyM(:));
+
+% Entry rate | HSG
+schoolS.fracEnter_qycM(:,:,iCohort) = loadS.entry_qyM;
+% No info on graduation rates
+
+% Marginal entry rates
+schoolS.fracEnter_qcM(:,iCohort) = loadS.entry_qV;
+schoolS.fracEnter_ycM(:,iCohort) = loadS.entry_yV;
+
+
+% *******  Implied fields
+
+% Mass by [s,q,y]. Sums to 1
+mass_sqyM = nan([cS.nSchool, nIq, nYp]);
+% Mass of HSD
+mass_sqyM(cS.iHSD, :,:) = 0.03 .* ones([nIq, nYp]); % +++++ need this
+mass_sqyM(cS.iHSG,:,:) =  0.01 .* ones([nIq, nYp]); % +++++ need this
+
+
+% *****  School fractions (implied)
+
+frac_sV = zeros(cS.nSchool, 1);
+for iSchool = 1 : cS.iHSG
+   frac_sV(iSchool) = matrix_lh.sum_all(mass_sqyM(iSchool, :,:));
+end
+
+% Fraction who enters college
+fracCollege = 1 - sum(frac_sV(1 : cS.iHSG));
+
+% Graduation rate (CPS)
+cpsIdx = find(cpsS.bYearV == bYear);
+if length(cpsIdx) ~= 1
+   error('Not found');
+end
+gradRate = cpsS.frac_scM(cS.iCG,cpsIdx) ./ sum(cpsS.frac_scM(cS.iCD : cS.iCG,cpsIdx), 1);
+
+frac_sV(cS.iCD) = fracCollege * (1 - gradRate);
+frac_sV(cS.iCG) = fracCollege * gradRate;
+
+check_lh.prob_check(frac_sV, 1e-6);
+
+schoolS.frac_scM(:, iCohort) = frac_sV;
+
+
+%%  Project Talent
+
+% Needs updating +++++
+
+% *****  Load data
+
+bYear = 1942;
+iCohort = find(cS.bYearV == bYear);
+if length(iCohort) ~= 1
+   error('Not found');
+end
+
+dataFn = 'flanagan 1971.csv';
+loadS = data_bc1.load_income_iq_college(dataFn, cS.setNo);
+
+
+% ******  Directly loaded fields
+
+% Mass of HSG+, sums to 1
+schoolS.massHsgPlus_qycM(:,:,iCohort) = loadS.mass_qyM ./ sum(loadS.mass_qyM(:));
+
+% Entry rate | HSG
+schoolS.fracEnter_qycM(:,:,iCohort) = loadS.entry_qyM;
+% Graduation rate | HSG
+schoolS.fracGrad_qycM(:,:,iCohort)  = loadS.grad_qyM;
+
+% Marginal entry rates
+schoolS.fracEnter_qcM(:,iCohort) = loadS.entry_qV;
+schoolS.fracEnter_ycM(:,iCohort) = loadS.entry_yV;
+
+% Marginal graduation rates
+schoolS.fracGrad_qcM(:,iCohort) = loadS.grad_qV;
+schoolS.fracGrad_ycM(:,iCohort) = loadS.grad_yV;
+
+
+% ******  Implied
+
+% For now: just use CPS school fractions +++
+schoolS.frac_scM(:, iCohort) = cpsS.frac_scM(:, find(cpsS.bYearV == bYear));
+
+check_lh.prob_check(schoolS.frac_scM(:, iCohort), 1e-6);
 
 
 
 %% Validation
+
+fieldV = {'fracEnter_qcM', 'fracGrad_qcM', 'fracEnter_ycM', 'fracGrad_ycM'};
+for i1 = 1 : length(fieldV)
+   fieldM = schoolS.(fieldV{i1});
+   validateattributes(fieldM(~isnan(fieldM)), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+      '<=', 1})
+end
+
 
 for iCohort = 1 : cS.nCohorts
    if ~isnan(schoolS.frac_sqycM(1,1,1,iCohort))
@@ -143,7 +215,7 @@ for iCohort = 1 : cS.nCohorts
    end
    if ~isnan(schoolS.fracEnter_qcM(1,iCohort))
       validateattributes(schoolS.fracEnter_qcM(:,iCohort), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-         'positive', '<', 0.9})
+         'positive', '<', 0.98})
    end
    if ~isnan(schoolS.fracGrad_qcM(1,iCohort))
       validateattributes(schoolS.fracGrad_qcM(:,iCohort), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...

@@ -7,20 +7,19 @@ Then pvEarn_asM is taken from that experiment (which would usually be the experi
 that calibrates everything for a particular cohort)
 
 IN
-   pvec
-      pvector object with calibrated params
+   pvecIn
+      pvectorLH object with calibrated params
 
 OUT
    expS
       struct with experiment settings
    tgS
-      [] unless cal targets are modified
-      must be copied back into cS if not []
+      which calibration targets to use?
    Items for cS:
       doCalV
          parameters with any value in doCalV are calibrated
       iCohort
-         base cohort +++++
+         cohort for which experiment is run
 %}
 
 expNo = cS.expNo;
@@ -31,9 +30,13 @@ pvec = pvecIn;
 expS.decomposeExpNoM = [114 : 117; 104 : 107]';
 % Decomposition: cumulative changes
 expS.decomposeCumulExpNoM = [134 : 138; 124 : 128]';
+% Pure comparative statics
+expS.compStatExpNoV = 301 : 303;
 
-% Do we modify calibration targets?
-tgS = [];
+% Which calibration targets to use?
+% These are targets we would like to match. Targets that are NaN are ignored.
+tgS = calibr_bc1.caltg_defaults('default', cS.modelS);
+
 
 
 %%  Which data based parameters are from another experiment?
@@ -51,7 +54,7 @@ expS.bLimitCohort = [];
 % Target school fractions (tgS.frac_scM) taken from another cohort
 expS.schoolFracCohort = [];
 % Parental altruism taken from this cohort
-expS.puWeightExpNo = [];
+% expS.puWeightExpNo = [];
 % Pref for HS from another experiment
 expS.prefHsExpNo = [];
 
@@ -59,13 +62,28 @@ expS.prefHsExpNo = [];
 expS.doCalibrate = 1;
 
 
+%%  Exogenously changed parameters
+
+% Mean college cost
+expS.pMeanChange = 0;
+% Change in CG premium (log points)
+expS.cgPremChange = 0;
+expS.cdPremChange = 0;
+
+
+%%  Settings for each case
+
 % The reason for nested functions is an editor bug in Matlab
 if expNo < 100
    base_exper;
 elseif expNo < 200
+   % Counterfactuals. Only calibrate prefHS to match school fractions
    counterfactuals;
 elseif expNo < 300
    time_series;
+elseif expNo < 400
+   % Pure counterfactuals. Nothing is calibrated
+   pure_counterfactuals;
 else
    error('Invalid');
 end
@@ -86,10 +104,44 @@ function base_exper
    end
 end
    
+
+%% Nested:  Pure counterfactuals: 300s
+function pure_counterfactuals
+   expS.doCalibrate = false;
+   doCalV = cS.calExp;
+   % Taking parameters from this cohort
+   iCohort = cS.iRefCohort;
+
+   if expNo == 301
+      % Add $1000 to college costs
+      expS.expStr = 'Higher tuition';
+      expS.pMeanChange = 1e3 ./ cS.unitAcct;
+      % output dir
+      expS.outDir = 'tuition_up';
+   elseif expNo == 302
+      % Raise college grad premium by 10 log points
+      expS.expStr = 'Higher CG premium';
+      expS.cgPremChange = 0.1;
+      % output dir
+      expS.outDir = 'gradprem_up';
+      
+   elseif expNo == 303
+      % Raise college grad premium by 10 log points
+      expS.expStr = 'Higher college premium';
+      expS.cgPremChange = 0.1;
+      expS.cdPremChange = 0.1;
+      % output dir
+      expS.outDir = 'collprem_up';
+
+   else
+      error('Invalid');
+   end
+end
    
    
 %% Nested:   Counterfactuals
-% Nothing is calibrated  EXCEPT prefHS to match college entry.
+% Change one parameter (e.g. college costs). Hold school fractions constant at base exper.
+% Nothing is calibrated  EXCEPT prefHS, probHsgInter to match college entry.
 % Params are copied from base
 function counterfactuals
    expS.doCalibrate = 1;
@@ -97,10 +149,11 @@ function counterfactuals
    % Taking parameters from this cohort
    iCohort = cS.iRefCohort;
 
-   % Match overall college entry. Calibrate only 1 param
+   % Calibrate only 2 param to match school fractions
    pvec = pvec.calibrate('prefHS', cS.calExp);
+   pvec = pvec.calibrate('probHsgInter', cS.calExp);
    % Only target school fractions
-   tgS = calibr_bc1.caltg_defaults('onlySchoolFrac');
+   tgS = calibr_bc1.caltg_defaults('onlySchoolFrac', cS.modelS);
    
    % Pick out cohort from which counterfactuals are taken
    if expNo < 110
@@ -126,15 +179,16 @@ function counterfactuals
    cfExpNo = cS.bYearExpNoV(cfCohort); 
 
    
-   if any(expNo == expS.decomposeExpNoM(:))
-      % ------  Change one param at a time
-      if any(expNo == [103, 113])
-         expS.expStr = 'Replicate base exper';    % for testing
-         expS.earnExpNo = cS.expBase;
-         expS.bLimitCohort = iCohort;
-         expS.collCostExpNo = cS.expBase;
+   if any(expNo == [103, 113])
+      expS.expStr = 'Replicate base exper';    % for testing
+      expS.earnExpNo = cS.expBase;
+      expS.bLimitCohort = iCohort;
+      expS.collCostExpNo = cS.expBase;
+      expS.prefHsExpNo = cS.expBase;
 
-      elseif any(expNo == [104, 114])
+   elseif any(expNo == expS.decomposeExpNoM(:))
+   % ------  Change one param at a time
+      if any(expNo == [104, 114])
          % Take pvEarn_asM from cfExpNo
          expS.expStr = 'Only change earn profiles'; 
          expS.earnExpNo = cfExpNo;
@@ -208,7 +262,7 @@ function time_series
    % Calibrate pMean, which is really a truncated data moment
    %  Should also do something about pStd +++
    pvec = pvec.calibrate('pMean', cS.calExp);
-   tgS = calibr_bc1.caltg_defaults('timeSeriesPartial');
+   tgS = calibr_bc1.caltg_defaults('timeSeriesPartial', cS.modelS);
          % also implement: do not target IQ/yp sorting +++++
          % this is 'timeSeries'
 
@@ -217,13 +271,14 @@ function time_series
       % ******  Calibrate all time varying params
       iCohort = find(expNo == cS.bYearExpNoV);
       expS.expStr = sprintf('%i', cS.cohYearV(iCohort));
+      expS.outDir = 'cohort_compare';
       
       % Signal noise
       % pvec = pvec.calibrate('alphaAM', cS.calExp);
-      % Match transfers
-      pvec = pvec.calibrate('puWeightMean', cS.calExp);
       % Match overall college entry
       pvec = pvec.calibrate('prefHS', cS.calExp);
+      % Match college graduation rate
+      pvec = pvec.calibrate('prGradMin',  cS.calExp);
       
       % Scale factors of lifetime earnings (log)
       pvec = pvec.calibrate('eHatCD', cS.calExp);
@@ -239,8 +294,6 @@ function time_series
       
       % Signal noise
       % pvec = pvec.calibrate('alphaAM', cS.calExp);
-      % Match transfers
-      pvec = pvec.calibrate('puWeightMean', cS.calExp);
       % Match overall college entry
       pvec = pvec.calibrate('prefHS', cS.calExp);
       

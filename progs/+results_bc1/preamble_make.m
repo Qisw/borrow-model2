@@ -25,6 +25,12 @@ results_bc1.preamble_add('cpiBaseYear',  sprintf('%i', cS.cpiBaseYear),  'CPI ba
 results_bc1.preamble_add('collCostAge',  sprintf('%i', cS.dataS.collCostAge), 'Age for which college cost is taken', cS);
 
 
+%% Calibration
+
+results_bc1.preamble_add('hoursPerWeekDefault',  sprintf('%.1f', cS.dataS.hoursPerWeekDefault),  ...
+   'Default college hours',  cS);
+
+
 results_bc1.preamble_write(cS);
 
 end

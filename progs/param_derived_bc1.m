@@ -11,8 +11,6 @@ iCohort = cS.iCohort;
 
 % Calibration targets
 tgS = var_load_bc1(cS.vCalTargets, cS);
-% Copy targets that are applicable for this experiment into this struct
-paramTgS.setNo = cS.setNo;
 
 
       % %% Adjust for changed nSchool
@@ -75,16 +73,6 @@ end
 
 %% Preferences: Derived
 
-if ~isempty(cS.expS.prefHsExpNo)
-   % prefHS from another experiment
-   c2S = const_bc1(cS.setNo, cS.expS.prefHsExpNo);
-   param2S = var_load_bc1(c2S.vParams, c2S);
-   paramS.prefHS = param2S.prefHS;
-   paramS.dPrefHS = param2S.dPrefHS;
-   paramS.prefHS_jV = param2S.prefHS_jV;
-   clear param2S;
-end
-
 if cS.ucCurvatureSame == 1
    % Same curvature of preferences work / college
    paramS.workSigma = paramS.prefSigma;
@@ -94,18 +82,6 @@ end
 % Utility function at work
 paramS.utilWorkS = UtilCrraLH(paramS.workSigma, paramS.prefBeta, paramS.prefWtWork);
 
-% Consumption growth rate during work phase
-% paramS.gC = (paramS.prefBeta * paramS.R) .^ (1 / paramS.workSigma);
-% Growth factors for consumption by age
-% paramS.cFactorV = paramS.gC .^ (0 : (max(cS.workYears_sV) - 1))';
-
-% Present value factor
-%  Present value of consumption = c at work start * pvFactor
-%  Tested in value work
-% paramS.cPvFactor_sV = nan([cS.nSchool, 1]);
-% for iSchool = 1 : cS.nSchool
-%    paramS.cPvFactor_sV(iSchool) = sum((paramS.gC ./ paramS.R) .^ (0 : (cS.workYears_sV(iSchool)-1)));
-% end
 
 
 %% College costs
@@ -121,10 +97,15 @@ if ~isempty(cS.expS.collCostExpNo)
    paramS.pStd  = param2S.pStd;
 end
 
+% Change mean college cost
+if cS.expS.pMeanChange ~= 0
+   paramS.pMean = paramS.pMean + cS.expS.pMeanChange;
+end
+
 % Targets for college costs
 %  Does not make sense to take that from another cohort
-paramTgS.pMean = tgS.costS.pMean_cV(iCohort);
-paramTgS.pStd  = tgS.costS.pStd_cV(iCohort);
+paramS.costS.tgPMean = tgS.costS.pMean_cV(iCohort);
+paramS.costS.tgPStd  = tgS.costS.pStd_cV(iCohort);
 
 
 %% School attainment
@@ -136,19 +117,11 @@ if isempty(cS.expS.schoolFracCohort)
 else
    ic = cS.expS.schoolFracCohort;
 end
-paramTgS.frac_sV = tgS.schoolS.frac_scM(:, ic);
+paramS.schoolS.tgFrac_sV = tgS.schoolS.frac_scM(:, ic);
 clear ic;
 
 
-%% Endowments
-
-if ~isempty(cS.expS.puWeightExpNo)
-   % Take altruism from another cohort
-   c2S = const_bc1(cS.setNo, cS.expS.puWeightExpNo);
-   param2S = var_load_bc1(c2S.vParams, c2S);
-   paramS.puWeightMean = param2S.puWeightMean;
-   clear param2S;
-end
+%% Endowments by type
 
 
 % All types have the same probability
@@ -161,9 +134,12 @@ wtM = [1, 0, 0, 0;
    paramS.alphaZP, paramS.alphaZY, 1, 0;
    paramS.alphaPM, paramS.alphaYM, paramS.alphaMZ, 1]; 
 
+meanV = [paramS.pMean; paramS.logYpMean; paramS.zMean; 0];
+stdV  = [paramS.pStd; paramS.logYpStd; paramS.zStd; 1];
+
 % This correctly handles constant endowments
-gridM = calibr_bc1.endow_grid([paramS.pMean; paramS.logYpMean; paramS.zMean; 0], ...
-   [paramS.pStd; paramS.logYpStd; paramS.zStd; 1],  wtM, cS);
+gridM = calibr_bc1.endow_grid(meanV, stdV, wtM, cS);
+
 paramS.pColl_jV      = gridM(:,1);
 paramS.yParent_jV    = exp(gridM(:,2));
 paramS.transfer_jV = exp(gridM(:,3));
@@ -172,22 +148,6 @@ paramS.m_jV          = gridM(:,4);
 
 % All agents start with 0 assets (bad assumption?)
 paramS.k_jV = zeros(cS.nTypes, 1);
-
-% Free consumption / leisure in college 
-%  Proportional to m. Range 0 to cCollMax
-mMin = min(paramS.m_jV);
-mMax = max(paramS.m_jV);
-paramS.cColl_jV = (paramS.m_jV - mMin) .* paramS.cCollMax ./ (mMax - mMin);
-paramS.lColl_jV = (paramS.m_jV - mMin) .* paramS.lCollMax ./ (mMax - mMin);
-
-% Preference for high school by type
-if paramS.dPrefHS > 1e-6
-   % prefHS_jV is in prefHS +/- 0.5 * dPrefHS
-   mScaledV = paramS.m_jV ./ (mMax - mMin);
-   paramS.prefHS_jV = paramS.prefHS - mScaledV .* paramS.dPrefHS;
-else
-   paramS.prefHS_jV = paramS.prefHS .* ones([cS.nTypes, 1]);
-end
 
 if cS.dbg > 10
    % Moments of marginal distributions are checked in test fct for endow_grid
@@ -204,6 +164,23 @@ if cS.dbg > 10
 %    validateattributes(paramS.puWeight_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
 %       '>=', 0})
 end
+
+
+% ******  Free consumption / leisure in college 
+%  Proportional to m. Range 0 to cCollMax
+mMin = min(paramS.m_jV);
+mMax = max(paramS.m_jV);
+if cS.modelS.hasCollCons
+   paramS.cColl_jV = (paramS.m_jV - mMin) .* paramS.cCollMax ./ (mMax - mMin);
+else
+   paramS.cColl_jV = zeros(cS.nTypes, 1);
+end
+if cS.modelS.hasCollLeisure
+   paramS.lColl_jV = (paramS.m_jV - mMin) .* paramS.lCollMax ./ (mMax - mMin);
+else
+   paramS.lColl_jV = zeros(cS.nTypes, 1);
+end
+
 
 
 % For now: everyone gets the same college earnings
@@ -223,13 +200,6 @@ if cS.dbg > 10
 end
 
 
-% % *****  Preference for work as HSG (expressed as tax rate on HS earnings)
-% 
-% paramS.tax_jV = logistic_bc1(paramS.m_jV, paramS.taxHSzero, paramS.taxHSslope);
-% if cS.dbg > 10
-%    validateattributes(paramS.tax_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-%       '>', -0.95, '<', 0.95, 'size', [cS.nTypes, 1]})
-% end
 
 % Range of permitted assets in college (used for approximating value functions)
 paramS.kMax = 2e5 ./ cS.unitAcct;
@@ -316,9 +286,27 @@ if cS.dbg > 10
 end
 
 
-%% Clean up
+%% Preferences: derived (using endowment info)
 
-paramS.tgS = paramTgS;
+if ~isempty(cS.expS.prefHsExpNo)
+   % prefHS from another experiment
+   c2S = const_bc1(cS.setNo, cS.expS.prefHsExpNo);
+   param2S = var_load_bc1(c2S.vParams, c2S);
+   paramS.prefHS = param2S.prefHS;
+   paramS.dPrefHS = param2S.dPrefHS;
+   paramS.prefHS_jV = param2S.prefHS_jV;
+   clear param2S;
+end
+
+% Preference for high school by type
+if paramS.dPrefHS > 1e-6
+   % prefHS_jV is in prefHS +/- 0.5 * dPrefHS
+   mScaledV = paramS.m_jV ./ (mMax - mMin);
+   paramS.prefHS_jV = paramS.prefHS - mScaledV .* paramS.dPrefHS;
+else
+   paramS.prefHS_jV = paramS.prefHS .* ones([cS.nTypes, 1]);
+end
+
 
 
 end

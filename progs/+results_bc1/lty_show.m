@@ -14,7 +14,7 @@ if 1
    for iPlot = 1 : 2
       pvEarn_saM = zeros(cS.nSchool, cS.nAbil);
       for iSchool = 1 : cS.nSchool
-         pvEarn_saM(iSchool,:) = paramS.pvEarn_tsaM(cS.ageWorkStartM(iSchool,1), iSchool, :);
+         pvEarn_saM(iSchool,:) = paramS.earnS.pvEarn_tsaM(cS.ageWorkStartM(iSchool,1), iSchool, :);
       end
       
       if iPlot == 1

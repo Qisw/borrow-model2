@@ -84,7 +84,7 @@ ptS.mark_used('alphaAM');
 
 % Marginal distributions
 row_add_vector({'pMean', 'pStd'}, ['Marginal distribution of $', symS.retrieve('collCost'), '$'], '%.1f', []);
-row_add_vector({'logYpMean', 'logYpStd'}, ['Marginal distribution of $', symS.retrieve('famIncome'), '$'], '%.2f', []);
+% row_add_vector({'logYpMean', 'logYpStd'}, ['Marginal distribution of $', symS.retrieve('famIncome'), '$'], '%.2f', []);
 row_add_vector({'zMean', 'zStd'}, ['Marginal distribution of $', symS.retrieve('pTransfer'), '$'], '%.2f', []);
 row_add_vector({'sigmaIQ'}, [symS.retrieve('IQ'), ' noise'], '%.2f', []);
 
@@ -109,8 +109,12 @@ row_add('prefWtWork', '%.2f', []);
 % row_add('puSigma', '%.2f', []);
 row_add('prefScaleEntry', '%.2f', []);
 row_add('prefHS', '%.2f', []);
-row_add('cCollMax', '%.1f', []);
-row_add('lCollMax', '%.2f', []);
+if cS.modelS.hasCollCons
+   row_add('cCollMax', '%.1f', []);
+end
+if cS.modelS.hasCollLeisure
+   row_add('lCollMax', '%.2f', []);
+end
 
 
 %% Work

@@ -7,6 +7,19 @@ nIq = length(cS.iqUbV);
 nYp = length(cS.ypUbV);
 
 
+%% Fit by [q, y]
+% Each figure is "flattened" into 2 figures with 4 subplots
+if 1
+   ds = outS.devV.dev_by_name('mass qy');
+   [fhIq, fhYp, fhIqV, fhYpV] = output_bc1.fit_qy(ds.modelV, ds.dataV, 'Fraction', saveFigures, cS);
+   
+   figure(fhIq);
+   output_bc1.fig_save(fullfile(cS.fitDir, 'qy_mass_byIq'), saveFigures, cS);
+   figure(fhYp);
+   output_bc1.fig_save(fullfile(cS.fitDir, 'qy_mass_byYp'), saveFigures, cS);
+end
+
+
 %% Prob enter college | IQ  /  prob grad | IQ  /   also by yp
 if 1
    % What can be on the x axis

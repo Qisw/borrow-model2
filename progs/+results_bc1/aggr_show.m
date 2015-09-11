@@ -50,10 +50,10 @@ function school_stats(fp, aggrS, paramS, cS)
    fprintf(fp, '    %.2f',  aggrS.pvEarnMeanLog_sV);
    fprintf(fp, '\n');
    fprintf(fp, '    fixed(s):  ');
-   fprintf(fp, '%.2f  ',  log(paramS.earnS.tgPvEarn_sV(cS.iHSG)) + paramS.eHat_sV);
+   fprintf(fp, '%.2f  ',  log(paramS.earnS.tgPvEarn_sV(cS.iHSG)) + paramS.earnS.eHat_sV);
    fprintf(fp, '\n');
    fprintf(fp, '    ability part(s):  ');
-   fprintf(fp, '%.2f  ',  paramS.phi_sV .* (statS.abilMean_sV - paramS.earnS.aBar));
+   fprintf(fp, '%.2f  ',  paramS.earnS.phi_sV .* (statS.abilMean_sV - paramS.earnS.aBar));
    fprintf(fp, '\n');
 end
 

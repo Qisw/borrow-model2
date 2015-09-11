@@ -58,8 +58,7 @@ pvec = pvec.change('pMean', '\mu_{\tau}', 'Mean of $\tau$', ...
 pvec = pvec.change('pStd', '\sigma_{\tau}', 'Std of $\tau$', 2e3 ./ cS.unitAcct, ...
    5e2 ./ cS.unitAcct, 1e4 ./ cS.unitAcct, cS.calBase);
 
-
-% Parental income (log)
+% Parental income (log) (no longer relevant)
 % This will be taken directly from data (so not calibrated)
 %  but is calibrated for other cohorts
 pvec = pvec.change('logYpMean', '\mu_{y}', 'Mean of $\log(y_{p})$', ...
@@ -90,7 +89,6 @@ pvec = pvec.change('alphaMZ', '\alpha_{m,z}', 'Correlation, $m,z$', 0.5, -5, 5, 
 pvec = pvec.change('alphaAM', '\alpha_{a,m}', 'Correlation, $a,m$', 2, 0.1, 5, cS.calBase);
 
 
-
 pvec = pvec.change('sigmaIQ', '\sigma_{IQ}', 'Std of IQ noise',  0.35, 0.2, 2, cS.calBase);
 
 
@@ -116,8 +114,9 @@ pvec = pvec.change('prGradPower', '\pi_{c}', 'In $\pi_{a}$', 1, 0.1, 2, cS.calNe
 pvec = pvec.change('prGradABase', 'a_{0}', 'In $\pi_{a}$', 0, 0, 0.3, cS.calNever);
 
 % If student makes it past period 2, probability of graduating in 4 rather than 5 years
+% Fixed to match average duration of 4.5 years (should be time varying +++)
 pvec = pvec.change('probGradFour', symS.retrieve('probGradFour'), 'Prob of graduating in 4 years', ...
-   0.5, 0.1, 0.9, cS.calBase);
+   0.5, 0.1, 0.9, cS.calNever);
 
 % nCohorts = length(cS.bYearV);
 pvec = pvec.change('wCollMean', 'w_{c}', 'College wage', ...

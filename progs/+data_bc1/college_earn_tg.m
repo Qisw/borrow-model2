@@ -1,6 +1,6 @@
-function collEarnS = college_earn_tg(n79S, tgS, cS)
+function collEarnS = college_earn_tg(tgS, cS)
 % College earnings
-% Scaled to be stationary
+
 
 %% Allocate outputs
 
@@ -15,13 +15,28 @@ collEarnS.mean_cV = nan([cS.nCohorts, 1]);
 
 
 
-%% NLSY79
+%% NLSY79 and 97
 
-collEarnS.mean_qcM(:, tgS.icNlsy79) = n79S.median_earnings_2yr_byafqt ./ tgS.nlsyCpiFactor;
-collEarnS.mean_ycM(:, tgS.icNlsy79) = n79S.median_earnings_2yr_byinc ./ tgS.nlsyCpiFactor;
+for ic = [tgS.icNlsy79, tgS.icNlsy97]
+   if ic == tgS.icNlsy79
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy79_targets_load(cS);
+      dFactor = tgS.nlsyCpiFactor;
+   elseif ic == tgS.icNlsy97
+      %  Load file with all NLSY79 targets
+      n79S = data_bc1.nlsy97_targets_load(cS);
+      dFactor = tgS.nlsy97CpiFactor;
+   else
+      error('Invalid');
+   end
 
-% Average earnings across all students
-collEarnS.mean_cV(tgS.icNlsy79) = n79S.median_earnings_2yr ./ tgS.nlsyCpiFactor;
+
+   collEarnS.mean_qcM(:, ic) = n79S.median_earnings_2yr_byafqt ./ dFactor;
+   collEarnS.mean_ycM(:, ic) = n79S.median_earnings_2yr_byinc ./ dFactor;
+
+   % Average earnings across all students
+   collEarnS.mean_cV(ic) = n79S.median_earnings_2yr ./ dFactor;
+end
 
 
 

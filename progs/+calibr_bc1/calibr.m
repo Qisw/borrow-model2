@@ -89,7 +89,7 @@ end
 
 % Recover parameter vector etc
 [~, paramS] = cal_dev_nested(solnV);
-[dev, outS, hhS, aggrS] = calibr_bc1.cal_dev(tgS, paramS, cS);
+[dev, outS, hhS, aggrS] = calibr_bc1.cal_dev(true, tgS, paramS, cS);
 
 
 fprintf('Calibration done. Terminal deviation: %.3f \n', dev);
@@ -125,7 +125,7 @@ end
       % Extract the guesses
       param2S = cS.pvector.guess_extract(guessV, paramS, doCalV);
       param2S = param_derived_bc1(param2S, cS);
-      dev = calibr_bc1.cal_dev(tgS, param2S, cS);
+      dev = calibr_bc1.cal_dev(false, tgS, param2S, cS);
    end
 
    % Same, but reject out of bounds guesses

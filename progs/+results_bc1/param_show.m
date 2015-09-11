@@ -25,7 +25,7 @@ if 1
    for iSchool = 1 : cS.nSchool
       tStart = cS.ageWorkStartM(iSchool,1);
       discFactor = paramS.R .^ (tStart - 1);
-      pvEarn_saM(iSchool,:) = squeeze(paramS.pvEarn_tsaM(tStart,iSchool,:)) ./ discFactor;
+      pvEarn_saM(iSchool,:) = squeeze(paramS.earnS.pvEarn_tsaM(tStart,iSchool,:)) ./ discFactor;
    end
    
    % Log pv earn difference by [a,s]
@@ -56,31 +56,40 @@ end
 
 %% Distribution of endowments (joint)
 if 1
-   for iPlot = 1 : 3
-      if iPlot == 1
-         % m / yp
+   xStrV = {'m', 'm', 'y', 'm'};
+   for iPlot = 1 : length(xStrV)
+      if xStrV{iPlot} == 'm'
          xV = paramS.m_jV;
          xStr = 'Ability signal';
+         wtV = paramS.prob_jV;
+      elseif xStrV{iPlot} == 'y'
+         xV = log(paramS.yParent_jV);
+         xStr = 'Log yParent';
+         wtV = paramS.prob_jV;
+      else
+         error('Invalid');
+      end
+      
+      if iPlot == 1
+         % m / yp
          yV = log(paramS.yParent_jV);
          yStr = 'Log yParent';
-         wtV = paramS.prob_jV;
          figName = 'endow_yp_m';
       elseif iPlot == 2
          % m / p
-         xV = paramS.m_jV;
-         xStr = 'Ability signal';
          yV = paramS.pColl_jV;
          yStr = 'College cost';
-         wtV = paramS.prob_jV;
          figName = 'endow_p_m';
       elseif iPlot == 3
          % yp / p
-         xV = log(paramS.yParent_jV);
-         xStr = 'Log yParent';
          yV = paramS.pColl_jV;
          yStr = 'College cost';
-         wtV = paramS.prob_jV;
          figName = 'endow_p_yp';
+      elseif iPlot == 4
+         % transfer / m
+         yV = paramS.transfer_jV;
+         yStr = 'Transfer';
+         figName = 'endow_z_m';
       else
          error('Invalid');
       end

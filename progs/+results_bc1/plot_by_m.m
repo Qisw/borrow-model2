@@ -24,7 +24,7 @@ fh = output_bc1.fig_new(saveFigures, []);
 hold on;
 
 for iVar = 1 : nVars
-   plot(xV, yM(jIdxV, iVar), figS.lineStyleDenseV{iVar}, 'color', figS.colorM(iVar,:));
+   plot(xV, yM(jIdxV, iVar), figS.lineStyleV{iVar}, 'color', figS.colorM(iVar,:));
 end
 
 hold off;
