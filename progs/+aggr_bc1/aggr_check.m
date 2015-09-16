@@ -1,7 +1,6 @@
 function aggr_check(aggrS, cS)
 % Consistency checks
 
-% move all consistency checks here +++++
 
 %% By [q,y]
 

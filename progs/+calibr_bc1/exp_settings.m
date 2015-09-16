@@ -260,7 +260,6 @@ function time_series
    % Now fewer parameters are calibrated
    doCalV = cS.calExp;
    % Calibrate pMean, which is really a truncated data moment
-   %  Should also do something about pStd +++
    pvec = pvec.calibrate('pMean', cS.calExp);
    tgS = calibr_bc1.caltg_defaults('timeSeriesPartial', cS.modelS);
          % also implement: do not target IQ/yp sorting +++++
@@ -279,6 +278,8 @@ function time_series
       pvec = pvec.calibrate('prefHS', cS.calExp);
       % Match college graduation rate
       pvec = pvec.calibrate('prGradMin',  cS.calExp);
+      % Match HS graduation rate
+      pvec = pvec.calibrate('probHsgInter', cS.calExp);
       
       % Scale factors of lifetime earnings (log)
       pvec = pvec.calibrate('eHatCD', cS.calExp);

@@ -23,7 +23,7 @@ tgS = var_load_bc1(cS.vCalTargets, cS);
 %% Remove unused params
 removeV = {'prGradA0', 'prefPhi',    'mGridV',    'k1_jV' ,     'puWeight' ,    'earn_asM' , ...
     'pvEarn_sV' ,    'taxHSzero' ,     'taxHSslope' ,     'tax_jV' ,     'eHatHSG' , ...
-    'eHatCG',     'earn_tsM',    'pvEarn_asM',  'cPvFactor_sV',  'cFactorV' };
+    'eHatCG',     'earn_tsM',    'pvEarn_asM',  'cPvFactor_sV',  'cFactorV',  'sigmaIQ' };
 for i1 = 1 : length(removeV)
    if isfield(paramS, removeV{i1})
       paramS = rmfield(paramS, removeV{i1});
@@ -107,6 +107,12 @@ end
 paramS.costS.tgPMean = tgS.costS.pMean_cV(iCohort);
 paramS.costS.tgPStd  = tgS.costS.pStd_cV(iCohort);
 
+if ~cS.modelS.hasCollCostHetero
+   % Simply set pMean from data
+   paramS.pMean = paramS.costS.tgPMean;
+   paramS.pStd  = 0;
+end
+
 
 %% School attainment
 
@@ -123,132 +129,14 @@ clear ic;
 
 %% Endowments by type
 
-
-% All types have the same probability
-paramS.prob_jV = ones([cS.nTypes, 1]) ./ cS.nTypes;
-
-% Order is 
-%  p, y, z, m
-wtM = [1, 0, 0, 0; 
-   paramS.alphaPY, 1, 0, 0;
-   paramS.alphaZP, paramS.alphaZY, 1, 0;
-   paramS.alphaPM, paramS.alphaYM, paramS.alphaMZ, 1]; 
-
-meanV = [paramS.pMean; paramS.logYpMean; paramS.zMean; 0];
-stdV  = [paramS.pStd; paramS.logYpStd; paramS.zStd; 1];
-
-% This correctly handles constant endowments
-gridM = calibr_bc1.endow_grid(meanV, stdV, wtM, cS);
-
-paramS.pColl_jV      = gridM(:,1);
-paramS.yParent_jV    = exp(gridM(:,2));
-paramS.transfer_jV = exp(gridM(:,3));
-paramS.m_jV          = gridM(:,4);
-% paramS.puWeight_jV   = max(0,  gridM(:,4));
-
-% All agents start with 0 assets (bad assumption?)
-paramS.k_jV = zeros(cS.nTypes, 1);
-
-if cS.dbg > 10
-   % Moments of marginal distributions are checked in test fct for endow_grid
-   validateattributes(paramS.yParent_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-      'positive', 'size', [cS.nTypes, 1]})
-   if abs(mean(paramS.m_jV)) > 0.1
-      disp(mean(paramS.m_jV));
-      error_bc1('Invalid mean m', cS);
-   end
-   if abs(std(paramS.m_jV) - 1) > 0.05
-      disp(std_paramS.m_jV);
-      error_bc1('Invalid std m', cS);
-   end
-%    validateattributes(paramS.puWeight_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-%       '>=', 0})
-end
-
-
-% ******  Free consumption / leisure in college 
-%  Proportional to m. Range 0 to cCollMax
-mMin = min(paramS.m_jV);
-mMax = max(paramS.m_jV);
-if cS.modelS.hasCollCons
-   paramS.cColl_jV = (paramS.m_jV - mMin) .* paramS.cCollMax ./ (mMax - mMin);
-else
-   paramS.cColl_jV = zeros(cS.nTypes, 1);
-end
-if cS.modelS.hasCollLeisure
-   paramS.lColl_jV = (paramS.m_jV - mMin) .* paramS.lCollMax ./ (mMax - mMin);
-else
-   paramS.lColl_jV = zeros(cS.nTypes, 1);
-end
-
-
-
-% For now: everyone gets the same college earnings
-paramS.wColl_jV = ones([cS.nTypes, 1]) * paramS.wCollMean;
-if cS.dbg > 10
-   validateattributes(paramS.wColl_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-      'positive', 'size', [cS.nTypes, 1]})
-end
-
-
-% Parental income classes
-paramS.ypClass_jV = distrib_lh.class_assign(paramS.yParent_jV, ...
-   paramS.prob_jV, cS.ypUbV, cS.dbg);
-if cS.dbg > 10
-   validateattributes(paramS.ypClass_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
-      'positive', '<=', length(cS.ypUbV)})
-end
-
-
-
-% Range of permitted assets in college (used for approximating value functions)
-paramS.kMax = 2e5 ./ cS.unitAcct;
-
-
-paramS.endowS = calibr_bc1.param_endow(paramS, cS);
-
-
-%% Ability and IQ
-
-% Equal weighted bins
-paramS.prob_aV = ones([cS.nAbil, 1]) ./ cS.nAbil;  
-
-% Pr(a | type)
-[paramS.prob_a_jM, paramS.abilGrid_aV] = ...
-   calibr_bc1.normal_conditional(paramS.prob_aV, paramS.prob_jV, paramS.m_jV, ...
-   paramS.alphaAM, cS.dbg);
-
-if cS.dbg > 10
-   check_bc1.prob_matrix(paramS.prob_a_jM,  [cS.nAbil, cS.nTypes],  cS);
-   validateattributes(paramS.abilGrid_aV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-      'size', [cS.nAbil, 1]})
-end
-
-
-% ******  Derived
-
-% Pr(a) = sum over j (pr(j) * pr(a|j))
-%  should very close to what was exogenously set
-for iAbil = 1 : cS.nAbil
-   prob_a_jV = paramS.prob_a_jM(iAbil,:);
-   paramS.prob_aV(iAbil) = sum(paramS.prob_jV(:) .* prob_a_jV(:));
-end   
-
-if cS.dbg > 10
-   check_bc1.prob_matrix(paramS.prob_aV,  [cS.nAbil, 1], cS);   
-end
-
-
-
-%  IQ params
-[paramS.prIq_jM, paramS.pr_qjM, paramS.prJ_iqM] = calibr_bc1.iq_param(paramS, cS);
+paramS = calibr_bc1.param_endow(paramS, cS);
 
 
 
 %% Graduation probs
 
 % Prob of college graduation
-paramS.prGrad_aV = pr_grad_a_bc1(1 : cS.nAbil, iCohort, paramS, cS);
+paramS.prGrad_aV = calibr_bc1.pr_grad_a(1 : cS.nAbil, paramS, cS);
 
 if cS.dbg > 10
    validateattributes(paramS.prGrad_aV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
@@ -268,6 +156,10 @@ paramS.earnS = calibr_bc1.param_earn_derived(tgS, paramS, cS);
 
 
 %% Borrowing limits
+
+% Range of permitted assets in college (used for approximating value functions)
+paramS.kMax = 2e5 ./ cS.unitAcct;
+
 
 % Min k at start of each period (detrended)
 % kMin_acM = -calibr_bc1.borrow_limits(cS);

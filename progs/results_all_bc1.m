@@ -72,6 +72,9 @@ results_bc1.static_show(saveFigures, setNo, expNo);
 % Which params are close to bounds?
 results_bc1.params_close_to_bounds(setNo, expNo);
 
+% Show how prob(grad college | a) varies with parameters
+results_bc1.prob_grad_a_show(setNo, expNo);
+
 % For given j: show history
 % results_bc1.history_show(setNo, expNo);
 

@@ -43,15 +43,15 @@ end
 
 
 
-%%  Plot(pr(iq | j))
-if 1
-   fh = results_bc1.plot_by_m(paramS.prIq_jM', saveFigures, cS);
-   ylabel('Pr(IQ | m)');
-   legend(cS.formatS.iqLabelV, 'location', 'north');
-   output_bc1.fig_format(fh, 'line');
-   output_bc1.fig_save(fullfile(outDir, 'endow_pr_iq_m'), saveFigures, cS);
-end
-
+% %%  Plot(pr(iq | j))
+% if 1
+%    fh = results_bc1.plot_by_m(paramS.prIq_jM', saveFigures, cS);
+%    ylabel('Pr(IQ | m)');
+%    legend(cS.formatS.iqLabelV, 'location', 'north');
+%    output_bc1.fig_format(fh, 'line');
+%    output_bc1.fig_save(fullfile(outDir, 'endow_pr_iq_m'), saveFigures, cS);
+% end
+% 
 
 
 %% Distribution of endowments (joint)
@@ -111,7 +111,7 @@ end
 end
 
 
-%% E(a|j)
+%% E(a|j): On grid and "true"
 function mean_abil_j(saveFigures, paramS, cS)
    figS = const_fig_bc1;
    
@@ -123,11 +123,11 @@ function mean_abil_j(saveFigures, paramS, cS)
    
    fh = output_bc1.fig_new(saveFigures, []);
    hold on
-   plot(paramS.m_jV,  meanA_jV, 'o', 'color', figS.colorM(1,:));
+   plot(paramS.endowS.abilMean_jV,  meanA_jV, 'o', 'color', figS.colorM(1,:));
    plot([-2,2], [-2,2], 'k-');
    hold off;
-   xlabel('m');
-   ylabel('E(a|j)');
+   xlabel('E(x | j) analytical');
+   ylabel('E(x | j) on grid');
    output_bc1.fig_format(fh, 'line');
    output_bc1.fig_save(fullfile(cS.paramDir, 'endow_eOfa_j'), saveFigures, cS);
 end

@@ -1,0 +1,4 @@
+
+Parameters that are close to bounds
+  prGradMin:    [0.010 0.010 0.500]
+  dEHatHSG:    [-1.000 -0.000 0.000]

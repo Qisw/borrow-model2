@@ -85,8 +85,8 @@ ptS.mark_used('alphaAM');
 % Marginal distributions
 row_add_vector({'pMean', 'pStd'}, ['Marginal distribution of $', symS.retrieve('collCost'), '$'], '%.1f', []);
 % row_add_vector({'logYpMean', 'logYpStd'}, ['Marginal distribution of $', symS.retrieve('famIncome'), '$'], '%.2f', []);
-row_add_vector({'zMean', 'zStd'}, ['Marginal distribution of $', symS.retrieve('pTransfer'), '$'], '%.2f', []);
-row_add_vector({'sigmaIQ'}, [symS.retrieve('IQ'), ' noise'], '%.2f', []);
+row_add_vector({'logZMean', 'logZStd'}, ['Marginal distribution of $', symS.retrieve('pTransfer'), '$'], '%.2f', []);
+% row_add_vector({'sigmaIQ'}, [symS.retrieve('IQ'), ' noise'], '%.2f', []);
 
 
 

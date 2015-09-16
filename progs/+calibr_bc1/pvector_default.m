@@ -42,7 +42,7 @@ pvec = pvec.change('prefWtLeisure', '\omega_{l}', 'Weight on leisure', 0.5, 0.01
 % Pref shock at entry. For numerical reasons only. 
 %  was Fixed.
 pvec = pvec.change('prefScaleEntry', '\gamma', 'Preference shock at college entry', 0.2, 0.05, 0.5, cS.calNever);
-% Pref for working as HSG. Includes leisure. No good scale. +++
+% Pref for working as HSG. Includes leisure. No good scale.
 %  Calibrate in experiment to match schooling average
 pvec = pvec.change('prefHS', '\bar{\eta}', 'Preference for HS', 0, -5, 40, cS.calBase);
 % If not 0: prefHS(j) varies from prefHS - 0.5*dPrefHS to prefHS + 0.5*dPrefHS
@@ -50,7 +50,7 @@ pvec = pvec.change('dPrefHS', '\Delta\bar{\eta}', 'Range of HS preference', 0, 0
 
 
 %% Default: endowments
-
+% Best to keep same order as in param_derived
 
 % College costs
 pvec = pvec.change('pMean', '\mu_{\tau}', 'Mean of $\tau$', ...
@@ -66,30 +66,38 @@ pvec = pvec.change('logYpMean', '\mu_{y}', 'Mean of $\log(y_{p})$', ...
 % Assumed time invariant
 pvec = pvec.change('logYpStd', '\sigma_{y}', 'Std of $\log(y_{p})$', 0.3, 0.05, 0.6, cS.calNever);
 % Endowment correlations
-pvec = pvec.change('alphaPY', '\alpha_{\tau,y}', 'Correlation, $\tau,y$', 0.3, -5, 5, cS.calBase);
+% pvec = pvec.change('alphaPY', '\alpha_{\tau,y}', 'Correlation, $\tau,y$', 0.3, -5, 5, cS.calBase);
 
 
 % Transfers (LOG!)
-pvec = pvec.change('zMean', '\mu_{z}', 'Mean of $z$', ...
+pvec = pvec.change('logZMean', '\mu_{z}', 'Mean of $\ln z$', ...
    log(5e3 ./ cS.unitAcct), log(1e3 ./ cS.unitAcct), log(1e4 ./ cS.unitAcct), cS.calBase);
-pvec = pvec.change('zStd', '\sigma_{z}', 'Std of $z$', log(2e3 ./ cS.unitAcct), ...
+pvec = pvec.change('logZStd', '\sigma_{z}', 'Std of $\ln z$', log(2e3 ./ cS.unitAcct), ...
    log(1e2 ./ cS.unitAcct), log(5e3 ./ cS.unitAcct), cS.calBase);
-pvec = pvec.change('alphaZP', '\alpha_{\tau,z}', 'Correlation, $\tau,z$', 0.4, -5, 5, cS.calBase);
+% pvec = pvec.change('alphaZP', '\alpha_{\tau,z}', 'Correlation, $\tau,z$', 0.4, -5, 5, cS.calBase);
 pvec = pvec.change('alphaZY', '\alpha_{m,z}', 'Correlation, $m,z$', 0.4, -5, 5, cS.calBase);
 
 
 % Ability signal
-pvec = pvec.change('alphaPM', '\alpha_{\tau,m}', 'Correlation, $\tau,m$', 0.4, -5, 5, cS.calBase);
-pvec = pvec.change('alphaYM', '\alpha_{y,m}', 'Correlation, $y,m$', 0.5, -5, 5, cS.calBase);
+% pvec = pvec.change('alphaPM', '\alpha_{\tau,m}', 'Correlation, $\tau,m$', 0.4, -5, 5, cS.calBase);
+pvec = pvec.change('alphaMY', '\alpha_{y,m}', 'Correlation, $y,m$', 0.5, -5, 5, cS.calBase);
 pvec = pvec.change('alphaMZ', '\alpha_{m,z}', 'Correlation, $m,z$', 0.5, -5, 5, cS.calBase);
 
 
-% Does not matter right now. Until we have a direct role for ability
-%  But want to be able to change signal precision (rather than grad prob function) for experiments
-pvec = pvec.change('alphaAM', '\alpha_{a,m}', 'Correlation, $a,m$', 2, 0.1, 5, cS.calBase);
+% IQ
+pvec = pvec.change('alphaQY', '\alpha_{q,y}', 'Correlation, $q,y$', 0.5, -5, 5, cS.calBase);
+pvec = pvec.change('alphaQZ', '\alpha_{q,z}', 'Correlation, $q,z$', 0.5, -5, 5, cS.calBase);
+pvec = pvec.change('alphaQM', '\alpha_{q,m}', 'Correlation, $q,m$', 0.5, -5, 5, cS.calBase);
 
 
-pvec = pvec.change('sigmaIQ', '\sigma_{IQ}', 'Std of IQ noise',  0.35, 0.2, 2, cS.calBase);
+% Ability
+pvec = pvec.change('alphaAY', '\alpha_{a,y}', 'Correlation, $a,y$', 1, -5, 5, cS.calBase);
+pvec = pvec.change('alphaAZ', '\alpha_{a,z}', 'Correlation, $a,z$', 0, -5, 5, cS.calBase);
+pvec = pvec.change('alphaAM', '\alpha_{a,m}', 'Correlation, $a,m$', 1, -5, 5, cS.calBase);
+pvec = pvec.change('alphaAQ', '\alpha_{a,q}', 'Correlation, $a,q$', 0, -5, 5, cS.calBase);
+
+
+% pvec = pvec.change('sigmaIQ', '\sigma_{IQ}', 'Std of IQ noise',  0.35, 0.2, 2, cS.calBase);
 
 
 %% Default: schooling

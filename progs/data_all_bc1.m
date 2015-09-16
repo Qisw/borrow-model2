@@ -51,16 +51,19 @@ end
 
 data_bc1.data_summary(setNo);
 
-% data_bc1.cohort_earn_profiles_show(saveFigures, setNo);
+
+
+%% Stats for cohorts not used in calibration
+% Data exploration -- not updated
 
 % Correlation IQ, yp over time
-data_bc1.corr_iq_yp(setNo);
+% data_bc1.corr_iq_yp(setNo);
 
 % Entry rates by [q,y], selected studies
-data_bc1.qy_entry(saveFigures, setNo);
+% data_bc1.qy_entry(saveFigures, setNo);
 % Same by [q, y] separately
-data_bc1.marginal_entry_rates('iq', saveFigures, setNo);
-data_bc1.marginal_entry_rates('yp', saveFigures, setNo);
+% data_bc1.marginal_entry_rates('iq', saveFigures, setNo);
+% data_bc1.marginal_entry_rates('yp', saveFigures, setNo);
 
    
 end

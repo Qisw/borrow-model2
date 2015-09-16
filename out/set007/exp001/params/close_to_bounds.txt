@@ -1,3 +1,2 @@
 
 Parameters that are close to bounds
-  prGradMin:    [0.010 0.010 0.500]

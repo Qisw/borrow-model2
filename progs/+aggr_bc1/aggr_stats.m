@@ -6,7 +6,7 @@ paramS = param_load_bc1(setNo, expNo);
 aggrS = var_load_bc1(cS.vAggregates, cS);
 
 % Endowment correlations
-outS.endowCorrS = aggr_bc1.endow_corr(paramS, cS);
+% outS.endowCorrS = aggr_bc1.endow_corr(paramS, cS);
 
 
 %% By schooling

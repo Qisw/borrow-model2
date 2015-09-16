@@ -36,13 +36,13 @@ aggrS.simS = aggr_bc1.sim_histories(hhS, paramS, cS);
 aggrS.sqS = aggr_bc1.aggr_sqj(aggrS, hhS, paramS, cS);
 
 % By IQ quartile
-[aggrS.iqS, aggrS.iqYear2S, aggrS.iqYear4S] = aggr_bc1.aggr_iq(aggrS, paramS, cS);
+[aggrS.iqS, aggrS.iqYear2S, aggrS.iqYear4S, aggrS.iqGradS] = aggr_bc1.aggr_iq(aggrS, paramS, cS);
 
 % Aggregates (college entrants)
 aggrS.entrantYear2S = aggr_bc1.aggr_entrants(aggrS, cS);
 
 % By [parental income class]
-[aggrS.ypS, aggrS.ypYear2S, aggrS.ypYear4S] = aggr_bc1.aggr_yp(aggrS, paramS, cS);
+[aggrS.ypS, aggrS.ypYear2S, aggrS.ypYear4S, aggrS.ypGradS] = aggr_bc1.aggr_yp(aggrS, paramS, cS);
 
 % By [IQ, yp]
 [aggrS.qyS, aggrS.qyYear2S, aggrS.qyYear4S] = aggr_bc1.aggr_qy(aggrS, paramS, cS);

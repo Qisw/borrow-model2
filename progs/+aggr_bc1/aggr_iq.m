@@ -1,5 +1,5 @@
 % Aggregates By IQ
-function [iqS, iqYear2S, iqYear4S] = aggr_iq(aggrS, paramS, cS)
+function [iqS, iqYear2S, iqYear4S, iqGradS] = aggr_iq(aggrS, paramS, cS)
 
 
 %% Allocate outputs
@@ -39,49 +39,69 @@ iqYear4S.debtFrac_qV = zeros([nIq, 1]);
 iqYear4S.debtMean_qV = zeros([nIq, 1]);
 
 
+% College grads at end of college
+iqGradS.debtFrac_qV = zeros([nIq, 1]);
+iqGradS.debtMean_qV = zeros([nIq, 1]);
+
 
 
 %% Main
 
 for iIq = 1 : nIq
+   jIdxV = find(paramS.endowS.iqClass_jV == iIq);
+   
    % *******  All
 
    % Mass by j for this IQ
-   wtV = aggrS.aggr_jS.mass_jV .* paramS.prIq_jM(iIq, :)';
+   %wtV = aggrS.aggr_jS.mass_jV .* paramS.prIq_jM(iIq, :)';
+   wtV = aggrS.aggr_jS.mass_jV(jIdxV);
    % Parental income (not conditional on college)
-   iqS.logYpMean_qV(iIq) = sum(wtV .* log(paramS.yParent_jV)) ./ sum(wtV);
+   iqS.logYpMean_qV(iIq) = sum(wtV .* log(paramS.yParent_jV(jIdxV))) ./ sum(wtV);
 
    
    % *******  In college: first 2 years
    
    % Mass with IQ and j in college
-   wt_jV = aggrS.aggr_jS.massColl_jV .* paramS.prIq_jM(iIq, :)';
+   %wt_jV = aggrS.aggr_jS.massColl_jV .* paramS.prIq_jM(iIq, :)';
+   wt_jV = aggrS.aggr_jS.massColl_jV(jIdxV);
    wt_jV = wt_jV ./ sum(wt_jV);
    
    % First 2 years in college
-   iqYear2S.pMean_qV(iIq) = sum(wt_jV .* paramS.pColl_jV);   
-   iqYear2S.transferMean_qV(iIq) = sum(wt_jV .* paramS.transfer_jV);
+   iqYear2S.pMean_qV(iIq) = sum(wt_jV .* paramS.pColl_jV(jIdxV));   
+   iqYear2S.transferMean_qV(iIq) = sum(wt_jV .* paramS.transfer_jV(jIdxV));
 
-   iqYear2S.hoursCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.hours_tjM(1,:)');
-   iqYear2S.earnCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.earn_tjM(1,:)');
-   iqYear2S.consCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.cons_tjM(1,:)');
+   iqYear2S.hoursCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.hours_tjM(1,jIdxV)');
+   iqYear2S.earnCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.earn_tjM(1,jIdxV)');
+   iqYear2S.consCollMean_qV(iIq) = sum(wt_jV .* aggrS.simS.cons_tjM(1,jIdxV)');
    
    % Debt at end of year 2
-   iqYear2S.debtMean_qV(iIq) = sum(wt_jV .* aggrS.simS.debt_tjM(3,:)');
-   iqYear2S.debtFrac_qV(iIq) = sum(wt_jV .* (aggrS.simS.debt_tjM(3,:)' > 0));
+   iqYear2S.debtMean_qV(iIq) = sum(wt_jV .* aggrS.simS.debt_tjM(3,jIdxV)');
+   iqYear2S.debtFrac_qV(iIq) = sum(wt_jV .* (aggrS.simS.debt_tjM(3,jIdxV)' > 0));
    
    
    % ******* For those in college 4 years or more
    
    % Mass = mass of college grads
-   mass_jV = squeeze(aggrS.sqS.mass_sqjM(cS.iCG, iIq,:));
-   mass_jV = mass_jV(:);
+%    mass_jV = squeeze(aggrS.sqS.mass_sqjM(cS.iCG, iIq,:));
+   mass_jV = aggrS.aggr_jS.mass_sjM(cS.iCG, jIdxV);
+   mass_jV = mass_jV(:) ./ sum(mass_jV);
    
    % Debt at end of year 4 (from assets at year 5
-   debt_jV = aggrS.simS.debt_tjM(5,:)';
+   debt_jV = aggrS.simS.debt_tjM(5,jIdxV)';
    
-   iqYear4S.debtFrac_qV(iIq) = sum(mass_jV .* (debt_jV > 0)) ./ sum(mass_jV);
-   iqYear4S.debtMean_qV(iIq) = sum(mass_jV .* debt_jV) ./ sum(mass_jV);
+   iqYear4S.debtFrac_qV(iIq) = sum(mass_jV .* (debt_jV > 0));
+   iqYear4S.debtMean_qV(iIq) = sum(mass_jV .* debt_jV);
+   
+   
+   % *******  College graduates
+   % Same as those who stay 4+ years
+   % Everybody graduates in 4 or 5 years with same probability
+   prob4 = paramS.probGradFour;
+   debt_tjM = aggrS.simS.debt_tjM(5:6, jIdxV);
+   hasDebt_tjM = (debt_tjM > 0);
+   
+   iqGradS.debtFrac_qV(iIq) = sum(mass_jV .* (prob4 .* hasDebt_tjM(1,:)'  +  (1 - prob4) .* hasDebt_tjM(2,:)'));
+   iqGradS.debtMean_qV(iIq) = sum(mass_jV .* (prob4 .* debt_tjM(1,:)'  +  (1 - prob4) .* debt_tjM(2,:)'));
 
    
 %    % *** Debt stats at end of college
@@ -110,6 +130,11 @@ if cS.dbg > 10
       '>=', 0})
    validateattributes(iqYear4S.debtFrac_qV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
       '>=', 0, '<=', 1.001})
+
+   validateattributes(iqGradS.debtFrac_qV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+      '<=', 1.001,  'size', [nIq, 1]})
+   validateattributes(iqGradS.debtMean_qV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+         'size', [nIq, 1]})
 end
 
 

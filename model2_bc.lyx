@@ -299,70 +299,58 @@ they live for
 \end_layout
 
 \begin_layout Section
-Endowments 
+Endowments
 \end_layout
 
 \begin_layout Standard
-Each agent is endowed with a type 
-\begin_inset Formula $j\in\left\{ 1,...,J\right\} $
+We index households by 
+\begin_inset Formula $\hhType\in\left\{ 1,...,\nTypes\right\} $
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-All agents of type 
-\begin_inset Formula $j$
+Each agent draws 
+\begin_inset Formula $\left(\ability,\abilSignal,\ln\pTransfer,\ln\famIncome,\IQ\right)$
 \end_inset
 
- share the same values for
+ from a joint normal distribution.
 \end_layout
 
-\begin_layout Itemize
-parental income 
-\begin_inset Formula $\famIncome$
+\begin_layout Standard
+Mean vector 
+\begin_inset Formula $\left(0,0,\endowMean_{\pTransfer},0,0\right)$
 \end_inset
 
-
+.
+ We don't care about the scale of parental income at this point.
 \end_layout
 
-\begin_layout Itemize
-ability signal 
-\begin_inset Formula $\abilSignal$
+\begin_layout Standard
+Std deviation vector 
+\begin_inset Formula $\left(1,1,\endowStd_{\pTransfer},1,1\right)$
 \end_inset
 
-
+.
 \end_layout
 
-\begin_layout Itemize
-college cost 
-\begin_inset Formula $\collCost$
-\end_inset
-
- (currently not varying with 
-\begin_inset Formula $\hhType$
-\end_inset
-
-)
+\begin_layout Standard
+The household observes all endowments except for ability.
 \end_layout
 
-\begin_layout Itemize
-college wage 
-\begin_inset Formula $\collegeWage$
+\begin_layout Standard
+The household's beliefs about ability are given by 
+\begin_inset Formula $\Pr\left(\ability|\hhType\right)$
 \end_inset
 
-
+.
+ This is a normal distribution with known mean and std.
+ We approximate that on a grid.
 \end_layout
 
-\begin_layout Itemize
-parental transfer 
-\begin_inset Formula $\pTransfer$
-\end_inset
-
- (not conditional on college entry)
-\end_layout
-
-\begin_layout Itemize
+\begin_layout Standard
+The household also receives 
 \begin_inset Quotes eld
 \end_inset
 
@@ -377,39 +365,182 @@ free
 
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 purpose: reduce marginal utility of consumption and leisure of high ability
  students in college, so they do not work to little, consume too much
 \end_layout
 
-\end_deeper
-\begin_layout Standard
-We may not want all of those to vary by type, but we can allow for this.
+\begin_layout Itemize
+these are just a function of 
+\begin_inset Formula $\mathbb{E}\left(\ability|\hhType\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Code
+\end_layout
+
+\begin_layout Subsubsection
+Joint distribution
 \end_layout
 
 \begin_layout Standard
-The agents also has an ability 
+Let 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ be the covariance matrix of the endowments.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $V$
+\end_inset
+
+ be the lower triangular Cholesky decomposition of 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then 
+\begin_inset Formula $VV'=\Sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We calibrate the entries of 
+\begin_inset Formula $V$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We draw endowments using
+\begin_inset Formula 
+\begin{equation}
+y_{jk}=\endowMean_{k}+\sum_{i}V_{ki}\varepsilon_{ji}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ are standard normal iid draws.
+\end_layout
+
+\begin_layout Subsubsection
+Conditional distribution of 
+\begin_inset Formula $\ability|\hhType$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each 
+\begin_inset Formula $\hhType$
+\end_inset
+
+, 
 \begin_inset Formula $\ability$
 \end_inset
 
- that is correlated with 
-\begin_inset Formula $m$
+ is a Normal random variable.
+\end_layout
+
+\begin_layout Standard
+Conditional mean and std have closed form solutions.
+\end_layout
+
+\begin_layout Standard
+Test this by simulation.
+ All of this is now in 
+\family typewriter
+MultiVarNormal
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Approximating the conditional distribution of 
+\begin_inset Formula $\ability$
+\end_inset
+
+ on a grid
+\end_layout
+
+\begin_layout Standard
+Given a fixed ability grid of approximately 2 std dev width (on each side).
+\end_layout
+
+\begin_layout Standard
+Grid is set such that each point has equal probability (unconditional).
+\end_layout
+
+\begin_layout Standard
+For each 
+\begin_inset Formula $\hhType$
+\end_inset
+
+: compute the mass of abilities in the symmetric interval around each ability
+ grid point.
+\end_layout
+
+\begin_layout Standard
+That is taken to be 
+\begin_inset Formula $\Pr\left(\ability|\hhType\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Free college consumption
+\end_layout
+
+\begin_layout Standard
+Free college consumption / leisure: 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\cColl\left(j\right)=\left(\mathbb{E}\left(\ability|\hhType\right)-m_{\min}\right)\times\beta_{c}/\left(m_{\max}-m_{\min}\right)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-Ability is not observed until the start of work
+In words: 
+\begin_inset Formula $\cColl$
+\end_inset
+
+ is linear in 
+\begin_inset Formula $\mathbb{E}\left(\ability|\hhType\right)$
+\end_inset
+
+ such that the lowest type gets 0 and the highest type gets 
+\begin_inset Formula $\beta_{c}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-The agent knows 
-\begin_inset Formula $\Pr\left(\ability|j\right)$
+Analogous for 
+\begin_inset Formula $\lColl$
 \end_inset
 
- -- a model primitive
+.
 \end_layout
 
 \begin_layout Section
@@ -1099,6 +1230,23 @@ V_{5}\left(k,j\right)=\probGradFour V_{CG}\left(k,\hhType,5\right)+\left[1-\prob
 
 \end_layout
 
+\begin_layout Subsubsection
+Calibration
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\probGradFour$
+\end_inset
+
+ is currently the same for all cohorts.
+ If we have additional data, this can be changed.
+\end_layout
+
+\begin_layout Standard
+I set it to 50% to match average duration to graduation of 4.5 years (from
+ paper with Oksana).
+\end_layout
+
 \begin_layout Subsection
 Value of studying in period 5
 \end_layout
@@ -1427,10 +1575,6 @@ These can be computed from aggregates by [s, a, j]
 Mass(s,a,j) has closed form solution.
 \end_layout
 
-\begin_layout Standard
-Mass(s,IQ,j) = sum over a (mass(s,a,j) * pr(IQ|a))
-\end_layout
-
 \begin_layout Subsection
 Stats by type
 \end_layout
@@ -1566,121 +1710,6 @@ Note: we want the household to value leisure rather than dislike work.
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsubsection
-Endowments:
-\end_layout
-
-\begin_layout Standard
-Joint Normal: 
-\begin_inset Formula $\pTransfer,\abilSignal,\collCost$
-\end_inset
-
-,
-\begin_inset Formula $\famIncome$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-I implement this by drawing independent standard Normal random variables
- for each endowment.
- Then correlate them using weights called 
-\begin_inset Formula $\alpha_{x.y}$
-\end_inset
-
-.
- This is a detail.
- In effect, we are getting a joint Normal distribution.
-\end_layout
-
-\begin_layout Itemize
-correlation parameters: 
-\begin_inset Formula $\alpha_{m,\collCost}$
-\end_inset
-
- etc.
-\end_layout
-
-\begin_layout Itemize
-marginal distributions: 
-\begin_inset Formula $\mu_{\collCost},\sigma_{\collCost}$
-\end_inset
-
- etc.
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $m\sim N\left(0,1\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\ability\sim N\left(0,1\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-correlation with 
-\begin_inset Formula $m$
-\end_inset
-
- governed by 
-\begin_inset Formula $\alpha_{\ability,m}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Free college consumption / leisure: 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\cColl\left(j\right)=\left(m_{j}-m_{\min}\right)\times\beta_{c}/\left(m_{\max}-m_{\min}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-In words: 
-\begin_inset Formula $\cColl$
-\end_inset
-
- is linear in 
-\begin_inset Formula $m$
-\end_inset
-
- such that the lowest type gets 0 and the highest type gets 
-\begin_inset Formula $\beta_{c}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Analogous for 
-\begin_inset Formula $\lColl$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-With small 
-\begin_inset Formula $J$
-\end_inset
-
- (e.g.
- 80), the realized means and std devs can be quite far from the targets.
- To avoid that, I scale all random vars to be N(0,1).
 \end_layout
 
 \begin_layout Subsubsection
@@ -2394,21 +2423,8 @@ match earnings in college (source?)
 \end_layout
 
 \begin_layout Itemize
-for now: keep constant (in stationary model)
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\pi\left(a\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\prGradMin$
-\end_inset
-
- matches college graduation rate
+for now: keep constant (in stationary model).
+ Need to change this +++
 \end_layout
 
 \begin_layout Standard
@@ -2445,6 +2461,20 @@ Calibrated
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\pi\left(a\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\prGradMin$
+\end_inset
+
+ matches college graduation rate
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $\probHsgInter$
 \end_inset
 
@@ -2477,6 +2507,10 @@ match college entry rates, graduation rates by
 
 \end_layout
 
+\begin_layout Itemize
+currently fixed
+\end_layout
+
 \begin_layout Standard
 anything to match hours? +++
 \end_layout
@@ -2490,6 +2524,10 @@ Currently fixed
 \end_inset
 
 : mean log parental income: treat as fixed (stationary model)
+\end_layout
+
+\begin_layout Standard
+needs to change +++
 \end_layout
 
 \begin_layout Subsubsection
@@ -2511,15 +2549,7 @@ Time series calibration targets
 \end_layout
 
 \begin_layout Standard
-All targets that are available.
-\end_layout
-
-\begin_layout Standard
-Not available:
-\end_layout
-
-\begin_layout Itemize
-financing: transfers, earnings
+Target all available moments
 \end_layout
 
 \begin_layout Subsubsection
@@ -2527,11 +2557,12 @@ Hours worked in college
 \end_layout
 
 \begin_layout Standard
-Currently set to 
+Was at some point set to 
 \begin_inset Formula $\hoursPerWeekDefault$
 \end_inset
 
- (arbitrary)
+ (arbitrary).
+ Currently treated as not observed.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2539,7 +2570,7 @@ College earnings
 \end_layout
 
 \begin_layout Standard
-No data.
+Currently Hollis
 \end_layout
 
 \begin_layout Subsubsection
@@ -2547,11 +2578,15 @@ Transfers
 \end_layout
 
 \begin_layout Standard
-No data.
+Currently Hollis
 \end_layout
 
 \begin_layout Subsubsection
 Financing shares
+\end_layout
+
+\begin_layout Standard
+no longer used
 \end_layout
 
 \begin_layout Standard
@@ -2782,114 +2817,7 @@ Endowments
 \end_layout
 
 \begin_layout Subsubsection
-An alternative way of drawing endowments.
-\end_layout
 
-\begin_layout Standard
-Each agent draws 
-\begin_inset Formula $\left(\ability,\abilSignal,\pTransfer,\famIncome,\IQ\right)$
-\end_inset
-
- from a joint normal distribution.
-\end_layout
-
-\begin_layout Standard
-The household observes all endowments except for ability.
-\end_layout
-
-\begin_layout Standard
-We draw 
-\begin_inset Formula $J$
-\end_inset
-
- realizations.
- 
-\end_layout
-
-\begin_layout Standard
-For each 
-\begin_inset Formula $\hhType$
-\end_inset
-
-, 
-\begin_inset Formula $\ability$
-\end_inset
-
- is a Normal random variable.
-\end_layout
-
-\begin_layout Standard
-it should be possible to compute its mean and std deviation, so we have
- the entire distribution.
-\end_layout
-
-\begin_layout Standard
-This gives us the beliefs of the household.
-\end_layout
-
-\begin_layout Standard
-Now we make an ability grid and compute 
-\begin_inset Formula $\Pr\left(\ability|\hhType\right)$
-\end_inset
-
-.
- Done.
-\end_layout
-
-\begin_layout Paragraph
-Code:
-\end_layout
-
-\begin_layout Standard
-Define a lower diagonal weight matrix 
-\begin_inset Formula $W$
-\end_inset
-
-.
- 5x5
-\end_layout
-
-\begin_layout Standard
-compute the implied Cov matrix.
- Compute the implied scaled weight matrix such that 
-\begin_inset Formula $VV'=Cov$
-\end_inset
-
- using Cholesky.
-\end_layout
-
-\begin_layout Standard
-Endowment draws: 
-\begin_inset Formula $y_{is}=\mu_{s}+\sum_{k}V_{sk}\varepsilon_{ik}$
-\end_inset
-
- with 
-\begin_inset Formula $\varepsilon\sim N(0,1)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\mathbb{E}y_{is}|rest=\mu_{s}+\sum_{k\ne s}V_{sk}\varepsilon_{ik}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $Var\left(y_{is}|rest\right)=V_{ss}^{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Test this by simulation.
-\end_layout
-
-\begin_layout Standard
-Now we have the entire conditional distribution of each variable.
 \end_layout
 
 \begin_layout Subsection

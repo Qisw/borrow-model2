@@ -68,10 +68,12 @@ for iCohort = 1 : cS.nCohorts
    tbM{ir,1} = 'Mean hours worked in college';
    tbM{ir,ic} = sprintf('%.2f', tgS.hoursS.hoursMean_cV(iCohort));
 
-   meanEarn = sum(frac_qV .* tgS.collEarnS.mean_qcM(:,iCohort));
+   %meanEarn = sum(frac_qV .* tgS.collEarnS.mean_qcM(:,iCohort));
+   meanEarn = tgS.collEarnS.mean_cV(iCohort);
    row_add('Mean earnings in college', meanEarn, 'dollar');
    
-   meanTransfer = sum(frac_qV .* tgS.transferS.transferMean_qcM(:,iCohort));
+%    meanTransfer = sum(frac_qV .* tgS.transferS.transferMean_qcM(:,iCohort));
+   meanTransfer = tgS.transferS.transferMean_cV(iCohort);
    row_add('Mean transfers in college', meanTransfer, 'dollar');
    
    row_add('Fraction income from work',  tgS.finShareS.workShare_cV(iCohort),  '%.2f');

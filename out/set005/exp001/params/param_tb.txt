@@ -3,17 +3,17 @@
          Parameter                      Description                   Value
 ---------------------------------------------------------------------------
         Endowments                                                         
-                    Marginal distribution of $\tau$                    -0.1
-                       Marginal distribution of $z$              1.66, 0.42
-                                           IQ noise                    1.56
+                    Marginal distribution of $\tau$                    -0.4
+                       Marginal distribution of $z$              1.73, 0.56
+                                           IQ noise                    1.57
        Preferences                                                         
       $\omega_{l}$                Weight on leisure                    0.15
-      $\omega_{w}$           Weight on u(c) at work                   10.25
-      $\bar{\eta}$                Preference for HS                   25.05
-   $\bar{l}_{max}$                 Max free leisure                    0.15
+      $\omega_{w}$           Weight on u(c) at work                   10.32
+      $\bar{\eta}$                Preference for HS                   24.70
+   $\bar{l}_{max}$                 Max free leisure                    0.18
               Work                                                         
-     $\bar{Y}_{s}$                 Log skill prices  6.02, 6.37, 6.40, 6.47
+     $\bar{Y}_{s}$                 Log skill prices  6.03, 6.39, 6.41, 6.46
              Other                                                         
-           $w_{c}$                     College wage                    27.0
-                             High school graduation              0.91, 0.12
+           $w_{c}$                     College wage                    26.7
+                             High school graduation              0.91, 0.11
 ---------------------------------------------------------------------------

@@ -1,6 +1,8 @@
 function qy_entry(saveFigures, setNo)
 % For selected historical studies, show entry rates by [iq, yp]
 
+error('Not updated');
+
 cS = const_bc1(setNo);
 figS = const_fig_bc1;
 

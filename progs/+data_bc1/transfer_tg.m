@@ -11,6 +11,8 @@ nYp = length(cS.ypUbV);
 transferS.transferMean_ycM = nan([nYp, cS.nCohorts]);
 transferS.transferMean_qcM = nan([nIq, cS.nCohorts]);
 
+transferS.transferMean_cV = nan([cS.nCohorts, 1]);
+
 
 %% HSB
 % HSB, hsb_fam_income.xlsx
@@ -24,6 +26,18 @@ transferS.transferMean_ycM(:, tgS.icHSB) = [2358.477; 3589.882; 5313.561; 7710.7
 % NELS
 transferV = [2264; 3678; 4649; 5386];
 transferS.transferMean_qcM(:,tgS.icHSB) = transferV ./ dollarFactor;
+
+
+%% Earlier cohorts
+
+iCohortV = find(cS.bYearV < 1945);
+if length(iCohortV) ~= 2
+   error('Invalid');
+end
+
+outV = data_bc1.hollis_read({'transfer inc', 'savings inc'}, cS);
+transferS.transferMean_cV(iCohortV) = sum(outV);
+clear outV;
 
 
 

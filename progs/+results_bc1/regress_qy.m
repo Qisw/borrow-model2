@@ -13,7 +13,7 @@ IN
 nIq = length(iqUbV);
 nYp = length(ypUbV);
 validateattributes(probEntry_qyM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
-   '>', 0, '<', 1,  'size',  [nIq, nYp]})
+   '>=', 0, '<=', 1,  'size',  [nIq, nYp]})
 
 
 %% Regression

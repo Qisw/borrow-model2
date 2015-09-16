@@ -43,8 +43,7 @@ end
 
 
 %% Earlier cohorts
-
-% update +++++
+% Assumed constant, but scale does not matter any more
 
 % Assumed time invariant
 ypS.logYpMean_cV = ypS.logYpMean_cV(tgS.icNlsy79) .* ones([cS.nCohorts, 1]);

@@ -19,8 +19,10 @@ outS = SymbolTableLH(nameV, symbolV);
 
 % Free consumption / leisure in college: cColl, lColl
 
-nameV = {'hhType',   'ability',     'famIncome',   'cColl',    'lColl',    'IQ',    'collCost',    'abilSignal'};
-symbolV = {'j',      'x',           'y_{p}',       '\bar{c}',  '\bar{l}',  'IQ',    '\tau',        'm'};
+nameV = {'hhType',   'ability',     'famIncome',   'cColl',    'lColl',    'IQ',    'collCost',    'abilSignal', ...
+   'nTypes',   'endowMean',   '\endowStd'};
+symbolV = {'j',      'x',           'y_{p}',       '\bar{c}',  '\bar{l}',  'IQ',    '\tau',        'm', ...
+   'J',        '\mu',         '\sigma'};
 
 outS = outS.add(nameV, symbolV);
 

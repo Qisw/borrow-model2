@@ -7,6 +7,20 @@ nIq = length(cS.iqUbV);
 nYp = length(cS.ypUbV);
 
 
+%% School fractions
+if 1
+   ds = outS.devV.dev_by_name('frac s');
+   fh = output_bc1.fig_new(saveFigures, []);
+   bar([ds.modelV(:), ds.dataV(:)]);
+   xlabel(cS.sLabelV)
+   ylabel('Fraction');
+   legend({'Model', 'Data'}, 'location', 'southoutside', 'orientation', 'horizontal');
+   figures_lh.axis_range_lh([NaN, NaN, 0, 1]);
+   output_bc1.fig_format(fh, 'bar');
+   output_bc1.fig_save(fullfile(cS.fitDir, 'school_fractions'), saveFigures, cS);
+end
+
+
 %% Fit by [q, y]
 % Each figure is "flattened" into 2 figures with 4 subplots
 if 1

@@ -14,11 +14,11 @@ aggrS = var_load_bc1(cS.vAggregates, cS);
 prGrad_jV = aggrS.aggr_jS.mass_sjM(cS.iCG, :) ./ sum(aggrS.aggr_jS.mass_sjM(cS.iCD : cS.nSchool, :));
 prGrad_jV = prGrad_jV(:);
 
-% Collect info and sort by ability signal
-dataM = table(paramS.m_jV, paramS.prob_jV, hhS.v0S.probEnter_jV, prGrad_jV, ...
+% Collect info and sort by expected ability
+dataM = table(paramS.endowS.abilMean_jV, paramS.m_jV, paramS.prob_jV, hhS.v0S.probEnter_jV, prGrad_jV, ...
    paramS.transfer_jV,  ...
    aggrS.simS.cons_tjM(1,:)',  aggrS.simS.cons_tjM(3,:)',  aggrS.simS.hours_tjM(1,:)', aggrS.simS.hours_tjM(3,:)');
-dataM.Properties.VariableNames = {'m', 'probJ', 'probEnter', 'prGradJ', ...
+dataM.Properties.VariableNames = {'abilMean', 'm', 'probJ', 'probEnter', 'prGradJ', ...
    'zColl', 'c1', 'c2', 'hours1', 'hours2'};
 dataM = sortrows(dataM, 1);
 dataM.cumProbJ = cumsum(dataM.probJ);
@@ -26,7 +26,7 @@ dataM.cumProbJ = cumsum(dataM.probJ);
 
 %% Simple x-y plots
 if 1
-   xStrV = {'m',     'm',     'm',     'm',     'm',     'm',   ...
+   xStrV = {'abilMean',     'abilMean',     'abilMean',     'abilMean',     'abilMean',     'abilMean',   ...
       'c1',    'c2'};
    yStrV = {'entry', 'c1',    'c2', 'leisure1',  'leisure2', 'prGradJ', ...
       'leisure1', 'leisure2'};
@@ -77,6 +77,10 @@ end
          labelStr = 'Ability signal (cum pct)';
          dataV = dataM.cumProbJ;
          figStr = 'm';
+      elseif strcmp(inStr, 'abilMean')
+         labelStr = 'Expected ability percentile';
+         dataV = dataM.abilMean;
+         figStr = 'abilMean';
       elseif strcmp(inStr, 'c1')
          labelStr = 'Cons period 1';
          dataV = dataM.c1;

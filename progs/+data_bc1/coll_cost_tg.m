@@ -43,13 +43,13 @@ validateattributes(costS.pMean_cV, {'double'}, {'finite', 'nonnan', 'nonempty', 
 
 
 %%  NLSY79
-% Not clear how to scale that consistently with the time series +++
+% Not clear how to scale that consistently with the time series
 
 % Mean p by IQ
 % NELS (gradpred, Table 17)
 % pMeanV = [3550; 3362; 3449; 4119];
 % costS.pMean_qcM(:,icHSB) = pMeanV(:) ./ hsbCpiFactor;
 
-% Need to construct by yp +++
+% Need to construct by yp (if used)
 
 end

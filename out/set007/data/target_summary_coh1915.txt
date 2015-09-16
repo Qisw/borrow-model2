@@ -3,7 +3,7 @@ Summary of calibration targets for 1933 cohort
 
 All detrended
 College cost: mean / std  2.4 / NaN 
-In college: mean hours: 0.08   mean earnings: NaN 
+In college: mean hours: NaN   mean earnings: NaN 
 
 By parental income quartile
    Q  ypMean   zMean
@@ -15,7 +15,7 @@ By parental income quartile
 
 By IQ quartile
    Q  CD+CG    CG  ypMean  zMean
-   1   0.19   NaN     NaN    NaN
-   2   0.25   NaN     NaN    NaN
-   3   0.37   NaN     NaN    NaN
-   4   0.49   NaN     NaN    NaN
+   1   0.67   NaN     NaN    NaN
+   2   0.39   NaN     NaN    NaN
+   3   0.14   NaN     NaN    NaN
+   4   0.60   NaN     NaN    NaN

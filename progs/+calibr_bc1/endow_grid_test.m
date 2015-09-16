@@ -21,15 +21,15 @@ for i1 = 1 : n
    wtM(i1,i1) = 1;
 end
 
-fprintf('Weight matrix: \n');
-disp(wtM)
+% fprintf('Weight matrix: \n');
+% disp(wtM)
 
 gridM = calibr_bc1.endow_grid(muV, stdV, wtM, cS);
 
 corrM = corrcoef(gridM);
 
-fprintf('Correlation matrix: \n');
-disp(corrM)
+% fprintf('Correlation matrix: \n');
+% disp(corrM)
 
 
 %% Check means
@@ -56,9 +56,9 @@ end
 
 %% Check that raising a weight increases the correlation
 
-for i1 = 1 : n
-   i2V = 1 : n;
-   i2V(i1) = [];
+% Weight matrix is lower triangular
+for i1 = 2 : n
+   i2V = 1 : (i1-1);
    for i2 = i2V(:)'
       wt2M = wtM;
       wt2M(i1,i2) = wtM(i1,i2) + 0.5;

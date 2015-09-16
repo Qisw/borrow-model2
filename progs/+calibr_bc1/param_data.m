@@ -21,8 +21,7 @@ dataS.collCostAge = 20;
 dataS.timeEndow = 52 * 84;    % how to set this? +++
 
 % If no data available, set to this many hours per week
-%  fairly arbitrary +++
-dataS.hoursPerWeekDefault = 20 / 3;
+dataS.hoursPerWeekDefault = NaN;    % 20 / 3;
 
 
 end

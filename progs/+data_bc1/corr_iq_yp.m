@@ -5,6 +5,8 @@ function corr_iq_yp(setNo)
 Change: write output to a file
 %}
 
+error('Not updated for new xls files');
+
 cS = const_bc1(setNo);
 
 dirV = dir(fullfile(cS.studyEntryDir, '*.csv'));

@@ -10,6 +10,6 @@ paramS = param_load_bc1(setNo, expNo);
 hhS    = var_load_bc1(cS.vHhSolution, cS);
 
 
-aggrS = aggr_bc1.aggregates(hhS, paramS, cS)
+aggrS = aggr_bc1.aggregates(hhS, paramS, cS);
 
 end

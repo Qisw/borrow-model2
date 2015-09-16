@@ -91,7 +91,7 @@ tgS.tgTransferIq = 1;
 tgS.tgPenalizeLargeTransfers = true;
 
 % Financing shares (only constructed for cohorts where transfers etc not available)
-tgS.tgFinShares = 1;
+tgS.tgFinShares = false;
 
 
 %% Override for cases

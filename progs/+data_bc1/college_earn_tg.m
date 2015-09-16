@@ -39,6 +39,15 @@ for ic = [tgS.icNlsy79, tgS.icNlsy97]
 end
 
 
+%% Earlier cohorts
+
+iCohortV = find(cS.bYearV < 1945);
+if length(iCohortV) ~= 2
+   error('Invalid');
+end
+
+collEarnS.mean_cV(iCohortV) = data_bc1.hollis_read({'own earnings'}, cS);
+
 
 %% Implied
 

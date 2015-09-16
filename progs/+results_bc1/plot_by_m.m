@@ -1,6 +1,7 @@
 function fh = plot_by_m(yM, saveFigures, cS)
 % Plot a variable by m (or a set of variables)
 %{
+Instead of m, we now plot by E(ability | j)
 Leave plot open and return handle
 %}
 
@@ -14,7 +15,7 @@ end
 
 % Sort types by m
 paramS = param_load_bc1(cS.setNo, cS.expNo);
-sortM = sortrows([paramS.m_jV, (1 : cS.nTypes)']);
+sortM = sortrows([paramS.endowS.abilMean_jV, (1 : cS.nTypes)']);
 
 % Sorted type indices
 jIdxV = sortM(:, 2);
@@ -28,6 +29,6 @@ for iVar = 1 : nVars
 end
 
 hold off;
-xlabel('Signal percentile');
+xlabel('Expected ability percentile');
 
 end

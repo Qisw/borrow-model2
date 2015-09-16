@@ -13,6 +13,7 @@ IN
       variances may be 0
    wtM
       weight each var puts on each random variable
+      lower triangular (without loss of generality)
 %}
 % ---------------------------------------------
 

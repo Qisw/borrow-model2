@@ -2,6 +2,8 @@ function iq_yp_entry(setNo)
 % Characterize importance of [iq, yp] for college entry
 % Historical studies
 
+error('Not updated');
+
 cS = const_bc1(setNo);
 
 

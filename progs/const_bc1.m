@@ -113,7 +113,7 @@ cS.lFloor = 0.01;
 %% Default: endowments
 
 % Size of ability grid
-cS.nAbil = 9;
+cS.nAbil = 11;
 
 % Number of types
 cS.nTypes = 150;
@@ -250,10 +250,12 @@ cS.ageRetire = cS.physAgeRetire - cS.age1 + 1;
 
 % Changes if model does not have college cost hetero
 if ~cS.modelS.hasCollCostHetero
+   % pMean is directly taken from data
+   pvec = pvec.calibrate('pMean', cS.calNever);
    pvec = pvec.change('pStd', [], [], 0,  0, 1e4 ./ cS.unitAcct, cS.calNever);
-   pvec = pvec.change('alphaPY', [], [], 0,  [], [], cS.calNever);
-   pvec = pvec.change('alphaPM', [], [], 0,  [], [], cS.calNever);
-   pvec = pvec.change('alphaZP', [], [], 0,  [], [], cS.calNever);
+%    pvec = pvec.change('alphaPY', [], [], 0,  [], [], cS.calNever);
+%    pvec = pvec.change('alphaPM', [], [], 0,  [], [], cS.calNever);
+%    pvec = pvec.change('alphaZP', [], [], 0,  [], [], cS.calNever);
 end
 
 

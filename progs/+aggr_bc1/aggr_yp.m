@@ -1,5 +1,8 @@
+function [ypS, ypYear2S, ypYear4S, ypGradS] = aggr_yp(aggrS, paramS, cS)
 % Aggregates: By parental income class
-function [ypS, ypYear2S, ypYear4S] = aggr_yp(aggrS, paramS, cS)
+%{
+This repeats code for aggregates by IQ
+%}
 
 % nIq = length(cS.iqUbV);
 nyp = length(cS.ypUbV);
@@ -36,6 +39,11 @@ ypYear2S.debtMean_yV = nan(nyp, 1);
 % Debt at end of year 4 (these are CG)
 ypYear4S.debtFrac_yV = zeros([nyp, 1]);
 ypYear4S.debtMean_yV = zeros([nyp, 1]);
+
+
+% College grads at end of college
+ypGradS.debtFrac_yV = zeros([nyp, 1]);
+ypGradS.debtMean_yV = zeros([nyp, 1]);
 
 
 
@@ -99,6 +107,18 @@ for iy = 1 : nyp
       ypYear4S.debtFrac_yV(iy) = sum(frac_jV .* (aggrS.simS.debt_tjM(5,jIdxV)' > 0));
       ypYear4S.debtMean_yV(iy) = sum(frac_jV .* aggrS.simS.debt_tjM(5,jIdxV)');
 
+      
+      % ******  College grads at end of college
+      % Same as those who stay 4+ years
+      mass_jV = frac_jV;
+      % Everybody graduates in 4 or 5 years with same probability
+      prob4 = paramS.probGradFour;
+      debt_tjM = aggrS.simS.debt_tjM(5:6, jIdxV);
+      hasDebt_tjM = (debt_tjM > 0);
+
+      ypGradS.debtFrac_yV(iy) = sum(mass_jV .* (prob4 .* hasDebt_tjM(1,:)'  +  (1 - prob4) .* hasDebt_tjM(2,:)'));
+      ypGradS.debtMean_yV(iy) = sum(mass_jV .* (prob4 .* debt_tjM(1,:)'  +  (1 - prob4) .* debt_tjM(2,:)'));
+      
 
 
       % ******  Stats by [iq, yp]
@@ -131,6 +151,12 @@ if cS.dbg > 10
       '>=', 0, '<=', 1.001, 'size', [nyp,1]})
    validateattributes(ypYear4S.debtMean_yV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
       '>=', 0, 'size', [nyp,1]})
+
+
+   validateattributes(ypGradS.debtFrac_yV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+      '<=', 1.001,  'size', [nyp, 1]})
+   validateattributes(ypGradS.debtMean_yV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
+         'size', [nyp, 1]})
 end
 
 ypYear2S.debtFrac_yV = min(1, ypYear2S.debtFrac_yV);

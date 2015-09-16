@@ -1,0 +1,24 @@
+
+-----------------------------------------------------------------------------------------------------------
+                                      Description                     Model                      Data   Dev
+-----------------------------------------------------------------------------------------------------------
+                            Fraction by schooling    0.09, 0.08, 0.52, 0.31    0.10, 0.16, 0.38, 0.36  3.00
+         Fraction entering college by IQ quartile    0.77, 0.92, 0.96, 0.99    0.60, 0.80, 0.88, 0.96  3.06
+          Fraction entering college by y quartile    0.63, 0.90, 0.91, 0.99    0.65, 0.77, 0.87, 0.96  1.15
+    Fraction graduating high school by y quartile    0.85, 0.91, 0.93, 0.96    0.78, 0.91, 0.94, 0.99  0.33
+   Fraction graduating high school by IQ quartile    0.85, 0.90, 0.93, 0.96    0.76, 0.90, 0.96, 0.99  0.54
+                        Joint distribution of q,y                                                      1.20
+                             Lifetime earnings CD                      6.97                      6.81  3.54
+                       Lifetime earnings premiums  -0.47, -0.20, 0.00, 0.24  -0.56, -0.20, 0.00, 0.40  3.54
+                             Mean of college cost                     -0.57                      3.62  8.96
+                            Mean hours in college                      0.18                      0.25  2.16
+                      Mean hours in college by IQ    0.23, 0.20, 0.17, 0.12    0.29, 0.27, 0.25, 0.22  2.32
+                       Mean hours in college by y    0.22, 0.20, 0.18, 0.12    0.28, 0.28, 0.25, 0.21  2.26
+                         Mean earnings in college                      3.68                      4.07  0.32
+                   Mean earnings in college by IQ    4.75, 4.18, 3.62, 2.55    6.49, 5.07, 4.07, 3.03  2.18
+                    Mean earnings in college by y    4.58, 4.26, 3.69, 2.57    5.68, 5.28, 3.80, 2.94  1.23
+                         Fraction with debt by IQ    0.43, 0.58, 0.69, 0.79    0.64, 0.70, 0.70, 0.62  0.77
+                         Fraction with debt by yp    0.76, 0.64, 0.71, 0.61    0.80, 0.81, 0.69, 0.54  0.33
+                                Mean college debt    2.67, 4.16, 5.59, 7.45    5.11, 6.61, 6.98, 6.16  1.98
+                                Mean college debt    6.37, 5.43, 6.22, 4.77    7.99, 8.29, 6.32, 5.26  1.41
+-----------------------------------------------------------------------------------------------------------

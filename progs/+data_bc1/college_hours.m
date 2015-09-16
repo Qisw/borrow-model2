@@ -1,5 +1,8 @@
 function outS = college_hours(tgS, cS)
 % Calibration targets: hours in college
+%{
+Not available for all cohorts
+%}
 
 nIq = length(cS.iqUbV);
 nYp = length(cS.ypUbV);
@@ -67,8 +70,9 @@ if ~isempty(idxV)
    validateattributes(outS.hoursMean_qcM(:,idxV), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'positive', ...
       '<', 1})
 end
-validateattributes(outS.hoursMean_cV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'positive', ...
-   'size', [cS.nCohorts, 1]})
+% Mean hours: missing values
+% validateattributes(outS.hoursMean_cV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'positive', ...
+%    'size', [cS.nCohorts, 1]})
       
 
 end
