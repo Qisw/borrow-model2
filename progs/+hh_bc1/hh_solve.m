@@ -116,7 +116,7 @@ saveS.v0S = v0S;
 
 %% High school graduation (exogenous)
 
-saveS.probHsg_jV = hh_bc1.prob_hsg(paramS.m_jV, paramS, cS);
+saveS.probHsg_jV = hh_bc1.prob_hsg(paramS.endowS.abilMean_jV, paramS, cS);
 
 
 end

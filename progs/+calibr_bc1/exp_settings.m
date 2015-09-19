@@ -141,7 +141,7 @@ end
    
 %% Nested:   Counterfactuals
 % Change one parameter (e.g. college costs). Hold school fractions constant at base exper.
-% Nothing is calibrated  EXCEPT prefHS, probHsgInter to match college entry.
+% Nothing is calibrated  EXCEPT prefHS, probHsg params to match college entry.
 % Params are copied from base
 function counterfactuals
    expS.doCalibrate = 1;
@@ -151,7 +151,10 @@ function counterfactuals
 
    % Calibrate only 2 param to match school fractions
    pvec = pvec.calibrate('prefHS', cS.calExp);
-   pvec = pvec.calibrate('probHsgInter', cS.calExp);
+   %pvec = pvec.calibrate('probHsgInter', cS.calExp);
+   pvec = pvec.calibrate('probHsgMin', cS.calExp);
+   pvec = pvec.calibrate('probHsgMult', cS.calExp);
+   pvec = pvec.calibrate('probHsgOffset', cS.calExp);
    % Only target school fractions
    tgS = calibr_bc1.caltg_defaults('onlySchoolFrac', cS.modelS);
    
@@ -265,7 +268,6 @@ function time_series
          % also implement: do not target IQ/yp sorting +++++
          % this is 'timeSeries'
 
-   % Calibrate all time varying parameters to match data for another cohort
    if any(expNo == cS.bYearExpNoV)
       % ******  Calibrate all time varying params
       iCohort = find(expNo == cS.bYearExpNoV);
@@ -274,12 +276,21 @@ function time_series
       
       % Signal noise
       % pvec = pvec.calibrate('alphaAM', cS.calExp);
+      
       % Match overall college entry
       pvec = pvec.calibrate('prefHS', cS.calExp);
+
       % Match college graduation rate
       pvec = pvec.calibrate('prGradMin',  cS.calExp);
+      pvec = pvec.calibrate('prGradMax',  cS.calExp);
+      pvec = pvec.calibrate('prGradMult',  cS.calExp);
+      pvec = pvec.calibrate('prGradExp',  cS.calExp);
+      
       % Match HS graduation rate
-      pvec = pvec.calibrate('probHsgInter', cS.calExp);
+%       pvec = pvec.calibrate('probHsgInter', cS.calExp);
+      pvec = pvec.calibrate('probHsgMin', cS.calExp);
+      pvec = pvec.calibrate('probHsgMult', cS.calExp);
+      pvec = pvec.calibrate('probHsgOffset', cS.calExp);
       
       % Scale factors of lifetime earnings (log)
       pvec = pvec.calibrate('eHatCD', cS.calExp);

@@ -18,6 +18,8 @@ ypS.massEnter_yV = zeros([nyp, 1]);
 % ypS.fracGrad_yV = zeros([nyp, 1]);
 % This is NOT conditional on college
 ypS.logYpMean_yV = zeros([nyp, 1]);
+ypS.transferMean_yV = zeros([nyp, 1]);
+ypS.abilMean_yV = zeros([nyp, 1]);
 
 
 % ******  Years 1-2 in college
@@ -63,7 +65,11 @@ for iy = 1 : nyp
    ypS.massEnter_yV(iy) = sum(ypS.mass_syM(cS.iCD : cS.nSchool, iy));   
 
    % Average parental income (not conditional on college)
-   ypS.logYpMean_yV(iy) = sum(aggrS.aggr_jS.mass_jV(jIdxV) .* log(paramS.yParent_jV(jIdxV))) ./ totalMass;
+   wtV = aggrS.aggr_jS.mass_jV(jIdxV);
+   wtV = wtV ./ sum(wtV);
+   ypS.logYpMean_yV(iy) = sum(wtV .* log(paramS.yParent_jV(jIdxV)));
+   ypS.transferMean_yV(iy) = sum(wtV .* paramS.transfer_jV(jIdxV));
+   ypS.abilMean_yV(iy) = sum(wtV .* paramS.endowS.abilMean_jV(jIdxV));
 
    
    % *******  College entrants

@@ -56,7 +56,8 @@ end
 
 %% Distribution of endowments (joint)
 if 1
-   xStrV = {'m', 'm', 'y', 'm'};
+   xStrV = {'m', 'm', 'y', 'm', 'a'};
+   yStrV = {'y', 'p', 'p', 'z', 'y'};
    for iPlot = 1 : length(xStrV)
       if xStrV{iPlot} == 'm'
          xV = paramS.m_jV;
@@ -66,30 +67,26 @@ if 1
          xV = log(paramS.yParent_jV);
          xStr = 'Log yParent';
          wtV = paramS.prob_jV;
+      elseif xStrV{iPlot} == 'a'
+         xV = paramS.endowS.abilMean_jV;
+         xStr = 'Expected ability';
+         wtV = paramS.prob_jV;
       else
          error('Invalid');
       end
       
-      if iPlot == 1
+      if yStrV{iPlot} == 'y'
          % m / yp
          yV = log(paramS.yParent_jV);
          yStr = 'Log yParent';
-         figName = 'endow_yp_m';
-      elseif iPlot == 2
+      elseif yStrV{iPlot} == 'p'
          % m / p
          yV = paramS.pColl_jV;
          yStr = 'College cost';
-         figName = 'endow_p_m';
-      elseif iPlot == 3
-         % yp / p
-         yV = paramS.pColl_jV;
-         yStr = 'College cost';
-         figName = 'endow_p_yp';
-      elseif iPlot == 4
+      elseif yStrV{iPlot} == 'z'
          % transfer / m
          yV = paramS.transfer_jV;
          yStr = 'Transfer';
-         figName = 'endow_z_m';
       else
          error('Invalid');
       end
@@ -102,6 +99,8 @@ if 1
       ylabel(yStr);
       text(0.1, 0.1, sprintf('Correlation %.2f', corrCoeff), 'Units', 'normalized');
       output_bc1.fig_format(fh, 'line');
+      
+      figName = ['endow_', yStrV{iPlot}, '_', xStrV{iPlot}];
       output_bc1.fig_save(fullfile(outDir, figName), saveFigures, cS);
    end
 end

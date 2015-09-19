@@ -32,7 +32,7 @@ aggrS.mass_saM = aggr_bc1.aggr_sa(aggrS, paramS, cS);
 % Simulate histories in college, by t,j
 aggrS.simS = aggr_bc1.sim_histories(hhS, paramS, cS);
 
-% By [school, IQ, j]
+% By [school, IQ]
 aggrS.sqS = aggr_bc1.aggr_sqj(aggrS, hhS, paramS, cS);
 
 % By IQ quartile

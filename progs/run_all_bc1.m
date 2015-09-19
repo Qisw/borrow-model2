@@ -25,6 +25,8 @@ end
 if 01
    % Copy params from intermediate guess
    % param_from_guess_bc1(setNo, expNo);
+   % This is used to set params to fixed values
+   % calibr_bc1.param_set(setNo, expNo);
    
    % Calibrate for base cohort (all params)
    calibr_bc1.calibr('none', setNo, cS.expBase);

@@ -8,6 +8,8 @@ nIq = length(cS.iqUbV);
 
 % Mean parental income by IQ quartile (for all)
 iqS.logYpMean_qV = nan([nIq, 1]);
+iqS.transferMean_qV = nan([nIq, 1]);
+iqS.abilMean_qV = nan([nIq, 1]);
 
 
 % *****  Stats for first 2 years in college (includes dropouts and grads)
@@ -55,8 +57,11 @@ for iIq = 1 : nIq
    % Mass by j for this IQ
    %wtV = aggrS.aggr_jS.mass_jV .* paramS.prIq_jM(iIq, :)';
    wtV = aggrS.aggr_jS.mass_jV(jIdxV);
+   wtV = wtV ./ sum(wtV);
    % Parental income (not conditional on college)
-   iqS.logYpMean_qV(iIq) = sum(wtV .* log(paramS.yParent_jV(jIdxV))) ./ sum(wtV);
+   iqS.logYpMean_qV(iIq) = sum(wtV .* log(paramS.yParent_jV(jIdxV)));
+   iqS.transferMean_qV(iIq) = sum(wtV .* paramS.transfer_jV(jIdxV));
+   iqS.abilMean_qV(iIq) = sum(wtV .* paramS.endowS.abilMean_jV(jIdxV));
 
    
    % *******  In college: first 2 years

@@ -158,8 +158,8 @@ ptS.mark_used('prGradABase');
 row_add('wCollMean', '%.1f', []);
 row_add('probGradFour', '%.2f', []);
 
-%row_add_vector({'probHsgMult', 'probHsgOffset'}, 'High school graduation', '%.2f');
-row_add_vector({'probHsgInter', 'probHsgSlope'}, 'High school graduation', '%.2f');
+row_add_vector({'probHsgMin', 'probHsgMult', 'probHsgOffset'}, 'High school graduation', '%.2f');
+%row_add_vector({'probHsgInter', 'probHsgSlope'}, 'High school graduation', '%.2f');
 
 row_add('R', '%.2f', []);
 

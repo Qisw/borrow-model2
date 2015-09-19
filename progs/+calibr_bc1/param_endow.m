@@ -14,6 +14,9 @@ end
 % All agents start with 0 assets (bad assumption?)
 paramS.k_jV = zeros(cS.nTypes, 1);
 
+% All agents have the same college costs
+paramS.pColl_jV = paramS.pMean .* ones(cS.nTypes, 1);
+
 % All types have the same probability
 paramS.prob_jV = ones([cS.nTypes, 1]) ./ cS.nTypes;
 
@@ -109,14 +112,14 @@ if cS.dbg > 10
    % Moments of marginal distributions are checked in test fct for endow_grid
    validateattributes(paramS.yParent_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
       'positive', 'size', [cS.nTypes, 1]})
-   if abs(mean(paramS.m_jV)) > 0.2
-      disp(mean(paramS.m_jV));
-      error_bc1('Invalid mean m', cS);
-   end
-   if abs(std(paramS.m_jV) - 1) > 0.05
-      disp(std_paramS.m_jV);
-      error_bc1('Invalid std m', cS);
-   end
+%    if abs(mean(paramS.m_jV)) > 0.2
+%       disp(mean(paramS.m_jV));
+%       error_bc1('Invalid mean m', cS);
+%    end
+%    if abs(std(paramS.m_jV) - 1) > 0.05
+%       disp(std(paramS.m_jV));
+%       error_bc1('Invalid std m', cS);
+%    end
 end
 
 

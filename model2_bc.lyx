@@ -320,7 +320,7 @@ Each agent draws
 
 \begin_layout Standard
 Mean vector 
-\begin_inset Formula $\left(0,0,\endowMean_{\pTransfer},0,0\right)$
+\begin_inset Formula $\left(0,0,\meanEndow_{\pTransfer},0,0\right)$
 \end_inset
 
 .
@@ -329,7 +329,7 @@ Mean vector
 
 \begin_layout Standard
 Std deviation vector 
-\begin_inset Formula $\left(1,1,\endowStd_{\pTransfer},1,1\right)$
+\begin_inset Formula $\left(1,1,\stdEndow_{\pTransfer},1,1\right)$
 \end_inset
 
 .
@@ -426,7 +426,7 @@ We calibrate the entries of
 We draw endowments using
 \begin_inset Formula 
 \begin{equation}
-y_{jk}=\endowMean_{k}+\sum_{i}V_{ki}\varepsilon_{ji}
+y_{jk}=\meanEndow_{k}+\sum_{i}V_{ki}\varepsilon_{ji}
 \end{equation}
 
 \end_inset
@@ -675,19 +675,43 @@ Household solution
 Probability of HS graduation
 \end_layout
 
-\begin_layout Standard
-Depends on 
-\begin_inset Formula $\abilSignal$
-\end_inset
-
- (to avoid belief updating).
+\begin_layout Subsubsection
+High school graduation
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\probGradHs\left(\abilSignal\right)$
+Logistic to match that HSG rates drop a lot for low IQ, yp
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\probGradHs\left(\hhType\right)=\probHsgMin+\frac{1-\probHsgMin}{1+\exp\left(-\probHsgMult\left[\mathbb{E}\left(\ability|\hhType\right)-\probHsgOffset\right]\right)}
+\end{equation}
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+truncated in [0, 1]
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+prob_hsg.m
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Depends on 
+\begin_inset Formula $\mathbb{E}\left(\ability|\hhType\right)$
+\end_inset
+
+ (to avoid belief updating).
 \end_layout
 
 \begin_layout Subsection
@@ -1713,33 +1737,6 @@ Note: we want the household to value leisure rather than dislike work.
 \end_layout
 
 \begin_layout Subsubsection
-High school graduation
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\probGradHs\left(\abilSignal\right)=\probHsgInter+\probHsgSlope\abilSignal
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-truncated in [0, 1]
-\end_layout
-
-\begin_layout Standard
-
-\family typewriter
-prob_hsg.m
-\family default
-.
-\end_layout
-
-\begin_layout Subsubsection
 College
 \end_layout
 
@@ -1954,8 +1951,8 @@ filename "PaperFigures/param_fixed_tb.tex"
 Mostly standard choices.
 \end_layout
 
-\begin_layout Standard
-Directly from data
+\begin_layout Subsubsection
+Borrowing limits
 \end_layout
 
 \begin_layout Itemize
@@ -1964,6 +1961,24 @@ borrowing limits
 \end_inset
 
  (finaid.org)
+\end_layout
+
+\begin_layout Itemize
+for the NLSY79 cohort (mostly in colleg before 1987), the dominant source
+ of loans is GSL 
+\end_layout
+
+\begin_layout Itemize
+1983/84: GSL loans are $9.5b, Perkins $850m (Tb 3 in McPherson & Schapiro
+ 2006)
+\end_layout
+
+\begin_layout Itemize
+GSL is available to everyone, regardless of need
+\end_layout
+
+\begin_layout Itemize
+GSL limit until 1987 from finaid.org is $10,000 (current prices).
 \end_layout
 
 \begin_layout Standard
@@ -2397,34 +2412,31 @@ Time varying parameters
 \end_layout
 
 \begin_layout Subsubsection
-Directly from data
+Not calibrated
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $k_{min,d,c}$
 \end_inset
 
-: 
-\end_layout
-
-\begin_layout Itemize
-directly from statutory borrowing limits
+: borrowing limits; see below
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $w_{coll}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-match earnings in college (source?)
+: college wage
 \end_layout
 
 \begin_layout Itemize
 for now: keep constant (in stationary model).
- Need to change this +++
+ 
+\end_layout
+
+\begin_layout Itemize
+Need to change this.
+ Match earnings in college +++
 \end_layout
 
 \begin_layout Standard
@@ -2436,6 +2448,10 @@ for now: keep constant (in stationary model).
 
 \begin_layout Itemize
 currently set to 0.5 to get duration of 4.5 years (HS&B)
+\end_layout
+
+\begin_layout Itemize
+should be time varying +++
 \end_layout
 
 \begin_layout Subsubsection
@@ -2464,21 +2480,15 @@ Calibrated
 \begin_inset Formula $\pi\left(a\right)$
 \end_inset
 
-
+: probability of college graduation
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\prGradMin$
-\end_inset
-
- matches college graduation rate
+matches college graduation rate
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\probHsgInter$
-\end_inset
-
-: match high school graduation rate
+All params affecting prob of HSG: match high school graduation rate
 \end_layout
 
 \begin_layout Standard
@@ -2493,55 +2503,7 @@ match college entry rate overall
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\alpha_{a,m}$
-\end_inset
-
-: signal precision: 
-\end_layout
-
-\begin_layout Itemize
-match college entry rates, graduation rates by 
-\begin_inset Formula $IQ$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-currently fixed
-\end_layout
-
-\begin_layout Standard
 anything to match hours? +++
-\end_layout
-
-\begin_layout Subsubsection
-Currently fixed
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\mu_{y}$
-\end_inset
-
-: mean log parental income: treat as fixed (stationary model)
-\end_layout
-
-\begin_layout Standard
-needs to change +++
-\end_layout
-
-\begin_layout Subsubsection
-Group sizes vary with cohort
-\end_layout
-
-\begin_layout Standard
-E.g.
- family income is not in quartiles.
-\end_layout
-
-\begin_layout Standard
-If close to quartiles: interpolate (e.g.
- Project Talent)
 \end_layout
 
 \begin_layout Subsection
@@ -2549,7 +2511,90 @@ Time series calibration targets
 \end_layout
 
 \begin_layout Standard
-Target all available moments
+Target all available moments, EXCEPT
+\end_layout
+
+\begin_layout Itemize
+anything that governs college entry / graduation by [iq, yp]
+\end_layout
+
+\begin_layout Itemize
+might change: target graduation rates conditional on entry (they are really
+ exogenous)
+\end_layout
+
+\begin_layout Subsubsection
+Borrowing limits NLSY97
+\end_layout
+
+\begin_layout Standard
+Data for 2002/03 (Trends in student aid, 2006, table 1):
+\end_layout
+
+\begin_layout Standard
+Total federal debt: $49b 
+\end_layout
+
+\begin_layout Standard
+Stafford: $37b
+\end_layout
+
+\begin_layout Standard
+Total private debt: $7b 
+\end_layout
+
+\begin_layout Standard
+Fraction of undergrads with private debt: 5% 
+\end_layout
+
+\begin_layout Standard
+Private debt is unsurprisingly concentrated among private colleges and professio
+nal students.
+\end_layout
+
+\begin_layout Standard
+So it seems safe to neglect it for our purposes.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+Loan limits:
+\end_layout
+
+\begin_layout Standard
+Dependent students: $23k, subsidized if need is met.
+\end_layout
+
+\begin_layout Standard
+Independent students: $46k
+\end_layout
+
+\begin_layout Standard
+if denied PLUS, even dependent students (with need) can borrow up to $46,000
+ (half of that unsubsidized).
+\end_layout
+
+\begin_layout Standard
+About 45% of students are independent, mostly b/c they are age 24+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+Modeling proposal:
+\end_layout
+
+\begin_layout Standard
+Everyone gets a limit of $23k.
+\end_layout
+
+\begin_layout Standard
+We can add: below median students get low interest loans
 \end_layout
 
 \begin_layout Subsubsection

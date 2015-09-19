@@ -116,7 +116,7 @@ cS.lFloor = 0.01;
 cS.nAbil = 11;
 
 % Number of types
-cS.nTypes = 150;
+cS.nTypes = 250;
 
 % IQ groups
 cS.iqUbV = (0.25 : 0.25 : 1)';

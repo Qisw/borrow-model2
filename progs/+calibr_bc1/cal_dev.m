@@ -11,6 +11,7 @@ Checked: 2015-Apr-3
 
 % Debug or not?
 xRand = random_lh.rand_time;
+   fprintf('  xRand = %.3f \n',  xRand);
 if xRand < cS.dbgFreq
    cS.dbg = 111;
 else
@@ -24,7 +25,7 @@ if ~doShow
    end
 end
 % Save intermediate results
-if xRand < 0.02 
+if xRand < 0.05
    doSave = true;
 else
    doSave = false;
@@ -55,8 +56,12 @@ outS.devFracS = dev_add(paramS.schoolS.tgFrac_sV, aggrS.frac_sV, 1,  4 * pctFact
    'frac s', 'Fraction by schooling', '%.2f');
 
 % By [s,q,y]
-outS.devFrac_sqy = dev_add(tgS.schoolS.frac_sqycM(:,:,:,iCohort),  aggrS.qyS.mass_sqyM,  1,  ...
-   0.3 * pctFactor,  cS.tgS.tgFrac_sqy,  'frac/sqy',  'School fractions by [s,q,y]', '%.2f');
+dataM = tgS.schoolS.frac_sqycM(:,:,:,iCohort);
+% Early cohorts have partial info for this moment
+if ~any(isnan(dataM(:)))
+   outS.devFrac_sqy = dev_add(dataM,  aggrS.qyS.mass_sqyM,  1,  ...
+      0.3 * pctFactor,  cS.tgS.tgFrac_sqy,  'frac/sqy',  'School fractions by [s,q,y]', '%.2f');
+end
 
 % by IQ
 % fracEnter is conditional on HSG
@@ -194,10 +199,11 @@ outS.devDebtGradsFracIq = dev_add(tgS.debtS.fracGrads_qcM(:,iCohort),  aggrS.iqG
    1, 0.6 * pctFactor, cS.tgS.tgDebtFracGrads,  'debtFracGradsIq',  'Fraction with debt by IQ', '%.2f');
 outS.devDebtGradsFracYp = dev_add(tgS.debtS.fracGrads_ycM(:,iCohort),  aggrS.ypGradS.debtFrac_yV, ...
    1, 0.6 * pctFactor, cS.tgS.tgDebtFracGrads,  'debtFracGradsYp',  'Fraction with debt by yp', '%.2f');
+
 outS.devDebtGradsMeanIq = dev_add(tgS.debtS.meanGrads_qcM(:,iCohort),  aggrS.iqGradS.debtMean_qV, ...
-   1, dollarFactor, cS.tgS.tgDebtFracGrads,  'debtMeanGradsIq',  'Mean college debt', 'dollar');
+   1, dollarFactor, cS.tgS.tgDebtMeanGrads,  'debtMeanGradsIq',  'Mean college debt', 'dollar');
 outS.devDebtGradsMeanYp = dev_add(tgS.debtS.meanGrads_ycM(:,iCohort),  aggrS.ypGradS.debtMean_yV, ...
-   1, dollarFactor, cS.tgS.tgDebtFracGrads,  'debtMeanGradsYp',  'Mean college debt', 'dollar');
+   1, dollarFactor, cS.tgS.tgDebtMeanGrads,  'debtMeanGradsYp',  'Mean college debt', 'dollar');
 
 
 %% Debt at end of college

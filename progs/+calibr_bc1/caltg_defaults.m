@@ -23,7 +23,7 @@ tgS.tgMass_qy = true;
 % Overall school fractions
 tgS.tgFracS = 1;
 
-% Fraction graduating high school (or more) 
+% Fraction graduating high school (or more)
 tgS.tgFracHsgIq = true;
 tgS.tgFracHsgYp = true;
 
@@ -69,7 +69,7 @@ tgS.tgEarnYp = 1;
 
 % Debt at end of college by CD / CG
 % tgS.tgDebtFracS = 0;
-% tgS.tgDebtMeanS = 0;      
+% tgS.tgDebtMeanS = 0;
 % Debt at end of college
 % tgS.tgDebtFracIq = 0;
 % tgS.tgDebtFracYp = 0;
@@ -78,7 +78,9 @@ tgS.tgEarnYp = 1;
 % Average debt per student
 % tgS.tgDebtMean = false;
 % Debt stats among college grads only, by iq an yp
-tgS.tgDebtFracGrads = 1;
+%   Not used b/c small debt values could lead to large deviations relative to data
+tgS.tgDebtFracGrads = false;
+tgS.tgDebtMeanGrads = true;
 % Penalty when too many students hit borrowing limit?
 %  To avoid getting stuck at params where everyone maxes out borrowing limit
 tgS.useDebtPenalty = 1;
@@ -116,7 +118,7 @@ elseif strcmpi(caseStr, 'timeSeriesPartial')
    % Fraction by [s,q,y]
    tgS.tgFrac_sqy = false;
 
-   
+
 elseif strcmpi(caseStr, 'timeSeries')
    % Time series calibration
    % Do not target regression coefficients betaIq, betaYp
@@ -132,8 +134,8 @@ elseif strcmpi(caseStr, 'timeSeries')
    tgS.tgCollegeQy = 0;
    % Fraction by [s,q,y]
    tgS.tgFrac_sqy = false;
-   
-   
+
+
 elseif strcmpi(caseStr, 'onlySchoolFrac')
    % Target only school fractions
    % For experiments
@@ -143,7 +145,7 @@ elseif strcmpi(caseStr, 'onlySchoolFrac')
       tgS.(nameV{i1}) = false;
    end
    tgS.tgFracS = true;
-   
+
 else
    error('Invalid');
 end

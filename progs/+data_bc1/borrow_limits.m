@@ -1,7 +1,10 @@
 function borrow_limits(setNo)
 % Construct borrowing limits by [year in college, cohort]
 %{
-Base year dollar amounts, at the START of each year in college
+In units of account
+
+There is no point trying to construct this from an aggregate series
+Each cohort needs to be hand coded
 
 Checked: 2015-Mar-19
 %}
@@ -12,7 +15,7 @@ saveFigures = 1;
 
 
 
-%% Data
+%% Data: Aggregate series, but we don't use this 
 % Current dollars
 
 % Finaid.org: Aggregate borrowing limits
@@ -30,6 +33,7 @@ saveFigures = 1;
 % Subsidized + unsubsidized loan limits by year
 % and lifetime max
 % The lifetime max is actually just the sum over the first 4 years
+% This looks like independent students to me
 
 dataM = [
 1967	1500	1500	1500	1500	6000;
@@ -111,7 +115,8 @@ if 1
 end
 
 
-%% Make into borrowing limits by [year in college, cohort]
+%% Borrowing limits by [year in college, cohort]
+% Hand coded for each cohort
 
 % No of years in college
 ny = max(cS.ageWorkStartM(:)) - 1;
@@ -120,22 +125,57 @@ bLimit_acM = nan([ny+1, cS.nCohorts]);
 bLimit_acM(1, :) = 0;
 
 % Just first 4 years (with direct data)
-tV = 1 : size(bLimitM, 2);
+% tV = 1 : size(bLimitM, 2);
 
 for iCohort = 1 : cS.nCohorts
-   for iy = 1 : ny
-      % First year in college
-      year1 = cS.yearStartCollege_cV(iCohort);
-
-      % Matching time period for borrowing limits
-      yrIdx = find(year1 >= yLbV);
-      yrIdx = yrIdx(end);
-      bLimit_acM(1 + tV, iCohort) = -bLimitM(yrIdx, :)' ./ data_bc1.detrending_factors(year1, cS.setNo);
-
-      % Extend to past 4 years. Assume that borrowing limit does not rise further +++
-      tLast = 1 + tV(end);
-      bLimit_acM(tLast : end, iCohort) = bLimit_acM(tLast, iCohort);
+   % First year in college
+   year1 = cS.yearStartCollege_cV(iCohort);
+   % Years in college
+   collYearV = year1 + (0 : ny);
+   detrendV = data_bc1.detrending_factors(collYearV, cS.setNo);
+   
+   if year1 < 1967 - 5
+      % No loans
+      bLimit_acM(:, iCohort) = 0;
+      
+   elseif cS.bYearV(iCohort) == 1961
+      % NLSY 79
+      % GSL loans for everyone
+      % Nominal loan limit until 1987 is $2500 per year with cumulative limit of $10,000
+      % (finaid.org)
+      limitV = zeros(ny+1, 1);
+      limitV(2 : 5) = 2500 : 2500 : 10000;
+      limitV(6 : end) = 10000;
+      bLimit_acM(:, iCohort) = -limitV(:) ./ detrendV;
+      
+   elseif cS.bYearV(iCohort) == 1979
+      % NLSY97
+      % ?Trends in Undergraduate Borrowing II: Federal Student Loans in 1995-96, 1999-2000, and 2003-04,? March 18, 2008. http://nces.ed.gov/pubsearch/pubsinfo.asp?pubid=2008179rev.
+      % Table 1. for dependent students
+      limitV = zeros(ny+1, 1);
+      limitV(2 : 6) = cumsum([2600, 3500, 5500, 5500, 5500]);
+%       limitV(6 : end) = limitV(5);
+      bLimit_acM(:, iCohort) = -limitV(:) ./ detrendV;
+      
+   else
+      error('Not implemented');
    end
+   
+   
+   % Make sure inflation does not erode borrowing limits over time
+   for iy = 3 : (ny+1)
+      bLimit_acM(iy,:) = min(bLimit_acM(iy-1,:), bLimit_acM(iy,:));
+   end
+      
+
+%    % Matching time period for borrowing limits
+%    yrIdx = find(year1 >= yLbV);
+%    yrIdx = yrIdx(end);
+%    bLimit_acM(1 + tV, iCohort) = -bLimitM(yrIdx, :)' ./ data_bc1.detrending_factors(year1 - 1 + tV, cS.setNo);
+% 
+%    % Extend to past 4 years. Assume that borrowing limit does not rise further +++
+%    tLast = 1 + tV(end);
+%    bLimit_acM(tLast : end, iCohort) = bLimit_acM(tLast, iCohort);
 end
 
 
@@ -143,6 +183,8 @@ validateattributes(bLimit_acM, {'double'}, {'finite', 'nonnan', 'nonempty', 'rea
    'size', [ny+1, cS.nCohorts]})
 
 var_save_bc1(bLimit_acM, cS.vBorrowLimits, cS);
+
+
 
 
 end
