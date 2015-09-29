@@ -2,21 +2,21 @@
 -----------------------------------------------------------------------------------------------------------
                                       Description                     Model                      Data   Dev
 -----------------------------------------------------------------------------------------------------------
-                            Fraction by schooling    0.18, 0.21, 0.29, 0.32    0.18, 0.22, 0.31, 0.30  0.27
-         Fraction entering college by IQ quartile    0.46, 0.71, 0.76, 0.96    0.46, 0.64, 0.80, 0.91  0.48
-          Fraction entering college by y quartile    0.48, 0.55, 0.74, 0.89    0.56, 0.62, 0.77, 0.91  0.66
-    Fraction graduating high school by y quartile    0.73, 0.78, 0.86, 0.91    0.65, 0.80, 0.90, 0.95  0.67
-   Fraction graduating high school by IQ quartile    0.69, 0.80, 0.86, 0.92    0.61, 0.82, 0.90, 0.97  0.60
-                        Joint distribution of q,y                                                      2.16
-                             Lifetime earnings CD                      6.84                      6.81  0.11
-                       Lifetime earnings premiums  -0.53, -0.28, 0.00, 0.26  -0.56, -0.20, 0.00, 0.40  2.79
-                             Mean of college cost                      3.62                      3.62  0.00
-                            Mean hours in college                      0.26                      0.25  0.03
-                      Mean hours in college by IQ    0.29, 0.29, 0.25, 0.22    0.29, 0.27, 0.25, 0.22  0.07
-                       Mean hours in college by y    0.31, 0.26, 0.26, 0.22    0.28, 0.27, 0.25, 0.21  0.11
-                         Mean earnings in college                      5.29                      4.36  1.74
-                   Mean earnings in college by IQ    6.01, 6.04, 5.25, 4.58    6.78, 5.75, 4.49, 3.17  1.66
-                    Mean earnings in college by y    6.41, 5.44, 5.27, 4.60    6.49, 5.36, 4.52, 3.20  1.28
-                                Mean college debt    7.56, 6.15, 7.62, 6.35    5.39, 6.51, 6.73, 5.79  0.76
-                                Mean college debt   7.95, 10.41, 6.54, 4.44    6.81, 8.01, 6.80, 4.93  0.94
+                            Fraction by schooling    0.18, 0.21, 0.28, 0.34    0.18, 0.22, 0.31, 0.30  0.89
+         Fraction entering college by IQ quartile    0.44, 0.68, 0.81, 0.94    0.46, 0.64, 0.80, 0.91  0.22
+          Fraction entering college by y quartile    0.44, 0.53, 0.73, 0.89    0.56, 0.62, 0.77, 0.91  1.29
+    Fraction graduating high school by y quartile    0.71, 0.77, 0.88, 0.94    0.65, 0.80, 0.90, 0.95  0.29
+   Fraction graduating high school by IQ quartile    0.64, 0.83, 0.87, 0.96    0.61, 0.82, 0.90, 0.97  0.08
+                        Joint distribution of q,y                                                      1.07
+                             Lifetime earnings CD                      6.83                      6.81  0.06
+                       Lifetime earnings premiums  -0.55, -0.19, 0.00, 0.28  -0.56, -0.20, 0.00, 0.40  3.44
+                             Mean of college cost                      5.06                      5.06  0.00
+                            Mean hours in college                      0.25                      0.25  0.00
+                      Mean hours in college by IQ    0.29, 0.28, 0.26, 0.21    0.29, 0.27, 0.25, 0.22  0.05
+                       Mean hours in college by y    0.31, 0.26, 0.25, 0.21    0.28, 0.27, 0.25, 0.21  0.09
+                         Mean earnings in college                      7.19                      6.11  2.41
+                   Mean earnings in college by IQ    8.40, 8.23, 7.43, 6.01    9.50, 8.06, 6.29, 4.44  2.56
+                    Mean earnings in college by y    8.91, 7.45, 7.21, 6.18    9.09, 7.51, 6.32, 4.49  1.89
+                                Mean college debt   8.14, 8.69, 8.90, 11.12    7.55, 9.12, 9.42, 8.11  1.26
+                                Mean college debt   9.75, 13.82, 9.48, 7.64   9.53, 11.21, 9.52, 6.90  0.94
 -----------------------------------------------------------------------------------------------------------

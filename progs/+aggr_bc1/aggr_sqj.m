@@ -1,8 +1,8 @@
+function sqS = aggr_sqj(aggrS, hhS, paramS, cS)
 % Aggregates:  By [school, IQ, j]
 %{
 Checked: 2015-Aug-25
 %}
-function sqS = aggr_sqj(aggrS, hhS, paramS, cS)
 
 frac_qV = diff([0; cS.iqUbV]);
 nIq = length(cS.iqUbV);

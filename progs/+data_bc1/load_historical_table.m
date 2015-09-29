@@ -23,12 +23,12 @@ nObs = length(loadM.cum_ses);
 
 
 % Recode interval upper bounds
-[iYpV, ypUbV] = vector_lh.recode_sequential(loadM.cum_ses, 5);
+[iYpV, ypUbV] = vector_lh.recode_sequential(loadM.cum_ses, 4);
 validateattributes(iYpV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', 'positive', ...
    'size', [nObs,1]})
 outS.ypUbV = ypUbV;
 
-[iIqV, iqUbV] = vector_lh.recode_sequential(loadM.cum_iq, 5);
+[iIqV, iqUbV] = vector_lh.recode_sequential(loadM.cum_iq, 4);
 validateattributes(iIqV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', 'positive', ...
    'size', [nObs,1]})
 outS.iqUbV = iqUbV;

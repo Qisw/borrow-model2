@@ -44,8 +44,14 @@ aggrS.entrantYear2S = aggr_bc1.aggr_entrants(aggrS, cS);
 % By [parental income class]
 [aggrS.ypS, aggrS.ypYear2S, aggrS.ypYear4S, aggrS.ypGradS] = aggr_bc1.aggr_yp(aggrS, paramS, cS);
 
+% By [s, y]
+aggrS.syS = aggr_bc1.aggr_syj(aggrS, hhS, paramS, cS);
+
 % By [IQ, yp]
-[aggrS.qyS, aggrS.qyYear2S, aggrS.qyYear4S] = aggr_bc1.aggr_qy(aggrS, paramS, cS);
+% Universe used to assign [q,y] quartiles: all
+[aggrS.qyS, aggrS.qyYear2S, aggrS.qyYear4S] = aggr_bc1.aggr_qy('all', aggrS, paramS, cS);
+% Universe to assign quartiles: high school graduates
+aggrS.qyUniverseHsgS = aggr_bc1.aggr_qy('hsg', aggrS, paramS, cS);
 
 
 %% By school

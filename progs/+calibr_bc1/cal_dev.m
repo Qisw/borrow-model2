@@ -11,7 +11,6 @@ Checked: 2015-Apr-3
 
 % Debug or not?
 xRand = random_lh.rand_time;
-   fprintf('  xRand = %.3f \n',  xRand);
 if xRand < cS.dbgFreq
    cS.dbg = 111;
 else
@@ -49,19 +48,47 @@ pctFactor = 10;
 outS.devV = devvectLH(100);
 
 
-%% College outcomes
+%% School fractions
 
 % Overall
 outS.devFracS = dev_add(paramS.schoolS.tgFrac_sV, aggrS.frac_sV, 1,  4 * pctFactor, cS.tgS.tgFracS, ...
    'frac s', 'Fraction by schooling', '%.2f');
 
-% By [s,q,y]
-dataM = tgS.schoolS.frac_sqycM(:,:,:,iCohort);
+% By [s,q,y]. Sum to 1
 % Early cohorts have partial info for this moment
-if ~any(isnan(dataM(:)))
-   outS.devFrac_sqy = dev_add(dataM,  aggrS.qyS.mass_sqyM,  1,  ...
+dataM = tgS.schoolS.frac_sqycM(:,:,:,iCohort);
+modelM = aggrS.qyS.mass_sqyM ./ sum(aggrS.qyS.mass_sqyM(:));
+idxV = find(~isnan(dataM));
+if ~isempty(idxV)
+   outS.devFrac_sqy = dev_add(dataM(idxV),  modelM(idxV),  1,  ...
       0.3 * pctFactor,  cS.tgS.tgFrac_sqy,  'frac/sqy',  'School fractions by [s,q,y]', '%.2f');
 end
+
+
+% By [s,q]. Sum to 1
+dataM = tgS.schoolS.frac_sqcM(:,:,iCohort);
+modelM = aggrS.sqS.mass_sqM;
+modelM = modelM ./ sum(modelM(:));
+% Not all cohorts have this info
+idxV = find(~isnan(dataM));
+if ~isempty(idxV)
+   outS.devFrac_sq = dev_add(dataM(idxV),  modelM(idxV),  1,  ...
+      pctFactor,  cS.tgS.tgFrac_sq,  'frac/sq',  'School fractions by [s,q]', '%.2f');
+end
+
+% By [s,y]. Sum to 1
+dataM = tgS.schoolS.frac_sycM(:,:,iCohort);
+modelM = aggrS.syS.mass_syM;
+modelM = modelM ./ sum(modelM(:));
+% Not all cohorts have this info
+idxV = find(~isnan(dataM));
+if ~isempty(idxV)
+   outS.devFrac_sy = dev_add(dataM(idxV),  modelM(idxV),  1,  ...
+      pctFactor,  cS.tgS.tgFrac_sy,  'frac/sy',  'School fractions by [s,y]', '%.2f');
+end
+
+
+%% College 
 
 % by IQ
 % fracEnter is conditional on HSG
@@ -107,16 +134,39 @@ end
 
 %% High school graduation rates
 
-% Fraction HSG+
+% Fraction HSG+ | IQ or YP
 modelV = sum(aggrS.ypS.mass_syM(cS.iHSG : cS.nSchool, :)) ./ sum(aggrS.ypS.mass_syM);
-outS.devFracHsgYp = dev_add(tgS.schoolS.fracHsg_ycM(:, iCohort), modelV(:), 1, ...
-   1.5 * pctFactor, cS.tgS.tgFracHsgYp, ...
+outS.devFracHsgPlus_y = dev_add(tgS.schoolS.fracHsg_ycM(:, iCohort), modelV(:), 1, ...
+   1.5 * pctFactor, cS.tgS.tgFracHsgPlus_y, ...
    'hsg/yp',  'Fraction graduating high school by y quartile', '%.2f');
 
 modelV = sum(aggrS.sqS.mass_sqM(cS.iHSG : cS.nSchool, :)) ./ sum(aggrS.sqS.mass_sqM);
-outS.devFracHsgIq = dev_add(tgS.schoolS.fracHsg_qcM(:, iCohort), modelV(:), 1, ...
-   1.5 * pctFactor, cS.tgS.tgFracHsgIq, ...
+outS.devFracHsgPlus_q = dev_add(tgS.schoolS.fracHsg_qcM(:, iCohort), modelV(:), 1, ...
+   1.5 * pctFactor, cS.tgS.tgFracHsgPlus_q, ...
    'hsg/iq',  'Fraction graduating high school by IQ quartile', '%.2f');
+
+
+%% Schooling for universe HSG 
+
+% Fraction HSG+ | [iq, yp]. Scaled to sum to 1
+dataV = tgS.schoolS.hsgS.massHsgPlus_qycM(:,:,iCohort);
+dataV = dataV(:) ./ sum(dataV(:));
+
+modelV = aggrS.qyUniverseHsgS.massHsgPlus_qyM;
+modelV = modelV(:) ./ sum(modelV(:));
+
+outS.devHsgFracHsgPlus_qy = dev_add(dataV, modelV(:), 1, ...
+   pctFactor, cS.tgS.tgHsgFracHsgPlus_qy, ...
+   'hsg/qy2',  'Mass HSG+ by [iq, yp]', '%.2f');
+
+
+% Fraction entering college | HSG, by [iq, yp]
+dataV = tgS.schoolS.hsgS.fracEnter_qycM(:,:,iCohort);
+modelV = aggrS.qyUniverseHsgS.fracEnter_qyM;
+
+outS.devHsgFracEnter_qy = dev_add(dataV(:), modelV(:), 1, ...
+   pctFactor, cS.tgS.tgHsgCollegeQy, ...
+   'enter/qy2',  'Frac enter by [iq, yp]', '%.2f');
 
 
 
@@ -137,7 +187,7 @@ outS.devPvLty = dev_add(data_sV(cS.iCD),  model_sV(cS.iCD),  1,  1.2 * pctFactor
 
 % Target premiums relative to dropouts
 outS.devLtyPrem = dev_add(data_sV - data_sV(cS.iCD),  model_sV - model_sV(cS.iCD),  1, ...
-   2 * pctFactor,  cS.tgS.tgPvLty,  'ltyPrem',  'Lifetime earnings premiums',  '%.2f');
+   3 * pctFactor,  cS.tgS.tgPvLty,  'ltyPrem',  'Lifetime earnings premiums',  '%.2f');
 
 
 %% Parental income
@@ -352,13 +402,17 @@ IN
       
       % For display of dollar values
       if strcmp(fmtStr, 'dollar')
-         modelV = modelV .* dollarFactor;
-         tgV = tgV .* dollarFactor;
+         %modelV = modelV .* dollarFactor;
+         %tgV = tgV .* dollarFactor;
          fmtStr = '%.2f';
       end
       % Make a deviation struct
       ds = devstructLH(descrStr, descrStr, longDescrStr, modelV, tgV, wtV, scaleFactor, fmtStr);
       scalarDev = ds.scalar_dev;
+      
+%       if strcmp(descrStr, 'pMean')
+%          keyboard;
+%       end
       
       if isTarget == 1
          % Add to deviation vector

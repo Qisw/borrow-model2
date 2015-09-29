@@ -8,6 +8,9 @@ formatS.ypGroupStr = 'Family background';
 
 formatS.cohortXLabelStr = 'Cohort';
 
+formatS.iqSuffixStr = '_q';
+formatS.ypSuffixStr = '_y';
+
 
 
 %% IQ labels

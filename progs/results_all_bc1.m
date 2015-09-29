@@ -42,6 +42,7 @@ results_bc1.lty_show(saveFigures, setNo, expNo);
 
 % Fit
 results_bc1.fit(saveFigures, setNo, expNo);
+results_bc1.fit_qy(saveFigures, setNo, expNo);
 % Table with all deviations from cal targets
 results_bc1.fit_tb(setNo, expNo);
 

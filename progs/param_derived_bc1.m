@@ -6,6 +6,7 @@ Ref cohort
 Checked: 2015-Mar-19
 %}
 
+setNo = cS.setNo;
 nIq = length(cS.iqUbV);
 iCohort = cS.iCohort;
 
@@ -90,6 +91,18 @@ If not calibrated: copied from base expNo (done above)
 But can override by setting collCostExpNo
 %}
 
+% Targets for college costs
+%  Does not make sense to take that from another cohort
+paramS.costS.tgPMean = tgS.costS.pMean_cV(iCohort);
+paramS.costS.tgPStd  = tgS.costS.pStd_cV(iCohort);
+
+if ~cS.modelS.hasCollCostHetero
+   % Simply set pMean from data
+   paramS.pMean = paramS.costS.tgPMean;
+   paramS.pStd  = 0;
+end
+
+% Take from another experiment
 if ~isempty(cS.expS.collCostExpNo)
    c2S = const_bc1(cS.setNo, cS.expS.collCostExpNo);
    param2S = var_load_bc1(c2S.vParams, c2S);
@@ -102,16 +115,21 @@ if cS.expS.pMeanChange ~= 0
    paramS.pMean = paramS.pMean + cS.expS.pMeanChange;
 end
 
-% Targets for college costs
-%  Does not make sense to take that from another cohort
-paramS.costS.tgPMean = tgS.costS.pMean_cV(iCohort);
-paramS.costS.tgPStd  = tgS.costS.pStd_cV(iCohort);
 
-if ~cS.modelS.hasCollCostHetero
-   % Simply set pMean from data
-   paramS.pMean = paramS.costS.tgPMean;
-   paramS.pStd  = 0;
+
+%% High school graduation
+
+if ~isempty(cS.expS.hsGraduationExpNo)
+   % Take all params related to HSG from another experiment
+   c2S = const_bc1(setNo, cS.expS.hsGraduationExpNo);
+   param2S = var_load_bc1(cS.vParams, c2S);
+   for i1 = 1 : length(cS.pGroupS.hsGradParamV)
+      pName = cS.pGroupS.hsGradParamV{i1};
+      paramS.(pName) = param2S.(pName);
+   end
+   clear c2S param2S;
 end
+
 
 
 %% School attainment
@@ -133,7 +151,18 @@ paramS = calibr_bc1.param_endow(paramS, cS);
 
 
 
-%% Graduation probs
+%% College Graduation probs
+
+if ~isempty(cS.expS.collGraduationExpNo)
+   % Take all params related to college graduation from another experiment
+   c2S = const_bc1(setNo, cS.expS.collGraduationExpNo);
+   param2S = var_load_bc1(cS.vParams, c2S);
+   for i1 = 1 : length(cS.pGroupS.collGradParamV)
+      pName = cS.pGroupS.collGradParamV{i1};
+      paramS.(pName) = param2S.(pName);
+   end
+   clear c2S param2S;
+end
 
 % Prob of college graduation
 paramS.prGrad_aV = calibr_bc1.pr_grad_a(1 : cS.nAbil, paramS, cS);

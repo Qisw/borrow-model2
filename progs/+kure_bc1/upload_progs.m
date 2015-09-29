@@ -8,6 +8,8 @@ dirKureS  = helper_bc1.directories(false, setNo, expNo);
 kS = KureLH;
 
 kS.updownload(dirLocalS.progDir, dirKureS.progDir, 'up');
-kS.updownload(dirLocalS.sharedDir, dirKureS.sharedDir, 'up');
+% Currently using common shared progs
+kS.upload_shared_code;
+% kS.updownload(dirLocalS.sharedDir, dirKureS.sharedDir, 'up');
 
 end

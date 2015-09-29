@@ -6,7 +6,7 @@ symS = helper_bc1.symbols;
 
 % Experiments to show (each cohort)
 iCohortV = 1 : 3;
-expNoV = cS.bYearExpNoV(iCohortV);
+expNoV = cS.expS.bYearExpNoV(iCohortV);
 expNoV(3) = cS.expBase;    % Not robust
 nx = length(expNoV);
 
@@ -28,7 +28,7 @@ tbS.rowUnderlineV = zeros([nr, 1]);
 ir = 1;
 tbM{ir, 1} = 'Cohort';
 for ix = 1 : nx
-   tbM{ir, 1 + ix} = cS.dataSource_cV{iCohortV(ix)};
+   tbM{ir, 1 + ix} = cS.cohortS.descrV{iCohortV(ix)};
 end
 % tbS.rowUnderlineV(ir) = 1;
 

@@ -12,8 +12,9 @@ IN
       may be []; then the function figures out whether we run locally
 %}
 
-global lhS;
-% kS = KureLH;
+lhS = const_lh;
+% disp(lhS.runLocal);
+
 
 setStr = sprintf('set%03i', setNo);
 expStr = sprintf('exp%03i', expNo);
@@ -21,23 +22,36 @@ dirS.setStr = setStr;
 dirS.expStr = expStr;
 
 if isempty(runLocal)
-   dirS.runLocal = (exist('/users/lutz', 'dir') > 0);
+   dirS.runLocal = lhS.runLocal;
 else
    dirS.runLocal = runLocal;
 end
+runLocal = dirS.runLocal;
 
-% Only baseDir depends on whether we are local
-if dirS.runLocal
-   dirS.baseDir = fullfile('/users', 'lutz', 'dropbox', 'hc', 'borrow_constraints');
+% Project info
+pS = project_load('bc1');
+if runLocal
+   ic = pS.cLocal;
 else
-   dirS.baseDir = fullfile('/nas02/home/l/h/lhendri/', 'bc');
+   ic = pS.cRemote;
 end
+
+% % Only baseDir depends on whether we are local
+% % should be taken from project file (ProjectListLH) +++
+% if dirS.runLocal
+%    dirS.baseDir = fullfile('/users', 'lutz', 'dropbox', 'hc', 'borrow_constraints');
+% else
+%    dirS.baseDir = fullfile('/nas02/home/l/h/lhendri/', 'bc');
+% end
+dirS.baseDir = pS.baseDirV{ic};
+dirS.progDir = pS.progDirV{ic};
+dirS.sharedDirV = pS.sharedDirM(:, ic);
 
 
 % Dir hierarchy
 dirS.modelDir = fullfile(dirS.baseDir, 'model2');
 
-   dirS.progDir = fullfile(dirS.modelDir, 'progs');
+   % dirS.progDir = fullfile(dirS.modelDir, 'progs');
    % For paper figures
    dirS.paperDir = fullfile(dirS.modelDir, 'PaperFigures');
    dirS.matDir  = fullfile(dirS.modelDir, 'mat', setStr, expStr);
@@ -53,11 +67,11 @@ dirS.modelDir = fullfile(dirS.baseDir, 'model2');
          % Hh solution
          dirS.hhDir = fullfile(dirS.outDir, 'household');
 
-if dirS.runLocal
-   dirS.sharedDir = lhS.sharedDir;
-else
-   dirS.sharedDir = fullfile(dirS.modelDir, 'shared');
-end
+% if dirS.runLocal
+%    dirS.sharedDirV = lhS.sharedDirV;
+% else
+%    dirS.sharedDir = fullfile(dirS.modelDir, 'shared');
+% end
 
 dirS.dataDir = fullfile(dirS.baseDir, 'data');
 
@@ -84,7 +98,6 @@ dirS.nlsy97Fn = ...
 dirS.studyDir = '/Users/lutz/Dropbox/borrowing constraints/data/';
    dirS.studyGradDir  = fullfile(dirS.studyDir, 'income x iq x college grad');
    dirS.studyEntryDir = fullfile(dirS.studyDir, 'income x iq x college');
-
 
 
 end

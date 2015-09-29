@@ -7,7 +7,7 @@ Graduation fractions are NOT conditional on entry
 
 
 % CPS school fractions by cohort
-cpsS = var_load_bc1(cS.vCohortSchooling, cS);
+% cpsS = var_load_bc1(cS.vCohortSchooling, cS);
 
 
 %% Allocate outputs
@@ -37,6 +37,7 @@ schoolS.fracHsg_ycM   = nan([nYp, cS.nCohorts]);
 %  conditional on HSG
 schoolS.fracEnter_qycM = nan([nIq, nYp, cS.nCohorts]);
 schoolS.fracGrad_qycM  = nan([nIq, nYp, cS.nCohorts]);
+% Frac at least Hsg | q,y
 schoolS.fracHsg_qycM = nan([nIq, nYp, cS.nCohorts]);
 
 % Mass (HSG+, q, y). Sums to 1 for each cohort
@@ -48,11 +49,22 @@ schoolS.massHsgPlus_qycM = nan([nIq, nYp, cS.nCohorts]);
 
 % Fraction by schooling
 %  If available, that's the only info needed
+%  Sums to 1 if all cells available
 schoolS.frac_sqycM = nan([cS.nSchool, nIq, nYp, cS.nCohorts]);
 
 % Fraction by [s,q]. Sum to 1 for each cohort
 schoolS.frac_sqcM = nan([cS.nSchool, nIq, cS.nCohorts]);
 schoolS.frac_sycM = nan([cS.nSchool, nYp, cS.nCohorts]);
+
+
+% ******  Moments where [q,y] quartiles are defined for HSG
+
+% schoolS.hsgS.frac_sqcM
+% schoolS.hsgS.frac_sycM
+
+% Mass HSG+ by [q,y]. Sums to 1
+schoolS.hsgS.massHsgPlus_qycM = nan([nIq, nYp, cS.nCohorts]);
+schoolS.hsgS.fracEnter_qycM = nan([nIq, nYp, cS.nCohorts]);
 
 
 %%  Nlsy79 and Nlsy97
@@ -92,15 +104,15 @@ schoolS = data_bc1.load_updegraff(schoolS, cS);
 
 %%  Project Talent
 
-% Needs updating +++++
+schoolS = data_bc1.load_project_talent(schoolS, cS);
 
 % % *****  Load data
 % 
-bYear = 1942;
-iCohort = find(cS.bYearV == bYear);
-if length(iCohort) ~= 1
-   error('Not found');
-end
+% bYear = 1942;
+% iCohort = find(cS.bYearV == bYear);
+% if length(iCohort) ~= 1
+%    error('Not found');
+% end
 % 
 % dataFn = 'flanagan 1971.csv';
 % loadS = data_bc1.load_income_iq_college(dataFn, cS.setNo);
@@ -128,16 +140,15 @@ end
 % % ******  Implied
 
 % For now: just use CPS school fractions +++
-schoolS.frac_scM(:, iCohort) = cpsS.frac_scM(:, find(cpsS.bYearV == bYear));
+% schoolS.frac_scM(:, iCohort) = cpsS.frac_scM(:, find(cpsS.bYearV == bYear));
 
-check_lh.prob_check(schoolS.frac_scM(:, iCohort), 1e-6);
+% check_lh.prob_check(schoolS.frac_scM(:, iCohort), 1e-6);
 
 
 
 %% Validation
 
 iCohortV = 1 : cS.nCohorts;
-iCohortV(2) = []; % +++++ Project talent not up to date
 for iCohort = iCohortV
    % Probabilities, by [something, c]
    fieldV = {'fracEnter_qcM', 'fracGrad_qcM', 'fracEnter_ycM', 'fracGrad_ycM', 'fracHsg_qcM', 'fracHsg_ycM'};
@@ -209,15 +220,25 @@ schoolS.betaIq_cV = nan(cS.nCohorts, 1);
 schoolS.betaYp_cV = nan(cS.nCohorts, 1);
 
 for iCohort = 1 : cS.nCohorts
-   if ~isnan(schoolS.fracEnter_qycM(1,1,iCohort))
+   if iCohort == cS.cohortS.by_name('Project Talent')
+      % Universe: HSG
+      massHsgPlus_qyM = schoolS.hsgS.massHsgPlus_qycM(:,:,iCohort);
+      fracEnter_qyM = schoolS.hsgS.fracEnter_qycM(:,:,iCohort);
+   else
+      % Universe: all
+      massHsgPlus_qyM = schoolS.massHsgPlus_qycM(:,:,iCohort);
+      fracEnter_qyM = schoolS.fracEnter_qycM(:,:,iCohort);
+   end
+   
+   if ~isnan(fracEnter_qyM(1,1))
       if cS.dataS.regrIqYpWeighted
-         wt_qyM = sqrt(schoolS.massHsgPlus_qycM(:,:,iCohort));
+         wt_qyM = sqrt(massHsgPlus_qyM);
       else
          wt_qyM = [];
       end
 
       [schoolS.betaIq_cV(iCohort), schoolS.betaYp_cV(iCohort)] = ...
-         results_bc1.regress_qy(schoolS.fracEnter_qycM(:,:,iCohort), wt_qyM, ...
+         results_bc1.regress_qy(fracEnter_qyM, wt_qyM, ...
          cS.iqUbV(:), cS.ypUbV(:), cS.dbg);
    end
 end

@@ -51,7 +51,7 @@ function time_series(setNo)
    cS = const_bc1(setNo);
 
    % Compare cohort outcomes
-   cfExpNoV = fliplr(cS.bYearExpNoV(~isnan(cS.bYearExpNoV)));
+   cfExpNoV = fliplr(cS.expS.bYearExpNoV(~isnan(cS.expS.bYearExpNoV)));
    expNoV = flip([cS.expBase, cfExpNoV]);  
    c2S = const_bc1(setNo, cfExpNoV(1));
    outDir = fullfile(cS.setOutDir, c2S.expS.outDir);
@@ -84,7 +84,7 @@ function cumulative_decomp(setNo)
 
    % For experiments that vary variables cumulatively
    for iCohort = 1 : size(cS.expS.decomposeCumulExpNoM, 2)
-      expNoV = [cS.expBase; cS.expS.decomposeCumulExpNoM(:, iCohort); cS.bYearExpNoV(iCohort)];
+      expNoV = [cS.expBase; cS.expS.decomposeCumulExpNoM(:, iCohort); cS.expS.bYearExpNoV(iCohort)];
       setNoV = setNo .* ones(size(expNoV));
       outDir = fullfile(cS.setOutDir, sprintf('cumulative%i', cS.bYearV(iCohort)));
       exper_bc1.compare(setNoV, expNoV, outDir);

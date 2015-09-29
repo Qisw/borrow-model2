@@ -17,7 +17,7 @@ loadS = var_load_bc1(cS.vStudentDebtData, cS);
 
 % Take average debt at year 2 in college 
 %  Early cohorts have 0 debt (year 1)
-yearCollegeV = cS.yearStartCollege_cV + 2;
+yearCollegeV = cS.cohortS.yearStartCollegeV + 2;
 
 % Detrend
 [~, detrendV] = data_bc1.detrending_factors(yearCollegeV, cS.setNo);

@@ -3,8 +3,25 @@ function fit(saveFigures, setNo, expNo)
 cS = const_bc1(setNo, expNo);
 figS = const_fig_bc1;
 outS = var_load_bc1(cS.vCalResults, cS);
+aggrS = var_load_bc1(cS.vAggregates, cS);
+paramS = var_load_bc1(cS.vParams, cS);
+tgS = var_load_bc1(cS.vCalTargets, cS);
 nIq = length(cS.iqUbV);
 nYp = length(cS.ypUbV);
+
+
+%% Lifetime earnings
+if 1
+   dataV = log(paramS.earnS.tgPvEarn_sV);
+   modelV = aggrS.pvEarnMeanLog_sV;
+   fh = output_bc1.fig_new(saveFigures, []);
+   bar([modelV(:), dataV(:)] - dataV(cS.iHSG));
+   ylabel('Log lifetime earnings');
+   legend({'Model', 'Data'}, 'location', 'southoutside', 'orientation', 'horizontal');
+   output_bc1.fig_format(fh, 'bar');
+   output_bc1.fig_save(fullfile(cS.fitDir, 'log_lty'), saveFigures, cS);
+   %return;
+end
 
 
 %% School fractions
@@ -12,7 +29,6 @@ if 1
    ds = outS.devV.dev_by_name('frac s');
    fh = output_bc1.fig_new(saveFigures, []);
    bar([ds.modelV(:), ds.dataV(:)]);
-   xlabel(cS.sLabelV)
    ylabel('Fraction');
    legend({'Model', 'Data'}, 'location', 'southoutside', 'orientation', 'horizontal');
    figures_lh.axis_range_lh([NaN, NaN, 0, 1]);
@@ -21,20 +37,52 @@ if 1
 end
 
 
-%% Fit by [q, y]
-% Each figure is "flattened" into 2 figures with 4 subplots
+%% School fractions by IQ or yp
 if 1
-   ds = outS.devV.dev_by_name('mass qy');
-   [fhIq, fhYp, fhIqV, fhYpV] = output_bc1.fit_qy(ds.modelV, ds.dataV, 'Fraction', saveFigures, cS);
-   
-   figure(fhIq);
-   output_bc1.fig_save(fullfile(cS.fitDir, 'qy_mass_byIq'), saveFigures, cS);
-   figure(fhYp);
-   output_bc1.fig_save(fullfile(cS.fitDir, 'qy_mass_byYp'), saveFigures, cS);
+   % Plot by IQ or yp
+   for iPlot = 1 : 2
+      if iPlot == 1
+         % Is this a target?
+         isTarget = cS.tgS.tgFrac_sq;
+         data_sxM = tgS.schoolS.frac_sqcM(:,:,cS.iCohort);
+         model_sxM = aggrS.sqS.mass_sqM;
+         xStr = cS.formatS.iqGroupStr;
+         suffixStr = cS.formatS.iqSuffixStr;
+      elseif iPlot == 2
+         isTarget = cS.tgS.tgFrac_sy;
+         data_sxM = tgS.schoolS.frac_sycM(:,:,cS.iCohort);
+         model_sxM = aggrS.syS.mass_syM;         
+         xStr = cS.formatS.ypGroupStr;
+         suffixStr = cS.formatS.ypSuffixStr;
+      end
+      % Mass should sum to 1
+      model_sxM = model_sxM ./ sum(model_sxM(:));
+      
+      % Are there data?
+      if isTarget  &&  any(~isnan(data_sxM(:)))
+         fh = output_bc1.fig_new(saveFigures, figS.figOpt4S);
+         
+         for iSchool = 1 : cS.nSchool
+            % Are there data for this school group?
+            if ~isnan(data_sxM(iSchool,1))
+               subplot(2,2,iSchool);
+               bar([model_sxM(iSchool,:)',  data_sxM(iSchool, :)']);
+               xlabel(xStr);
+               ylabel(['Fraction ', cS.sLabelV{iSchool}]);
+               figures_lh.axis_range_lh([NaN, NaN, 0, 1]);
+               output_bc1.fig_format(fh, 'bar');
+            end
+         end
+         
+         output_bc1.fig_save(fullfile(cS.fitDir, ['school_fractions', suffixStr]), saveFigures, cS);
+      end
+   end
 end
 
 
-%% Prob enter college | IQ  /  prob grad | IQ  /   also by yp
+
+
+%% Targets by IQ or yp
 if 1
    % What can be on the x axis
    xIq = 1;

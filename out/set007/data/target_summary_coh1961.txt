@@ -3,19 +3,19 @@ Summary of calibration targets for 1979 cohort
 
 All detrended
 College cost: mean / std  2.7 / 3.1 
-In college: mean hours: 0.25   mean earnings: 7.7 
+In college: mean hours: 0.25   mean earnings: 7.5 
 
 By parental income quartile
    Q  ypMean   zMean
    1    33.4     3.0
-   2    60.7     4.5
-   3    82.7     6.7
-   4   110.2     9.8
+   2    60.2     4.5
+   3    81.1     6.7
+   4   109.2     9.8
 
 
 By IQ quartile
    Q  CD+CG    CG  ypMean  zMean
-   1   0.32  0.04    50.2    2.9
-   2   0.44  0.10    66.9    4.7
-   3   0.63  0.25    75.1    5.9
+   1   0.32  0.04    48.9    2.9
+   2   0.43  0.10    66.7    4.7
+   3   0.63  0.26    75.1    5.9
    4   0.88  0.57    83.6    6.8

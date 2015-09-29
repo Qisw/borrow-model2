@@ -210,9 +210,9 @@ end
 
 
 %% Parental income classes
-paramS.ypClass_jV = distrib_lh.class_assign(paramS.yParent_jV, paramS.prob_jV, cS.ypUbV, cS.dbg);
+endowS.ypClass_jV = distrib_lh.class_assign(paramS.yParent_jV, paramS.prob_jV, cS.ypUbV, cS.dbg);
 if cS.dbg > 10
-   validateattributes(paramS.ypClass_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
+   validateattributes(endowS.ypClass_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
       'positive', '<=', length(cS.ypUbV)})
 end
 

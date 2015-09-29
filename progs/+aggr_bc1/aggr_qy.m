@@ -1,6 +1,12 @@
-function [qyS, qyYear2S, qyYear4S] = aggr_qy(aggrS, paramS, cS)
+function [qyS, qyYear2S, qyYear4S] = aggr_qy(universeStr, aggrS, paramS, cS)
 % Aggregates by [IQ, yp] quartile
 %{
+IN:
+   universeStr
+      which universe to use for assigning [q,y] quartiles?
+      'all'
+      'hsg'
+
 Checked: 2015-Sep-16
 %}
 
@@ -8,21 +14,15 @@ dbg = cS.dbg;
 nIq = length(cS.iqUbV);
 nyp = length(cS.ypUbV);
 
-
-
-%% Probabilities: Entrants
-
-% % Prob j among college entrants
-% pr_jV = aggrS.aggr_jS.massColl_jV;
-% pr_jV = pr_jV ./ sum(pr_jV);
-
-% % We have Pr(j) and Pr(IQ | j). Use Bayes rule to compute the rest
-% pmS = stats_lh.ProbMatrix2D(paramS.prIq_jM, pr_jV);
-% 
-% prJ_qM = pmS.prX_yM;
-% validateattributes(prJ_qM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'size', [cS.nTypes, nIq]})
-% clear pmS;
-
+if strcmpi(universeStr, 'all')
+   ypClass_jV = paramS.endowS.ypClass_jV;
+   iqClass_jV = paramS.endowS.iqClass_jV;
+elseif strcmpi(universeStr, 'hsg')
+   ypClass_jV = aggrS.aggr_jS.ypClassHsg_jV;
+   iqClass_jV = aggrS.aggr_jS.iqClassHsg_jV;
+else
+   error('Invalid');
+end
 
 
 %% Allocate output matrices
@@ -54,7 +54,7 @@ qyS.massHsgPlus_qyM = zeros([nIq, nyp]);
 for iy = 1 : nyp
    for iIq = 1 : nIq
       % j in this class
-      jIdxV = find((paramS.ypClass_jV == iy)  &  (paramS.endowS.iqClass_jV == iIq));
+      jIdxV = find((ypClass_jV == iy)  &  (iqClass_jV == iIq));
       if ~isempty(jIdxV)
    
          % ********  All
@@ -132,6 +132,7 @@ qyS.fracGrad_qyM  = min(1, qyS.fracGrad_qyM);
 
 
 if cS.dataS.regrIqYpWeighted
+   % Universe: all
    wt_qyM = sqrt(qyS.mass_qyM);
 else
    wt_qyM = [];

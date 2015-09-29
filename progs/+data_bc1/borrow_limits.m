@@ -129,7 +129,7 @@ bLimit_acM(1, :) = 0;
 
 for iCohort = 1 : cS.nCohorts
    % First year in college
-   year1 = cS.yearStartCollege_cV(iCohort);
+   year1 = cS.cohortS.yearStartCollegeV(iCohort);
    % Years in college
    collYearV = year1 + (0 : ny);
    detrendV = data_bc1.detrending_factors(collYearV, cS.setNo);

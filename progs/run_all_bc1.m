@@ -33,7 +33,7 @@ if 01
    
    % Run all experiments that do not require recalibration
    % Needs to be done after calibrating for all cohorts!
-   exper_all_bc1(setNo);
+   exper_all_bc1('all', setNo);
 end
 
 

@@ -1,0 +1,14 @@
+
+Aggregate statistics
+
+Stats by schooling
+E{a | s}:  -1.00   -0.73   0.20   0.69   
+Mean log lifetime earnings, discounted to work start: 
+    6.24    6.60    6.79    7.15
+    fixed(s):  12.80  13.12  13.17  13.38  
+    ability part(s):  0.09  0.13  0.28  0.44  
+
+Financial stats
+  Fraction of spending paid by earnings: 0.73   debt: 0.05   transfers: 0.63 
+Model:    betaIq:  0.60    betaYp:  0.22 
+Data:     betaIq:  0.61    betaYp:  0.33 

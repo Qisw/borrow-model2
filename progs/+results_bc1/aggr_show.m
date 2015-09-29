@@ -22,9 +22,11 @@ if 1
    mBetaYp = aggrS.qyS.betaYp;
 
    fmtStr = '  betaIq: %5.2f    betaYp: %5.2f \n';
-   fprintf(fp, 'Model:  ');
+   fprintf(fp, 'Model (all):  ');
    fprintf(fp, fmtStr, mBetaIq, mBetaYp);
-   fprintf(fp, 'Data:   ');
+   fprintf(fp, 'Model (HSG):  ');
+   fprintf(fp, fmtStr, aggrS.qyUniverseHsgS.betaIq, aggrS.qyUniverseHsgS.betaYp);
+   fprintf(fp, 'Data (all):   ');
    fprintf(fp, fmtStr, tgS.schoolS.betaIq_cV(cS.iCohort), tgS.schoolS.betaYp_cV(cS.iCohort));
 end
 

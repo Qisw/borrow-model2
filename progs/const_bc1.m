@@ -80,17 +80,17 @@ cS.R = 1.04;
 
 %% Default parameters: Demographics, Preferences
 
+cS.cohortS = calibr_bc1.ModelCohorts;
+
 % Cohorts modeled
-cS.bYearV = [1915, 1942, 1961, 1979]';
+cS.bYearV = cS.cohortS.bYearV;
 % Year to be displayed for each cohort (high school graduation)
-cS.cohYearV = cS.bYearV + 18;
-% For each cohort: calibrate time varying parameters with these experiments
-cS.bYearExpNoV = [203, 202, NaN, 204];
+cS.cohYearV = cS.cohortS.displayYearV;
 % Data sources
-cS.dataSource_cV = {'Updegraff (1936)', 'Project Talent', 'NLSY79', 'NLSY97'};
+% cS.dataSource_cV = {'Updegraff (1936)', 'Project Talent', 'NLSY79', 'NLSY97'};
 % Cross sectional calibration for this cohort
-cS.iRefCohort = find(cS.bYearV == 1961);
-cS.nCohorts = length(cS.bYearV);
+cS.iRefCohort = cS.cohortS.by_name('NLSY79');
+cS.nCohorts = cS.cohortS.nCohorts;
 
 
 % Age at model age 1
@@ -167,7 +167,7 @@ cS.dataS = calibr_bc1.param_data(cS);
 cS.workS = calibr_bc1.param_work(cS);
 
 % Vector of calibrated params
-pvec = calibr_bc1.pvector_default(cS);
+[pvec, cS.pGroupS] = calibr_bc1.pvector_default(cS);
 
 % Formatting info for figures etc
 cS.formatS = helper_bc1.formatting(cS);
@@ -175,6 +175,7 @@ cS.formatS = helper_bc1.formatting(cS);
 % Directories
 dirS = helper_bc1.directories([], setNo, expNo);
 cS = struct_lh.merge(cS, dirS, cS.dbg);
+cS.dirS = dirS;
 
 
 %% Parameter sets
@@ -198,7 +199,7 @@ elseif setNo == 4
    % Is curvature of u(c) the same in college / at work?
    cS.ucCurvatureSame = 0;
     % Curvature of u(c) in college
-   pvec = pvec.change('prefSigma', '\varphi_{c}', 'Curvature of utility', 4, 1, 5, cS.calNever);
+   pvec.change('prefSigma', '\varphi_{c}', 'Curvature of utility', 4, 1, 5, cS.calNever);
    
 elseif setNo == 5
    cS.setStr = 'No free college consumption';
@@ -215,8 +216,8 @@ end
 
 % *****  Experiment settings
 % Also determines which calibration targets to use
-
-[expS, cS.tgS, pvec, cS.doCalV, cS.iCohort] = calibr_bc1.exp_settings(pvec, cS);
+% Changes pvec (handle class)
+[expS, cS.tgS, cS.doCalV, cS.iCohort] = calibr_bc1.exp_settings(pvec, cS);
 
 
 %% Derived constants
@@ -240,9 +241,9 @@ end
 cS.pr_iqV = diff([0; cS.iqUbV]);
 cS.pr_ypV = diff([0; cS.ypUbV]);
 
-cS.nCohorts = length(cS.bYearV);
+cS.nCohorts = cS.cohortS.nCohorts;
 % Year each cohort start college (age 19)
-cS.yearStartCollege_cV = cS.bYearV + 18;
+% cS.yearStartCollege_cV = cS.bYearV + 18;
 
 % Lifespan
 cS.ageMax = cS.physAgeLast - cS.age1 + 1;
@@ -251,34 +252,35 @@ cS.ageRetire = cS.physAgeRetire - cS.age1 + 1;
 % Changes if model does not have college cost hetero
 if ~cS.modelS.hasCollCostHetero
    % pMean is directly taken from data
-   pvec = pvec.calibrate('pMean', cS.calNever);
-   pvec = pvec.change('pStd', [], [], 0,  0, 1e4 ./ cS.unitAcct, cS.calNever);
-%    pvec = pvec.change('alphaPY', [], [], 0,  [], [], cS.calNever);
-%    pvec = pvec.change('alphaPM', [], [], 0,  [], [], cS.calNever);
-%    pvec = pvec.change('alphaZP', [], [], 0,  [], [], cS.calNever);
+   pvec.calibrate('pMean', cS.calNever);
+   pvec.change('pStd', [], [], 0,  0, 1e4 ./ cS.unitAcct, cS.calNever);
+%    pvec.change('alphaPY', [], [], 0,  [], [], cS.calNever);
+%    pvec.change('alphaPM', [], [], 0,  [], [], cS.calNever);
+%    pvec.change('alphaZP', [], [], 0,  [], [], cS.calNever);
 end
 
 
 
 if ~cS.modelS.hasCollCons
-   pvec = pvec.change('cCollMax', [], [],  0,  [], [], cS.calNever);
+   pvec.change('cCollMax', [], [],  0,  [], [], cS.calNever);
 end
 if ~cS.modelS.hasCollLeisure
-   pvec = pvec.change('lCollMax', [], [],  0,  [], [], cS.calNever);
+   pvec.change('lCollMax', [], [],  0,  [], [], cS.calNever);
 end
 
 if cS.abilAffectsEarnings == 0   
-   pvec = pvec.change('phiHSG', '\phi_{HSG}', 'Return to ability, HSG', 0,  0.02, 0.2, cS.calNever);
-   pvec = pvec.change('phiCG',  '\phi_{CG}',  'Return to ability, CG',  0, 0.02, 0.2, cS.calNever);
-   pvec = pvec.change('eHatCD', [], [], 0, [], [], cS.calNever);
-   pvec = pvec.change('dEHatHSG', [], [], 0, [], [], cS.calNever);
-   pvec = pvec.change('dEHatCG', [], [], 0, [], [], cS.calNever);
+   pvec.change('phiHSG', '\phi_{HSG}', 'Return to ability, HSG', 0,  0.02, 0.2, cS.calNever);
+   pvec.change('phiCG',  '\phi_{CG}',  'Return to ability, CG',  0, 0.02, 0.2, cS.calNever);
+   pvec.change('eHatCD', [], [], 0, [], [], cS.calNever);
+   pvec.change('dEHatHSD', [], [], 0, [], [], cS.calNever);
+   pvec.change('dEHatHSG', [], [], 0, [], [], cS.calNever);
+   pvec.change('dEHatCG', [], [], 0, [], [], cS.calNever);
 end
 
 if cS.ucCurvatureSame == 1
    % Do not calibrate curvature of work utility
    % It is the same as college utility
-   pvec = pvec.calibrate('workSigma', cS.calNever);
+   pvec.calibrate('workSigma', cS.calNever);
 end
 
 

@@ -55,7 +55,7 @@ for iy = 1 : nyp
    % ********  All
    
    % Types in this class
-   jIdxV = find(paramS.ypClass_jV == iy);
+   jIdxV = find(paramS.endowS.ypClass_jV == iy);
    totalMass = sum(aggrS.aggr_jS.mass_jV(jIdxV));
    
    % Mass(s,y) = sum over all j in yp class

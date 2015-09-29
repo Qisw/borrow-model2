@@ -23,13 +23,15 @@ tgS.tgMass_qy = true;
 % Overall school fractions
 tgS.tgFracS = 1;
 
-% Fraction graduating high school (or more)
-tgS.tgFracHsgIq = true;
-tgS.tgFracHsgYp = true;
+% Fraction graduating high school (or more) | IQ or YP
+tgS.tgFracHsgPlus_q = true;
+tgS.tgFracHsgPlus_y = true;
 
 % Fraction by [s,q,y]
 %  need to avoid double counting when this is available +++
 tgS.tgFrac_sqy = false;
+tgS.tgFrac_sy = false;
+tgS.tgFrac_sq = false;
 
 % fraction entering college (conditional on HSG)
 tgS.tgFracEnterIq = 1;
@@ -44,6 +46,17 @@ tgS.tgCollegeQy = 1;
 % Regression coefficients of entry on [iq, yp]
 tgS.tgRegrIqYp = 1;
 
+
+% *****  Schooling. Universe are HSG
+% Usually not used, unless no other moments are available
+% But can leave switched on b/c 
+
+% Fraction entering / graduating by [q,y]
+tgS.tgHsgCollegeQy = true;
+% Frac HSG+ | IQ or YP
+tgS.tgHsgFracHsgPlus_qy = true; 
+% tgS.tgHsgFracHsgPlus_q = true; 
+% tgS.tgHsgFracHsgPlus_y = true;
 
 
 %% Financing

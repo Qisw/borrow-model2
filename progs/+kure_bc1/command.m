@@ -31,8 +31,7 @@ end
 
 
 perturbGuess = 0;
-mFileStr = sprintf('run_batch_bc1(''%s'',%i,%s,%i)', solverStr, perturbGuess, setStr, expNo);
-
+mFileStr = sprintf('kure_bc1(''%s'',%i,%s,%i)', solverStr, perturbGuess, setStr, expNo);
 
 % No of cpus
 if cS.kureS.parallel

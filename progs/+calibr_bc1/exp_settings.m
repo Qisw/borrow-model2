@@ -1,4 +1,4 @@
-function [expS, tgS, pvec, doCalV, iCohort] = exp_settings(pvecIn, cS)
+function [expS, tgS, doCalV, iCohort] = exp_settings(pvec, cS)
 % Experiment settings
 %{
 By default, non-calibrated params are copied from base expNo
@@ -11,6 +11,7 @@ IN
       pvectorLH object with calibrated params
 
 OUT
+   pvec (handle class)
    expS
       struct with experiment settings
    tgS
@@ -23,13 +24,25 @@ OUT
 %}
 
 expNo = cS.expNo;
-pvec = pvecIn;
+
+
+%% Experiment numbers
+
+% For each cohort: calibrate time varying parameters with these experiments
+expS.bYearExpNoV = [203, 202, NaN, 204];
+
 
 % These experiments decompose time series changes into drivers
-% Each column is a cohort
-expS.decomposeExpNoM = [114 : 117; 104 : 107]';
+% Each COLUMN is a cohort
+baseExpNoV = [100; 110; NaN; 120];
+cfExpNoV   = 4 : 7;
+expS.decomposeExpNoM = ones(length(cfExpNoV), 1) * baseExpNoV(:)'   +  cfExpNoV(:) * ones(1, length(baseExpNoV));
 % Decomposition: cumulative changes
-expS.decomposeCumulExpNoM = [134 : 138; 124 : 128]';
+
+baseExpNoV = [140; 150; NaN; 160];
+cfExpNoV   = 4 : 8;
+expS.decomposeCumulExpNoM = ones(length(cfExpNoV), 1) * baseExpNoV(:)'   +  cfExpNoV(:) * ones(1, length(baseExpNoV));
+
 % Pure comparative statics
 expS.compStatExpNoV = 301 : 303;
 
@@ -57,6 +70,10 @@ expS.schoolFracCohort = [];
 % expS.puWeightExpNo = [];
 % Pref for HS from another experiment
 expS.prefHsExpNo = [];
+% Params governing HS graduation from another exper
+expS.hsGraduationExpNo = [];
+% Params governing college graduation rates from another exper
+expS.collGraduationExpNo = [];
 
 % Does this experiment require recalibration?
 expS.doCalibrate = 1;
@@ -77,7 +94,7 @@ expS.cdPremChange = 0;
 if expNo < 100
    base_exper;
 elseif expNo < 200
-   % Counterfactuals. Only calibrate prefHS to match school fractions
+   % Counterfactuals. Only calibrate a few things to match school fractions
    counterfactuals;
 elseif expNo < 300
    time_series;
@@ -139,7 +156,7 @@ function pure_counterfactuals
 end
    
    
-%% Nested:   Counterfactuals
+%% Nested:   Counterfactuals: 100s
 % Change one parameter (e.g. college costs). Hold school fractions constant at base exper.
 % Nothing is calibrated  EXCEPT prefHS, probHsg params to match college entry.
 % Params are copied from base
@@ -149,68 +166,95 @@ function counterfactuals
    % Taking parameters from this cohort
    iCohort = cS.iRefCohort;
 
-   % Calibrate only 2 param to match school fractions
-   pvec = pvec.calibrate('prefHS', cS.calExp);
-   %pvec = pvec.calibrate('probHsgInter', cS.calExp);
-   pvec = pvec.calibrate('probHsgMin', cS.calExp);
-   pvec = pvec.calibrate('probHsgMult', cS.calExp);
-   pvec = pvec.calibrate('probHsgOffset', cS.calExp);
+   % Calibrate only params to match 
+   %  school fractions
+   %  prob HSG
+   pvec.calibrate('prefHS', cS.calExp);
+   % High school graduation parameters
+   pvec.change_calibration_status(cS.pGroupS.hsGradParamV, cS.calBase, cS.calExp);
+%    %pvec.calibrate('probHsgInter', cS.calExp);
+%    pvec.calibrate('probHsgMin', cS.calExp);
+%    pvec.calibrate('probHsgMult', cS.calExp);
+%    pvec.calibrate('probHsgOffset', cS.calExp);
    % Only target school fractions
    tgS = calibr_bc1.caltg_defaults('onlySchoolFrac', cS.modelS);
    
    % Pick out cohort from which counterfactuals are taken
+   % Single variable changes
    if expNo < 110
-      cfBYear = 1940;   % Project talent
-      baseExpNo = 100;
-   elseif expNo < 120
       cfBYear = 1915;   % Updegraff
-      baseExpNo = 110;
+      % This is used to compute the offset (expNo - baseExpNo)
+      %  The offset determines the settings
+      %baseExpNo = 100;
+   elseif expNo < 120
+      cfBYear = 1940;   % Project talent
+      %baseExpNo = 110;
    elseif expNo < 130
+      cfBYear = 1979;   % NLSY97
+      %baseExpNo = 120;
+   
+   % Cumulative changes
+   elseif expNo < 150
+      % Cumulative changes: Updegraff
+      cfBYear = 1915;  
+      %baseExpNo = 140;
+   elseif expNo < 160
       % Cumulative changes: Project Talent
       cfBYear = 1940;  
-      baseExpNo = 120;
-   elseif expNo < 140
-      % Cumulative changes: Project Talent
-      cfBYear = 1915;  
-      baseExpNo = 130;
+      %baseExpNo = 150;
+   elseif expNo < 170
+      % NLSY97
+      cfBYear = 1979;
+      %baseExpNo = 160;
    else
       error('Invalid');
    end
    
+   % This is used to compute the offset (expNo - baseExpNo)
+   %  The offset determines the settings
+   baseExpNo = floor(expNo / 10) * 10;
+   eDiff = expNo - baseExpNo;
+   
    % Taking counterfactuals from this cohort (expNo)
    [~,cfCohort] = min(abs(cS.bYearV - cfBYear)); 
-   cfExpNo = cS.bYearExpNoV(cfCohort); 
+   cfExpNo = expS.bYearExpNoV(cfCohort); 
 
    
-   if any(expNo == [103, 113])
+   if eDiff == 3
       expS.expStr = 'Replicate base exper';    % for testing
       expS.earnExpNo = cS.expBase;
       expS.bLimitCohort = iCohort;
       expS.collCostExpNo = cS.expBase;
       expS.prefHsExpNo = cS.expBase;
+      expS.hsGraduationExpNo = cS.expBase;
+      expS.collGraduationExpNo = cS.expBase;
 
    elseif any(expNo == expS.decomposeExpNoM(:))
    % ------  Change one param at a time
-      if any(expNo == [104, 114])
+   % Sequence should match cumulative decomposition
+      if eDiff == 6
          % Take pvEarn_asM from cfExpNo
          expS.expStr = 'Only change earn profiles'; 
          expS.earnExpNo = cfExpNo;
 
-      elseif any(expNo == [105, 115])
+      elseif eDiff == 5
          expS.expStr = 'Only change bLimit';    % when not recalibrated
          expS.bLimitCohort = cfCohort;
 
-      elseif any(expNo == [106, 116])
+      elseif eDiff == 4
          % Change college costs
          expS.expStr = 'Change college costs';
          % Need to calibrate everything for that cohort. Then impose pMean from there
          expS.collCostExpNo = cfExpNo;
 
-      elseif any(expNo == [107, 117]);
+      elseif eDiff == 7
          %  Target schooling of cf cohort
+         %     Also change HSG rates and CG rates
          expS.expStr = 'Change schooling';
          expS.schoolFracCohort = cfCohort;
-      
+         expS.hsGraduationExpNo = cfExpNo;
+         expS.collGraduationExpNo = cfExpNo;
+         
       else
          error('Invalid');
       end
@@ -234,20 +278,22 @@ function counterfactuals
          expS.expStr = 'Change earnings profiles'; 
          expS.earnExpNo = cfExpNo;
       end
+%       if eDiff >= 7
+%          % Parental altruism
+%          expS.expStr = 'Change parental altruism';
+%          expS.puWeightExpNo = cfExpNo;
+%          pvec.calibrate('puWeightMean', cS.calNever);
+%       end
       if eDiff >= 7
-         % Parental altruism
-         expS.expStr = 'Change parental altruism';
-         expS.puWeightExpNo = cfExpNo;
-         pvec = pvec.calibrate('puWeightMean', cS.calNever);
-      end
-      if eDiff >= 8
          %  Target schooling of cf cohort
          expS.expStr = 'Change college entry';
          expS.schoolFracCohort = cfCohort;
          expS.prefHsExpNo = cfExpNo;
+         expS.hsGraduationExpNo = cfExpNo;
+         expS.collGraduationExpNo = cfExpNo;
          % Now nothing is calibrated anymore
          expS.doCalibrate = 0;
-         pvec = pvec.calibrate('prefHS', cS.calNever);
+         pvec.calibrate('prefHS', cS.calNever);
       end
       
       
@@ -263,66 +309,71 @@ function time_series
    % Now fewer parameters are calibrated
    doCalV = cS.calExp;
    % Calibrate pMean, which is really a truncated data moment
-   pvec = pvec.calibrate('pMean', cS.calExp);
+   pvec.calibrate('pMean', cS.calExp);
    tgS = calibr_bc1.caltg_defaults('timeSeriesPartial', cS.modelS);
          % also implement: do not target IQ/yp sorting +++++
          % this is 'timeSeries'
 
-   if any(expNo == cS.bYearExpNoV)
+   if any(expNo == expS.bYearExpNoV)
       % ******  Calibrate all time varying params
-      iCohort = find(expNo == cS.bYearExpNoV);
+      iCohort = find(expNo == expS.bYearExpNoV);
       expS.expStr = sprintf('%i', cS.cohYearV(iCohort));
       expS.outDir = 'cohort_compare';
       
       % Signal noise
-      % pvec = pvec.calibrate('alphaAM', cS.calExp);
+      % pvec.calibrate('alphaAM', cS.calExp);
       
       % Match overall college entry
-      pvec = pvec.calibrate('prefHS', cS.calExp);
+      pvec.calibrate('prefHS', cS.calExp);
 
       % Match college graduation rate
-      pvec = pvec.calibrate('prGradMin',  cS.calExp);
-      pvec = pvec.calibrate('prGradMax',  cS.calExp);
-      pvec = pvec.calibrate('prGradMult',  cS.calExp);
-      pvec = pvec.calibrate('prGradExp',  cS.calExp);
+      % For all params related to college graduation: change calibration status (if 
+      % calibrated in base case)
+      pvec.change_calibration_status(cS.pGroupS.collGradParamV, cS.calBase, cS.calExp);
       
       % Match HS graduation rate
-%       pvec = pvec.calibrate('probHsgInter', cS.calExp);
-      pvec = pvec.calibrate('probHsgMin', cS.calExp);
-      pvec = pvec.calibrate('probHsgMult', cS.calExp);
-      pvec = pvec.calibrate('probHsgOffset', cS.calExp);
+      pvec.change_calibration_status(cS.pGroupS.hsGradParamV, cS.calBase, cS.calExp);
       
       % Scale factors of lifetime earnings (log)
-      pvec = pvec.calibrate('eHatCD', cS.calExp);
-      pvec = pvec.calibrate('dEHatHSG', cS.calExp);
-      pvec = pvec.calibrate('dEHatCG',  cS.calExp);
+      pvec.calibrate('eHatCD', cS.calExp);
+      pvec.calibrate('dEHatHSD', cS.calExp);
+      pvec.calibrate('dEHatHSG', cS.calExp);
+      pvec.calibrate('dEHatCG',  cS.calExp);
       
       % Keeping college wage fixed for now
-      %pvec = pvec.calibrate('wCollMean', cS.calExp);
+      %pvec.calibrate('wCollMean', cS.calExp);
+      
+      % Project talent only: target mass by [s,q] and [s,y]
+      % because we don't have a lot of other moments
+      if iCohort == cS.cohortS.by_name('Project Talent')
+         tgS.tgFrac_sq = true;
+         tgS.tgFrac_sy = true;
+      end
       
    elseif expNo == 205  ||  expNo == 206  || expNo == 207
       iCohort = 1;
       expS.expStr = sprintf('Cohort %i', cS.cohYearV(iCohort));
       
       % Signal noise
-      % pvec = pvec.calibrate('alphaAM', cS.calExp);
+      % pvec.calibrate('alphaAM', cS.calExp);
       % Match overall college entry
-      pvec = pvec.calibrate('prefHS', cS.calExp);
+      pvec.calibrate('prefHS', cS.calExp);
       
       % Scale factors of lifetime earnings (log)
-      pvec = pvec.calibrate('eHatCD', cS.calExp);
-      pvec = pvec.calibrate('dEHatHSG', cS.calExp);
-      pvec = pvec.calibrate('dEHatCG',  cS.calExp);
+      pvec.calibrate('eHatCD', cS.calExp);
+      pvec.calibrate('dEHatHSD', cS.calExp);
+      pvec.calibrate('dEHatHSG', cS.calExp);
+      pvec.calibrate('dEHatCG',  cS.calExp);
       if expNo == 205
          % testing: calibrate pref scale at entry
-         pvec = pvec.calibrate('prefScaleEntry', cS.calExp);   % +++
+         pvec.calibrate('prefScaleEntry', cS.calExp);   % +++
       elseif expNo == 206
          % testing: calibrate graduation rates
-         pvec = pvec.calibrate('prGradMax', cS.calExp);   % +++
+         pvec.calibrate('prGradMax', cS.calExp);   % +++
       elseif expNo == 207
          % testing: calibrate prefHS_jV
          expS.expStr = 'Calibrate prefHS by j';
-         pvec = pvec.calibrate('dPrefHS', cS.calExp);   % +++
+         pvec.calibrate('dPrefHS', cS.calExp);   % +++
       else
          error('Invalid');
       end
@@ -337,10 +388,10 @@ function time_series
 %          ps = pvec.valueV{i1};
 %          if ps.doCal == cS.calExp
 %             % Do not calibrate, but take from base exper
-%             pvec = pvec.calibrate(ps.name, cS.calBase);
+%             pvec.calibrate(ps.name, cS.calBase);
 %          end
 %       end
-      %pvec = pvec.calibrate('logYpMean', cS.calExp);
+      %pvec.calibrate('logYpMean', cS.calExp);
    
    else
       error('Invalid');

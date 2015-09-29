@@ -34,9 +34,25 @@ aggr_jS.mass_sjM(cS.iCD, :) = aggr_jS.massColl_jV - aggr_jS.mass_sjM(cS.iCG, :)'
 aggr_jS.probS_jM = aggr_jS.mass_sjM ./ (ones([cS.nSchool,1]) * aggr_jS.mass_jV(:)');
 
 
+%% Assign [q,y] classes for universe HSG
+
+% Parental income classes
+aggr_jS.ypClassHsg_jV = distrib_lh.class_assign(paramS.yParent_jV, massHsPlus_jV, cS.ypUbV, cS.dbg);
+
+% IQ classes
+aggr_jS.iqClassHsg_jV = distrib_lh.class_assign(paramS.iq_jV, massHsPlus_jV, cS.iqUbV, cS.dbg);
+
+
+
+%% Output check
 if cS.dbg > 10
    validateattributes(aggr_jS.mass_sjM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', '>=', 0, ...
       '<=', aggrS.totalMass, 'size', [cS.nSchool, cS.nTypes]})
+   validateattributes(aggr_jS.ypClassHsg_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
+      'positive', '<=', length(cS.ypUbV)})
+   validateattributes(aggr_jS.iqClassHsg_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
+      'positive', '<=', length(cS.iqUbV)})
 end
+
 
 end

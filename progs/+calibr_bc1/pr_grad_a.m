@@ -13,7 +13,6 @@ prGradV = pr0 + (pr1 - pr0) ./ ...
    .^ (1 / paramS.prGradPower);
 
 
-
 %% Output check
 
 check_lh.prob_check(prGradV, []);

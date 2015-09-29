@@ -195,6 +195,25 @@ Student earnings and hours
 \end_layout
 
 \begin_layout Section
+\begin_inset Formula $\betaIq$
+\end_inset
+
+ and 
+\begin_inset Formula $\betaYp$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For Project Talent: IQ and y quartiles are for universe HSG.
+\end_layout
+
+\begin_layout Itemize
+in the model, this makes little difference (aggr_stats.txt).
+\end_layout
+
+\begin_layout Section
 eof
 \end_layout
 

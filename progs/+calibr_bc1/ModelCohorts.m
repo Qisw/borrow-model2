@@ -1,0 +1,52 @@
+% Model cohorts
+classdef ModelCohorts
+   
+properties
+   % Birth years
+   bYearV      
+   % Descriptive strings. Used in tables, legends
+   descrV      
+   % Which cohorts are we using right now
+   activeIdxV
+end
+
+properties (Dependent)
+   nCohorts
+   % In plots: display this year for each cohort
+   %  The year or HS graduation
+   displayYearV
+   % Year each cohort start college (age 19)
+   yearStartCollegeV
+end
+
+
+methods
+   % Constructor
+   function cohS = ModelCohorts
+      cohS.bYearV = [1915, 1942, 1961, 1979]';
+      cohS.descrV = {'Updegraff', 'Project Talent', 'NLSY79', 'NLSY97'};
+      cohS.activeIdxV = 1 : 4;
+   end
+   
+   % Cohort by name
+   function cohIdx = by_name(cohS, nameStr)
+      cohIdx = find(strncmpi(cohS.descrV, nameStr, length(nameStr)));
+      assert(length(cohIdx) == 1);
+   end
+   
+   function n = get.nCohorts(cohS)
+      n = length(cohS.bYearV);
+      assert(n > 2);
+   end
+   
+   function yearV = get.displayYearV(cohS)
+      yearV = cohS.bYearV + 18;
+   end
+   
+   function yearV = get.yearStartCollegeV(cohS)
+      % Year each cohort start college (age 19)
+      yearV = cohS.bYearV + 18;
+   end
+end
+   
+end
