@@ -5,7 +5,7 @@ Instead of m, we now plot by E(ability | j)
 Leave plot open and return handle
 %}
 
-figS = const_fig_bc1;
+% figS = const_fig_bc1;
 
 nVars = size(yM, 2);
 if size(yM, 1) ~= cS.nTypes
@@ -25,7 +25,8 @@ fh = output_bc1.fig_new(saveFigures, []);
 hold on;
 
 for iVar = 1 : nVars
-   plot(xV, yM(jIdxV, iVar), figS.lineStyleV{iVar}, 'color', figS.colorM(iVar,:));
+   output_bc1.plot_line(xV, yM(jIdxV, iVar), iVar, cS);
+   % plot(xV, yM(jIdxV, iVar), figS.lineStyleDenseV{iVar}, 'color', figS.colorM(iVar,:));
 end
 
 hold off;

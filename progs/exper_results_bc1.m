@@ -47,14 +47,16 @@ end
 
 %% Time series calibration
 function time_series(setNo)
-
+   
    cS = const_bc1(setNo);
+   outDir = fullfile(cS.dirS.setOutDir, 'cohort_compare');
 
    % Compare cohort outcomes
-   cfExpNoV = fliplr(cS.expS.bYearExpNoV(~isnan(cS.expS.bYearExpNoV)));
-   expNoV = flip([cS.expBase, cfExpNoV]);  
-   c2S = const_bc1(setNo, cfExpNoV(1));
-   outDir = fullfile(cS.setOutDir, c2S.expS.outDir);
+   cfExpNoV = cS.expS.bYearExpNoV(~isnan(cS.expS.bYearExpNoV));
+   % expNoV = flip([cS.expBase, cfExpNoV]);  
+   expNoV = cfExpNoV;
+   %c2S = const_bc1(setNo, cfExpNoV(1));
+   %outDir = fullfile(cS.setOutDir, c2S.expS.outDir);
    exper_bc1.compare(setNo .* ones(size(expNoV)), expNoV, outDir);
    
    % Short cohort comparison table to explain driving forces

@@ -17,9 +17,6 @@
        Change college entry                           
                       Model          0.46         0.27
                        Data          0.60         0.35
-       Change college entry                           
-                      Model          0.46         0.27
-                       Data          0.60         0.35
                        1933                           
                       Model          0.46         0.27
                        Data          0.24         0.59

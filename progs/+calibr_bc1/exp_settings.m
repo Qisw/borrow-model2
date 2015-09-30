@@ -29,7 +29,7 @@ expNo = cS.expNo;
 %% Experiment numbers
 
 % For each cohort: calibrate time varying parameters with these experiments
-expS.bYearExpNoV = [203, 202, NaN, 204];
+expS.bYearExpNoV = [203, 202, cS.expBase, 204];
 
 
 % These experiments decompose time series changes into drivers
@@ -40,7 +40,7 @@ expS.decomposeExpNoM = ones(length(cfExpNoV), 1) * baseExpNoV(:)'   +  cfExpNoV(
 % Decomposition: cumulative changes
 
 baseExpNoV = [140; 150; NaN; 160];
-cfExpNoV   = 4 : 8;
+cfExpNoV   = 4 : 7;
 expS.decomposeCumulExpNoM = ones(length(cfExpNoV), 1) * baseExpNoV(:)'   +  cfExpNoV(:) * ones(1, length(baseExpNoV));
 
 % Pure comparative statics
@@ -232,20 +232,20 @@ function counterfactuals
    elseif any(expNo == expS.decomposeExpNoM(:))
    % ------  Change one param at a time
    % Sequence should match cumulative decomposition
-      if eDiff == 6
-         % Take pvEarn_asM from cfExpNo
-         expS.expStr = 'Only change earn profiles'; 
-         expS.earnExpNo = cfExpNo;
+      if eDiff == 4
+         % Change college costs
+         expS.expStr = 'Change college costs';
+         % Need to calibrate everything for that cohort. Then impose pMean from there
+         expS.collCostExpNo = cfExpNo;
 
       elseif eDiff == 5
          expS.expStr = 'Only change bLimit';    % when not recalibrated
          expS.bLimitCohort = cfCohort;
 
-      elseif eDiff == 4
-         % Change college costs
-         expS.expStr = 'Change college costs';
-         % Need to calibrate everything for that cohort. Then impose pMean from there
-         expS.collCostExpNo = cfExpNo;
+      elseif eDiff == 6
+         % Take pvEarn_asM from cfExpNo
+         expS.expStr = 'Only change earn profiles'; 
+         expS.earnExpNo = cfExpNo;
 
       elseif eDiff == 7
          %  Target schooling of cf cohort

@@ -5,9 +5,8 @@ cS = const_bc1(setNo);
 symS = helper_bc1.symbols;
 
 % Experiments to show (each cohort)
-iCohortV = 1 : 3;
+iCohortV = 1 : cS.nCohorts;
 expNoV = cS.expS.bYearExpNoV(iCohortV);
-expNoV(3) = cS.expBase;    % Not robust
 nx = length(expNoV);
 
 tgS = var_load_bc1(cS.vCalTargets, cS);

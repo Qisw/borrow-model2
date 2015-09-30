@@ -17,9 +17,6 @@
        Change college entry              
                       Model   0.45   0.41
                        Data   0.56   0.46
-       Change college entry              
-                      Model   0.45   0.41
-                       Data   0.56   0.46
                        1997              
                       Model   0.45   0.41
                        Data   0.41   0.33
