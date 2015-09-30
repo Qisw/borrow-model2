@@ -45,7 +45,7 @@ for ix = 1 : nx
    row_add(' ',  sprintf('%i', cS.cohYearV(ix)));
    tbS.rowUnderlineV(ir) = 1;
    
-   collEntryRate = sum(tgS.frac_scM(cS.iCD : cS.iCG, iCohort));
+   collEntryRate = sum(tgS.schoolS.frac_scM(cS.iCD : cS.iCG, iCohort));
    row_add('College entry rate', sprintf('%.2f', collEntryRate));
    
    collPrem = log(tgS.pvEarn_scM(cS.iCG, iCohort)) - log(tgS.pvEarn_scM(cS.iHSG, iCohort));
@@ -54,18 +54,13 @@ for ix = 1 : nx
    [~, bLimitStr] = string_lh.dollar_format(-paramS.kMin_aV(end) .* cS.unitAcct, ',', 0);
    row_add('Borrowing limit',  bLimitStr);
    
-   [~, collCost] = string_lh.dollar_format(tgS.pMean_cV(iCohort) .* cS.unitAcct, ',', 0);
+   [~, collCost] = string_lh.dollar_format(tgS.costS.pMean_cV(iCohort) .* cS.unitAcct, ',', 0);
    row_add('College cost',  collCost);
    
    tbS.rowUnderlineV(ir) = 1;
    
-   if cS.regrEntryIqYpWeighted == 1
-      dataIdx = tgS.schoolS.iWeighted;
-   else
-      dataIdx = tgS.schoolS.iWeighted;
-   end
-   row_add(['$', symS.betaIq, '$'],  sprintf('%.2f', tgS.schoolS.betaIqM(dataIdx,iCohort)));
-   row_add(['$', symS.betaYp, '$'],  sprintf('%.2f', tgS.schoolS.betaYpM(dataIdx,iCohort)));
+   row_add(symS.retrieve('betaIq', true),  sprintf('%.2f', tgS.schoolS.betaIq_cV(iCohort)));
+   row_add(symS.retrieve('betaYp', true),  sprintf('%.2f', tgS.schoolS.betaYp_cV(iCohort)));
 
 end
 

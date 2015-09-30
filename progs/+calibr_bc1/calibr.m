@@ -84,6 +84,9 @@ elseif strcmpi(solverStr, 'bobyqa')  ||  strcmpi(solverStr, 'cobyla')  ||  strcm
    optS.upper_bounds = cS.pvector.guessMax .* ones(size(guessV));
 
    [solnV, fVal, exitFlag] = nlopt_optimize(optS, guessV);
+   
+else
+   error('Invalid');
 end
 
 

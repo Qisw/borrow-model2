@@ -60,7 +60,7 @@ for im = 1 : nm
    ic = 2 + 2 * (im-1);
    icV = ic : (ic + 1);
 
-   tbM(ir, icV) = {['$', symS.betaIq, '$'], ['$', symS.betaYp, '$']};
+   tbM(ir, icV) = {symS.retrieve('betaIq', true), symS.retrieve('betaYp', true)};
    tbS.rowUnderlineV(ir) = 1;
 
    for ix = 1 : nx
@@ -71,16 +71,18 @@ for im = 1 : nm
       setNo = setNoM(ix, im);
       expNo = expNoM(ix, im);
       cS = const_bc1(setNo, expNo);
-      aggrS = var_load_bc1(cS.vAggregates, cS);
-      if cS.regrEntryIqYpWeighted == 1
-         mBetaIq = aggrS.qyS.betaIqWeighted;
-         mBetaYp = aggrS.qyS.betaYpWeighted;
-      else
-         mBetaIq = aggrS.qyS.betaIq;
-         mBetaYp = aggrS.qyS.betaYp;
-      end
+      [aggrS, success] = var_load_bc1(cS.vAggregates, cS);
+      if success
+         if cS.regrEntryIqYpWeighted == 1
+            mBetaIq = aggrS.qyS.betaIqWeighted;
+            mBetaYp = aggrS.qyS.betaYpWeighted;
+         else
+            mBetaIq = aggrS.qyS.betaIq;
+            mBetaYp = aggrS.qyS.betaYp;
+         end
       
-      tbM(ir, icV) = {sprintf(fmtStr, mBetaIq),  sprintf(fmtStr, mBetaYp)};
+         tbM(ir, icV) = {sprintf(fmtStr, mBetaIq),  sprintf(fmtStr, mBetaYp)};
+      end
    end
 end
 

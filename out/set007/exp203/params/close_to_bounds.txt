@@ -1,3 +1,4 @@
 
 Parameters that are close to bounds
-  prGradMult:    [0.100 4.999 5.000]
+  probHsgMult:    [0.100 2.999 3.000]
+  prGradMult:    [0.100 4.996 5.000]

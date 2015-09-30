@@ -1,0 +1,20 @@
+
+-------------------------------------------------------
+                              $\beta_{IQ}$  $\beta_{F}$
+-------------------------------------------------------
+                        1979                           
+                       Model          0.64         0.36
+                        Data          0.60         0.35
+        Change college costs                           
+                       Model          0.64         0.37
+                        Data          0.60         0.35
+          Only change bLimit                           
+                       Model          0.64         0.37
+                        Data          0.60         0.35
+   Only change earn profiles                           
+                       Model          0.63         0.37
+                        Data          0.60         0.35
+            Change schooling                           
+                       Model          0.62         0.42
+                        Data          0.60         0.35
+-------------------------------------------------------

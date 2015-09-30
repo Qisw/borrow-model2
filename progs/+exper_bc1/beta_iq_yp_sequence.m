@@ -46,16 +46,6 @@ end
 
 %% Data
 
-if cxS.regrEntryIqYpWeighted == 1
-   dataIdx = tgS.schoolS.iWeighted;
-else
-   dataIdx = tgS.schoolS.iWeighted;
-end
-
-% cohStrV = cell([2,1]);
-% betaIqDataV = zeros([2,1]);
-% betaYpDataV = zeros([2, 1]);
-
 for i1 = 1 : 2
    if i1 == 1
       iCohort = iCohort1;
@@ -65,8 +55,8 @@ for i1 = 1 : 2
       ix = nx + 2;
    end
    if ~isempty(iCohort)
-      betaIqV(ix) = tgS.schoolS.betaIqM(dataIdx,iCohort);
-      betaYpV(ix) = tgS.schoolS.betaYpM(dataIdx,iCohort);
+      betaIqV(ix) = tgS.schoolS.betaIq_cV(iCohort);
+      betaYpV(ix) = tgS.schoolS.betaYp_cV(iCohort);
       caseStrV{ix} = sprintf('%i', cS.cohYearV(iCohort));
    end
 end
@@ -82,11 +72,11 @@ showIdxV = find(betaIqV ~= 0);
 for iPlot = 1 : 2
    if iPlot == 1
       yV = betaIqV(showIdxV);
-      xStr = symS.betaIq;
+      xStr = symS.retrieve('betaIq');
       figFn = 'beta_iq_decomp';
    else
       yV = betaYpV(showIdxV);
-      xStr = symS.betaYp;
+      xStr = symS.retrieve('betaYp');
       figFn = 'beta_yp_decomp';
    end
       

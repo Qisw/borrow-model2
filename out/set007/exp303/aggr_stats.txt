@@ -10,5 +10,6 @@ Mean log lifetime earnings, discounted to work start:
 
 Financial stats
   Fraction of spending paid by earnings: 0.54   debt: 0.10   transfers: 0.59 
-Model:    betaIq:  0.68    betaYp:  0.30 
-Data:     betaIq:  0.61    betaYp:  0.33 
+Model (all):    betaIq:  0.68    betaYp:  0.30 
+Model (HSG):    betaIq:  0.64    betaYp:  0.31 
+Data (all):     betaIq:  0.60    betaYp:  0.35 

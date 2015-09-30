@@ -69,9 +69,11 @@ function sequential_decomp(setNo)
    cS = const_bc1(setNo);
 
    for iCohort = 1 : size(cS.expS.decomposeExpNoM, 2)
-      expNoV = [cS.expBase; cS.expS.decomposeExpNoM(:, iCohort)];
-      outDir = fullfile(cS.setOutDir, sprintf('cohort%i', cS.bYearV(iCohort)));
-      exper_bc1.compare(setNo .* ones(size(expNoV)), expNoV, outDir);
+      if iCohort ~= cS.iRefCohort
+         expNoV = [cS.expBase; cS.expS.decomposeExpNoM(:, iCohort)];
+         outDir = fullfile(cS.setOutDir, sprintf('cohort%i', cS.bYearV(iCohort)));
+         exper_bc1.compare(setNo .* ones(size(expNoV)), expNoV, outDir);
+      end
    end
 
 end
@@ -84,22 +86,25 @@ function cumulative_decomp(setNo)
 
    % For experiments that vary variables cumulatively
    for iCohort = 1 : size(cS.expS.decomposeCumulExpNoM, 2)
-      expNoV = [cS.expBase; cS.expS.decomposeCumulExpNoM(:, iCohort); cS.expS.bYearExpNoV(iCohort)];
-      setNoV = setNo .* ones(size(expNoV));
-      outDir = fullfile(cS.setOutDir, sprintf('cumulative%i', cS.bYearV(iCohort)));
-      exper_bc1.compare(setNoV, expNoV, outDir);
-      
-      % Bar graph with decomposition
-      % Not showing data is clearer
-      iCohort1 = []; % cS.iRefCohort;
-      iCohort2 = []; % iCohort;
-      exper_bc1.beta_iq_yp_sequence(outDir, iCohort1, iCohort2, setNoV, expNoV);
+      if iCohort ~= cS.iRefCohort
+         expNoV = [cS.expBase; cS.expS.decomposeCumulExpNoM(:, iCohort); cS.expS.bYearExpNoV(iCohort)];
+         setNoV = setNo .* ones(size(expNoV));
+         outDir = fullfile(cS.setOutDir, sprintf('cumulative%i', cS.bYearV(iCohort)));
+         exper_bc1.compare(setNoV, expNoV, outDir);
+
+         % Bar graph with decomposition
+         % Not showing data is clearer
+         iCohort1 = []; % cS.iRefCohort;
+         iCohort2 = []; % iCohort;
+         exper_bc1.beta_iq_yp_sequence(outDir, iCohort1, iCohort2, setNoV, expNoV);
+      end
    end
 
 end
 
 
 %% Compare all cohorts side-by-side
+% Cumulative decomposition
 function cohorts_side_by_side(setNo)
 
    cS = const_bc1(setNo);
@@ -110,6 +115,8 @@ function cohorts_side_by_side(setNo)
    outFn = fullfile(outDir, 'decompose.tex');
    
    expNoM = cS.expS.decomposeCumulExpNoM;
+   % Omit base cohort (decomposition is relative to that cohort)
+   expNoM(:, cS.iRefCohort) = [];
    setNoM = setNo * ones(size(expNoM));
    [nx, nm] = size(expNoM);
    

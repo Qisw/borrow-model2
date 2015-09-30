@@ -25,15 +25,17 @@ iData = 2;
 
 for ix = 1 : nx
    cxS = const_bc1(setNoV(ix), expNoV(ix));
-   aggrS = var_load_bc1(cxS.vAggregates, cxS);
-   iCohort = cxS.iCohort;
-   betaIqM(ix, iModel) = aggrS.qyS.betaIq;
-   betaYpM(ix, iModel) = aggrS.qyS.betaYp;
+   [aggrS, success] = var_load_bc1(cxS.vAggregates, cxS);
+   if success
+      iCohort = cxS.iCohort;
+      betaIqM(ix, iModel) = aggrS.qyS.betaIq;
+      betaYpM(ix, iModel) = aggrS.qyS.betaYp;
 
-   caseStrV{ix} = cxS.expS.expStr;
+      caseStrV{ix} = cxS.expS.expStr;
 
-   betaIqM(ix, iData) = tgS.schoolS.betaIq_cV(iCohort);
-   betaYpM(ix, iData) = tgS.schoolS.betaYp_cV(iCohort);
+      betaIqM(ix, iData) = tgS.schoolS.betaIq_cV(iCohort);
+      betaYpM(ix, iData) = tgS.schoolS.betaYp_cV(iCohort);
+   end
 end
 
 

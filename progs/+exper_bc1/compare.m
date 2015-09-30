@@ -18,10 +18,10 @@ dbg = 111;
 saveFigures = 1;
 nx = length(expNoV);
 cS = const_bc1(setNoV(1), expNoV(1));
-figS = const_fig_bc1;
-nIq = length(cS.iqUbV);
-nYp = length(cS.ypUbV);
-tgS = var_load_bc1(cS.vCalTargets, cS);
+% figS = const_fig_bc1;
+% nIq = length(cS.iqUbV);
+% nYp = length(cS.ypUbV);
+% tgS = var_load_bc1(cS.vCalTargets, cS);
 
 % Just in case we run this for the 1st time, make the directories for outputs
 files_lh.mkdir_lh(outDir, cS.dbg);
@@ -116,7 +116,7 @@ for ix = 1 : nx
    tbM{ir,1} = 'Premium relative to HSG';
    tbM{ir,ic} = string_lh.string_from_vector(diff(aggrS.pvEarnMeanLog_sV), '%.2f');
    
-   xV = statsV{ix}.abilMean_sV .* paramV{ix}.phi_sV;
+   xV = statsV{ix}.abilMean_sV .* paramV{ix}.earnS.phi_sV;
    row_add('Premium due to selection',  diff(xV),  '%.2f');
    
    ir = ir + 1;
@@ -125,8 +125,7 @@ for ix = 1 : nx
    ir = ir + 1;
    tbM{ir,1} = 'Borrowing limit';
    [~, tbM{ir,ic}] = string_lh.dollar_format(paramV{ix}.kMin_aV(end) * cS.unitAcct, ',', 0);
-   corrAM = statsV{ix}.endowCorrS.corrM(statsV{ix}.endowCorrS.iAbil, statsV{ix}.endowCorrS.iSignal);
-   row_add('Corr ability signal',  corrAM, '%.2f');
+   
    
    tbS.rowUnderlineV(ir) = 1;
    ir = ir + 1;

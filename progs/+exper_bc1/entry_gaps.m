@@ -17,16 +17,18 @@ dataYpV = zeros(nx, 1);
 
 for ix = 1 : nx
    cS = const_bc1(setNo, expNoV(ix));
-   aggrS = var_load_bc1(cS.vAggregates, cS);
+   [aggrS, success] = var_load_bc1(cS.vAggregates, cS);
 
-   iCohort = cS.iCohort;
-   bYearV(ix) = cS.bYearV(iCohort);
+   if success
+      iCohort = cS.iCohort;
+      bYearV(ix) = cS.bYearV(iCohort);
 
-   % Data to show: gap in entry rates by iq, and yp
-   modelIqV(ix) = aggrS.sqS.fracEnter_qV(end) - aggrS.sqS.fracEnter_qV(1);
-   modelYpV(ix) = aggrS.ypS.fracEnter_yV(end) - aggrS.ypS.fracEnter_yV(1);
-   dataIqV(ix)  = tgS.schoolS.fracEnter_qcM(end,iCohort) - tgS.schoolS.fracEnter_qcM(1,iCohort);
-   dataYpV(ix)  = tgS.schoolS.fracEnter_ycM(end,iCohort) - tgS.schoolS.fracEnter_ycM(1,iCohort);
+      % Data to show: gap in entry rates by iq, and yp
+      modelIqV(ix) = aggrS.sqS.fracEnter_qV(end) - aggrS.sqS.fracEnter_qV(1);
+      modelYpV(ix) = aggrS.ypS.fracEnter_yV(end) - aggrS.ypS.fracEnter_yV(1);
+      dataIqV(ix)  = tgS.schoolS.fracEnter_qcM(end,iCohort) - tgS.schoolS.fracEnter_qcM(1,iCohort);
+      dataYpV(ix)  = tgS.schoolS.fracEnter_ycM(end,iCohort) - tgS.schoolS.fracEnter_ycM(1,iCohort);
+   end
 end
 
 end

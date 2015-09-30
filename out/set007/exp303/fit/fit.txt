@@ -1,30 +1,30 @@
 
--------------------------------------------------------------------------------------------------------------
-                                      Description                      Model                      Data    Dev
--------------------------------------------------------------------------------------------------------------
-                            Fraction by schooling     0.12, 0.30, 0.33, 0.25    0.11, 0.36, 0.29, 0.24   2.61
-         Fraction entering college by IQ quartile     0.33, 0.58, 0.74, 0.93    0.32, 0.44, 0.63, 0.88   2.10
-               Fraction graduating by IQ quartile     0.12, 0.22, 0.32, 0.46    0.04, 0.10, 0.25, 0.57   3.69
-          Fraction entering college by y quartile     0.39, 0.50, 0.69, 0.87    0.40, 0.46, 0.60, 0.85   0.61
-                Fraction graduating by y quartile     0.13, 0.22, 0.30, 0.42    0.09, 0.14, 0.24, 0.52   2.15
-         Fraction entering college by qy quartile                                                        1.81
-       Fraction graduating college by qy quartile                                                        1.17
-                       Regression entry on iq, yp                 0.68, 0.30                0.61, 0.33   1.36
-    Fraction graduating high school by y quartile     0.81, 0.85, 0.90, 0.94    0.74, 0.89, 0.95, 0.98   0.64
-   Fraction graduating high school by IQ quartile     0.78, 0.87, 0.90, 0.96    0.68, 0.92, 0.98, 0.99   1.13
-                        Joint distribution of q,y                                                        1.16
-                             Lifetime earnings CD                       6.91                      6.85   0.53
-                       Lifetime earnings premiums   -0.64, -0.33, 0.00, 0.35  -0.53, -0.19, 0.00, 0.37   6.81
-                             Mean of college cost                       1.95                      1.95   0.00
-                            Mean hours in college                       0.19                      0.25   1.32
-                      Mean hours in college by IQ     0.24, 0.23, 0.20, 0.15    0.26, 0.27, 0.26, 0.24   1.18
-                       Mean hours in college by y     0.26, 0.21, 0.19, 0.16    0.25, 0.26, 0.27, 0.24   1.46
-                         Mean earnings in college                       4.04                      5.28   3.09
-                   Mean earnings in college by IQ     4.95, 4.80, 4.24, 3.21    5.19, 6.28, 5.62, 4.78   3.38
-                    Mean earnings in college by y     5.35, 4.35, 4.05, 3.27    5.39, 6.21, 6.17, 4.63   4.99
-                                Mean college debt     9.99, 9.46, 9.61, 9.95    3.26, 3.69, 3.22, 4.55  18.94
-                                Mean college debt  10.69, 11.99, 10.05, 8.07    3.34, 4.17, 4.27, 3.97  21.13
-                                    Mean transfer                       4.43                      4.99   0.16
-                    Mean transfer by $y$ quartile     2.75, 3.30, 4.46, 5.83    2.13, 3.25, 4.81, 6.97   0.23
-                     Mean transfer by IQ quartile     3.48, 3.87, 4.33, 5.11    2.05, 3.33, 4.21, 4.87   0.31
--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+                                      Description                       Model                      Data    Dev
+--------------------------------------------------------------------------------------------------------------
+                            Fraction by schooling      0.12, 0.30, 0.33, 0.25    0.12, 0.36, 0.29, 0.23   2.64
+         Fraction entering college by IQ quartile      0.33, 0.58, 0.74, 0.93    0.32, 0.43, 0.63, 0.88   2.28
+               Fraction graduating by IQ quartile      0.12, 0.22, 0.32, 0.46    0.04, 0.10, 0.26, 0.57   3.64
+          Fraction entering college by y quartile      0.39, 0.50, 0.69, 0.87    0.39, 0.46, 0.59, 0.86   0.66
+                Fraction graduating by y quartile      0.13, 0.22, 0.30, 0.42    0.10, 0.14, 0.24, 0.53   2.52
+         Fraction entering college by qy quartile                                                         1.87
+       Fraction graduating college by qy quartile                                                         1.21
+                       Regression entry on iq, yp                  0.68, 0.30                0.60, 0.35   1.74
+    Fraction graduating high school by y quartile      0.81, 0.85, 0.90, 0.94    0.73, 0.89, 0.94, 0.98   0.65
+   Fraction graduating high school by IQ quartile      0.78, 0.87, 0.90, 0.96    0.66, 0.91, 0.97, 0.99   1.39
+                        Joint distribution of q,y                                                         1.21
+                             Lifetime earnings CD                        6.91                      6.85   0.53
+                       Lifetime earnings premiums    -0.64, -0.33, 0.00, 0.35  -0.53, -0.19, 0.00, 0.37   6.81
+                             Mean of college cost                        2.73                      2.73   0.00
+                            Mean hours in college                        0.19                      0.25   1.19
+                      Mean hours in college by IQ      0.24, 0.23, 0.20, 0.15    0.25, 0.27, 0.26, 0.24   1.08
+                       Mean hours in college by y      0.26, 0.21, 0.19, 0.16    0.24, 0.26, 0.26, 0.24   1.38
+                         Mean earnings in college                        5.66                      7.30   5.47
+                   Mean earnings in college by IQ      6.93, 6.72, 5.93, 4.50    7.37, 8.27, 7.63, 6.69   5.25
+                    Mean earnings in college by y      7.49, 6.09, 5.67, 4.58    7.47, 8.36, 8.39, 6.42   8.14
+                                Mean college debt  13.98, 13.24, 13.45, 13.94    4.37, 4.63, 4.80, 6.62  37.61
+                                Mean college debt  14.96, 16.79, 14.08, 11.30    5.10, 5.62, 6.07, 5.77  40.39
+                                    Mean transfer                        6.21                      7.02   0.33
+                    Mean transfer by $y$ quartile      3.86, 4.62, 6.24, 8.17    2.99, 4.55, 6.73, 9.76   0.45
+                     Mean transfer by IQ quartile      4.87, 5.41, 6.06, 7.15    2.87, 4.66, 5.89, 6.82   0.60
+--------------------------------------------------------------------------------------------------------------

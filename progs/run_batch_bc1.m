@@ -38,13 +38,14 @@ if length(setNoV) == 1
       calibr_bc1.calibr('none', setNoV, cS.expBase);
       exper_all_bc1(solverStr, setNoV);
       
+   elseif strcmpi(solverStr, 'exper')
+      % A single experiment
+      exper_bc1(setNoV(1), expNo);
+
    elseif expNo == cS.expBase
       % A single job to calibrate
       calibr_bc1.calibr(solverStr, setNoV, expNo);
       
-   elseif strcmpi(solverStr, 'exper')
-      % A single experiment
-      exper_bc1(setNoV(1), expNo);
    else
       error('Invalid');
    end

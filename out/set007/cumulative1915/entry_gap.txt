@@ -1,0 +1,26 @@
+
+-----------------------------------------
+                  Entry gap  by IQ  by yp
+-----------------------------------------
+                       1979              
+                      Model   0.59   0.52
+                       Data   0.56   0.46
+       Change college costs              
+                      Model   0.59   0.53
+                       Data   0.56   0.46
+     Change borrowing limit              
+                      Model   0.59   0.53
+                       Data   0.56   0.46
+   Change earnings profiles              
+                      Model   0.59   0.53
+                       Data   0.56   0.46
+       Change college entry              
+                      Model   0.45   0.42
+                       Data   0.56   0.46
+       Change college entry              
+                      Model   0.45   0.42
+                       Data   0.56   0.46
+                       1933              
+                      Model   0.45   0.42
+                       Data   0.32   0.47
+-----------------------------------------
