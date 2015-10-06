@@ -73,11 +73,11 @@ saveFigures = 1;
 for iPlot = 1 : 2
    if iPlot == 1
       yM = betaIqM;
-      yStr = symS.retrieve('betaIq', true);
+      yStr = symS.retrieve('betaIq', false);
       figFn = 'beta_iq';
    else
       yM = betaYpM;
-      yStr = symS.retrieve('betaYp', true);
+      yStr = symS.retrieve('betaYp', false);
       figFn = 'beta_yp';
    end
    

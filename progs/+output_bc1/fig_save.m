@@ -15,7 +15,7 @@ figOptS = figS.figOptS;
 % Store FIG files here
 figOptS.figDir = fullfile(figDir, 'figdata');
 if ~exist(figOptS.figDir, 'dir')
-   files_lh.mkdir_lh(figOptS.figDir);
+   filesLH.mkdir(figOptS.figDir);
 end
 
 figures_lh.fig_save_lh(figFn, saveFigures, figS.slideOutput, figOptS);

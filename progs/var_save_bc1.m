@@ -13,7 +13,7 @@ end
 [fn, fDir] = var_fn_bc1(varNo, cS);
 
 if ~exist(fDir, 'dir')
-   files_lh.mkdir_lh(fDir, cS.dbg);
+   filesLH.mkdir(fDir, cS.dbg);
 end
 
 save(fn, 'saveS');

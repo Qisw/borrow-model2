@@ -1,0 +1,538 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{amsfonts}
+\usepackage{amsxtra}
+\usepackage{amstext}
+\usepackage{latexsym}
+\usepackage{subfig}
+
+\input{PaperFigures/preamble1.tex}
+\input{PaperFigures/symbols.tex}
+
+\input{/Users/lutz/Dropbox/data/software/lyx/paper_preamble.tex}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Main Results
+\end_layout
+
+\begin_layout Standard
+Note: All results files used in this document are in PaperFigures.
+\end_layout
+
+\begin_layout Section
+Baseline Cohort: NLSY79
+\end_layout
+
+\begin_layout Subsection
+Fit: Entry and Graduation Rates
+\end_layout
+
+\begin_layout Standard
+We do a good job with college entry rates by [iq, yp].
+ These are conditional on HSG.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/fit/iq_enter.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/fit/yp_enter.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We are also good in terms of 
+\begin_inset Formula $\betaIq$
+\end_inset
+
+ and 
+\begin_inset Formula $\betaYp$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+College graduation rates (conditional on college entry) are too flat in
+ [iq, yp].
+ I don't know why.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/fit/iq_grad.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/fit/yp_grad.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+High school graduation rates are too flat in iq, and yp.
+ One might think the model could match those mechanically.
+ For some reason it does not.
+ Not a major issue in my book.
+\end_layout
+
+\begin_layout Subsection
+Fit: Financing
+\end_layout
+
+\begin_layout Standard
+We are in the right ballpark in terms of debt.
+ There is an odd peak for the 2nd yp quartile that I don't understand.
+ 
+\end_layout
+
+\begin_layout Standard
+Figures show mean debt of college grads at end of college (not conditional
+ on having debt).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/fit/iq_debtmean.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/fit/yp_debtmean.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We do well in terms of earnings and hours.
+ Although the lowest iq and yp kids work too much.
+ Not a major issue.
+\end_layout
+
+\begin_layout Standard
+Transfers look ok to me, but one could argue.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/fit/iq_transfer.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/fit/yp_transfer.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Fit: Lifetime earnings
+\end_layout
+
+\begin_layout Standard
+No issues here.
+\end_layout
+
+\begin_layout Section
+Time Series Calibration
+\end_layout
+
+\begin_layout Subsection
+Updegraff (exp 203)
+\end_layout
+
+\begin_layout Subsubsection
+Fit
+\end_layout
+
+\begin_layout Standard
+Good fit:
+\end_layout
+
+\begin_layout Itemize
+school fractions
+\end_layout
+
+\begin_layout Itemize
+lifetime earnings premiums (oddly the model is off by 15 log points in levels
+ for all 
+\begin_inset Formula $s$
+\end_inset
+
+ -- why?)
+\end_layout
+
+\begin_layout Itemize
+high school graduation rates
+\end_layout
+
+\begin_layout Standard
+Not good:
+\end_layout
+
+\begin_layout Itemize
+college earnings
+\end_layout
+
+\begin_layout Standard
+See 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Fit:-Updegraff"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fit: Updegraff
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fit:-Updegraff"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset include
+LatexCommand include
+filename "PaperFigures/Updegraff/fit.tex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+NLSY97 (exp 204)
+\end_layout
+
+\begin_layout Subsubsection
+Fit
+\end_layout
+
+\begin_layout Standard
+Pretty good in most dimensions, I would say.
+\end_layout
+
+\begin_layout Itemize
+The college premium is a bit low (47% versus 60%).
+\end_layout
+
+\begin_layout Itemize
+There are some fit issues with debt, but nothing major
+\end_layout
+
+\begin_layout Standard
+See 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Fit:-NLSY97"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fit: NLSY97
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fit:-NLSY97"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset include
+LatexCommand include
+filename "PaperFigures/Project Talent/fit.tex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Changes relative to NLSY79
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $\betaIq$
+\end_inset
+
+, 
+\begin_inset Formula $\betaYp$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/cohort_compare/beta_iq.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/cohort_compare/beta_yp.pdf
+	width 50text%
+	groupId 2across
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We account for broad trend in 
+\begin_inset Formula $\betaIq$
+\end_inset
+
+, but only for a fraction of the rise early / decline later.
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $\betaYp$
+\end_inset
+
+ we really don't have much success.
+\end_layout
+
+\begin_layout Standard
+We can ask why the 
+\begin_inset Formula $\beta$
+\end_inset
+
+ change.
+\end_layout
+
+\begin_layout Standard
+To do so, we decompose the changes for each cohort into the contributions
+ of financials and schooling levels.
+\end_layout
+
+\begin_layout Itemize
+We start from NLSY79.
+ Then we change, cumulatively, borrowing constraints, college costs, etc
+ to the levels of the comparison cohort.
+\end_layout
+
+\begin_layout Itemize
+We keep schooling constant by adjusting high school graduation rates and
+ 
+\begin_inset Formula $\prefHS$
+\end_inset
+
+ (the preference parameter).
+ [Chris suggests to change that.
+ We should do so as an additional experiment]
+\end_layout
+
+\begin_layout Itemize
+We find: financials don't do anything.
+\end_layout
+
+\begin_layout Itemize
+Then we change schooling levels (by setting high school graduation rates
+ and 
+\begin_inset Formula $\prefHS$
+\end_inset
+
+ to the values calibrated for the comparison cohort).
+ This causes essentially all the changes.
+\end_layout
+
+\begin_layout Standard
+Here is Updegraff as an example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PaperFigures/Updegraff/beta_iq_decomp.pdf
+	height 2.5in
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PaperFigures/Updegraff/beta_yp_decomp.pdf
+	height 2.5in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+eof
+\end_layout
+
+\end_body
+\end_document

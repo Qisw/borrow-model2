@@ -81,12 +81,16 @@
 Data Construction
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Schooling
 \end_layout
 
 \begin_layout Standard
 NLSY: from chris
+\end_layout
+
+\begin_layout Section
+Financing college
 \end_layout
 
 \begin_layout Subsection
@@ -123,14 +127,6 @@ not used right now
 \end_layout
 
 \begin_layout Subsection
-Parental income
-\end_layout
-
-\begin_layout Standard
-NLSY: from chris
-\end_layout
-
-\begin_layout Subsection
 Parental transfers
 \end_layout
 
@@ -164,6 +160,26 @@ Early years only have federal debt.
 Debt of college graduates
 \end_layout
 
+\begin_layout Standard
+NLSY79 numbers look very different from Trends in Student Borrowing.
+\end_layout
+
+\begin_layout Standard
+Chris reports (and I replicated in 
+\family typewriter
+nlsy79
+\family default
+ folder) that debt of seniors is essentially flat in parental income.
+\end_layout
+
+\begin_layout Standard
+Trends shows that debt declines massively in parental income.
+\end_layout
+
+\begin_layout Standard
+The reason for the difference is not clear.
+\end_layout
+
 \begin_layout Subsection
 Borrowing Limits
 \end_layout
@@ -195,14 +211,30 @@ Student earnings and hours
 \end_layout
 
 \begin_layout Section
-\begin_inset Formula $\betaIQ$
+Parental income / SES
+\end_layout
+
+\begin_layout Standard
+NLSY: from chris
+\end_layout
+
+\begin_layout Section
+\begin_inset Formula $\betaIq$
 \end_inset
 
-and 
+ and 
 \begin_inset Formula $\betaYp$
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+For Project Talent: IQ and y quartiles are for universe HSG.
+\end_layout
+
+\begin_layout Itemize
+in the model, this makes little difference (aggr_stats.txt).
 \end_layout
 
 \begin_layout Section

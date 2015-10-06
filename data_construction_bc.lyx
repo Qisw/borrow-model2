@@ -81,12 +81,16 @@
 Data Construction
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Schooling
 \end_layout
 
 \begin_layout Standard
 NLSY: from chris
+\end_layout
+
+\begin_layout Section
+Financing college
 \end_layout
 
 \begin_layout Subsection
@@ -123,14 +127,6 @@ not used right now
 \end_layout
 
 \begin_layout Subsection
-Parental income
-\end_layout
-
-\begin_layout Standard
-NLSY: from chris
-\end_layout
-
-\begin_layout Subsection
 Parental transfers
 \end_layout
 
@@ -164,6 +160,40 @@ Early years only have federal debt.
 Debt of college graduates
 \end_layout
 
+\begin_layout Standard
+NLSY79 numbers look very different from Trends in Student Borrowing.
+\end_layout
+
+\begin_layout Standard
+Chris reports (and I replicated in 
+\family typewriter
+nlsy79
+\family default
+ folder) that debt of seniors is essentially flat in parental income.
+\end_layout
+
+\begin_layout Standard
+Trends shows that debt declines massively in parental income.
+\end_layout
+
+\begin_layout Standard
+The reason for the difference is not clear.
+\end_layout
+
+\begin_layout Standard
+Tabulating undergrad debt in NPSAS (http://nces.ed.gov/datalab/quickstats/createta
+ble.aspx) produces contradictory results:
+\end_layout
+
+\begin_layout Enumerate
+Debt is flat in parental education for the 1990s cohort, but falling in
+ parental education for the 2008 cohort.
+\end_layout
+
+\begin_layout Enumerate
+Debt is falling (!) in SAT for the 2008 cohort.
+\end_layout
+
 \begin_layout Subsection
 Borrowing Limits
 \end_layout
@@ -192,6 +222,14 @@ for years past 4: assume loan limit stays at lifetime max
 
 \begin_layout Subsection
 Student earnings and hours
+\end_layout
+
+\begin_layout Section
+Parental income / SES
+\end_layout
+
+\begin_layout Standard
+NLSY: from chris
 \end_layout
 
 \begin_layout Section

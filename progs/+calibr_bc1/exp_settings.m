@@ -105,6 +105,18 @@ else
    error('Invalid');
 end
 
+
+%%  Derived settings
+
+if ~isempty(expS.hsGraduationExpNo)
+   % Cannot calibrate HSG params - they are taken from another experiment
+   pvec.change_calibration_status(cS.pGroupS.hsGradParamV, [], cS.calNever);
+end
+
+if ~isempty(expS.collGraduationExpNo)
+   pvec.change_calibration_status(cS.pGroupS.collGradParamV, [], cS.calNever);   
+end
+
 return;
 
 
@@ -229,6 +241,11 @@ function counterfactuals
       expS.hsGraduationExpNo = cS.expBase;
       expS.collGraduationExpNo = cS.expBase;
 
+   elseif eDiff == 2
+      % Change HSG rates
+      expS.expStr = 'Change HS graduation';
+      expS.hsGraduationExpNo = cfExpNo;
+
    elseif any(expNo == expS.decomposeExpNoM(:))
    % ------  Change one param at a time
    % Sequence should match cumulative decomposition
@@ -262,7 +279,6 @@ function counterfactuals
    elseif any(expNo == expS.decomposeCumulExpNoM(:))
       % -----  Cumulative changes   
       % Always adjust prefHS to keep schooling constant (for ease of interpretation)
-      eDiff = expNo - baseExpNo;
       if eDiff >= 4
          % Change college costs
          expS.expStr = 'Change college costs';
@@ -278,12 +294,6 @@ function counterfactuals
          expS.expStr = 'Change earnings profiles'; 
          expS.earnExpNo = cfExpNo;
       end
-%       if eDiff >= 7
-%          % Parental altruism
-%          expS.expStr = 'Change parental altruism';
-%          expS.puWeightExpNo = cfExpNo;
-%          pvec.calibrate('puWeightMean', cS.calNever);
-%       end
       if eDiff >= 7
          %  Target schooling of cf cohort
          expS.expStr = 'Change college entry';

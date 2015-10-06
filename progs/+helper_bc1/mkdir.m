@@ -5,12 +5,12 @@ dbg = 111;
 % cS = const_bc1(setNo, expNo);
 dirS = helper_bc1.directories([], setNo, expNo);
 
-files_lh.mkdir_lh(dirS.matDir, dbg);
-files_lh.mkdir_lh(dirS.outDir, dbg);
-files_lh.mkdir_lh(dirS.fitDir, dbg);
-files_lh.mkdir_lh(dirS.paramDir, dbg);
-files_lh.mkdir_lh(dirS.dataOutDir, dbg);
-files_lh.mkdir_lh(dirS.hhDir, dbg);
+filesLH.mkdir(dirS.matDir, dbg);
+filesLH.mkdir(dirS.outDir, dbg);
+filesLH.mkdir(dirS.fitDir, dbg);
+filesLH.mkdir(dirS.paramDir, dbg);
+filesLH.mkdir(dirS.dataOutDir, dbg);
+filesLH.mkdir(dirS.hhDir, dbg);
 
 
 %% Also make remote directories
@@ -18,8 +18,8 @@ files_lh.mkdir_lh(dirS.hhDir, dbg);
 kS = KureLH;
 if kS.is_mounted
    remoteBaseDir = fullfile(kS.mountedVolume, 'bc', 'model2');
-   files_lh.mkdir_lh(fullfile(remoteBaseDir, 'mat', dirS.setStr, dirS.expStr), dbg);
-   files_lh.mkdir_lh(fullfile(remoteBaseDir, 'out', dirS.setStr, dirS.expStr), dbg);
+   filesLH.mkdir(fullfile(remoteBaseDir, 'mat', dirS.setStr, dirS.expStr), dbg);
+   filesLH.mkdir(fullfile(remoteBaseDir, 'out', dirS.setStr, dirS.expStr), dbg);
 end
 
 end

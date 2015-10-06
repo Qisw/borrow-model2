@@ -24,7 +24,7 @@ cS = const_bc1(setNoV(1), expNoV(1));
 % tgS = var_load_bc1(cS.vCalTargets, cS);
 
 % Just in case we run this for the 1st time, make the directories for outputs
-files_lh.mkdir_lh(outDir, cS.dbg);
+filesLH.mkdir(outDir, cS.dbg);
 
 
 %% Load all experiments

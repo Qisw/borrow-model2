@@ -113,7 +113,7 @@ function cohorts_side_by_side(setNo)
    
    % Settings
    outDir = fullfile(cS.setOutDir, 'cumulative');
-   files_lh.mkdir_lh(outDir);
+   filesLH.mkdir(outDir);
    outFn = fullfile(outDir, 'decompose.tex');
    
    expNoM = cS.expS.decomposeCumulExpNoM;

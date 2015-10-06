@@ -25,6 +25,6 @@ end
 rmdir(cS.outDir, 's');
 
 % Make the folder again
-files_lh.mkdir_lh(cS.outDir);
+filesLH.mkdir(cS.outDir);
 
 end
