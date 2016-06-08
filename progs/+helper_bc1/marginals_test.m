@@ -15,8 +15,8 @@ prob_yV = prob_yV / sum(prob_yV);
 
 probX_qyM = rand(nq, ny);
 
-qV = random_lh.rand_discrete(prob_qV, rand(nSim,1), dbg);
-yV = random_lh.rand_discrete(prob_yV, rand(nSim,1), dbg);
+qV = randomLH.rand_discrete(prob_qV, rand(nSim,1), dbg);
+yV = randomLH.rand_discrete(prob_yV, rand(nSim,1), dbg);
 % latentV = 0.1 .* qV - 0.2 .* yV;
 % xMean = mean(latentV);
 % xV = (latentV > 0.4 .* xMean);

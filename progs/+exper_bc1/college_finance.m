@@ -15,6 +15,8 @@ IN:
    expStrV
       short description of each experiment
       xlabel for bar graph
+
+change: labels (expStrV) cannot be read +++
 %}
 
 cS = const_bc1(setNoV(1));

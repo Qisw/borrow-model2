@@ -20,7 +20,7 @@ ng = length(xPctUbV);
 
 nSim = 1e6;
 rng(4);
-jV = random_lh.rand_discrete(pr_jV, rand([nSim,1]), cS.dbg);
+jV = randomLH.rand_discrete(pr_jV, rand([nSim,1]), cS.dbg);
 xV = mGridV(jV) + randn(size(jV)) .* sigmaX;
 
 % *****  Prob of x <= xUbV

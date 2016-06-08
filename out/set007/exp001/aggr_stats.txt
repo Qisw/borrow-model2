@@ -3,6 +3,9 @@ Aggregate statistics
 
 Stats by schooling
 E{a | s}:  -0.78   -0.71   0.38   0.80   
+
+E(IQ | s)   -0.52   -0.45    0.36    0.56  
+
 Mean log lifetime earnings, discounted to work start: 
     6.27    6.60    6.82    7.17
     fixed(s):  12.80  13.12  13.17  13.38  
@@ -13,3 +16,6 @@ Financial stats
 Model (all):    betaIq:  0.64    betaYp:  0.36 
 Model (HSG):    betaIq:  0.62    betaYp:  0.38 
 Data (all):     betaIq:  0.60    betaYp:  0.35 
+
+Endowment stats:
+Var(x | j): 0.144 

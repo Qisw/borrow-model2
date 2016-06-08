@@ -205,6 +205,11 @@ elseif setNo == 5
    cS.setStr = 'No free college consumption';
    cS.modelS.hasCollCons = false;
    
+elseif setNo == 6
+   cS.setStr = 'No free college c or l';
+   cS.modelS.hasCollCons = false;
+   cS.modelS.hasCollLeisure = false;
+   
 elseif setNo == 7
    cS.setStr = 'Default';
 
@@ -331,6 +336,12 @@ cS.vStudentDebtData = 406;
 
 % Borrowing limits by cohort, detrended
 cS.vBorrowLimits = 407;
+
+
+%% Reduced form model (501 : 549)
+
+cS.vRfmSolution = 501;
+cS.vRfmParameters = 502;
 
 
 %% Clean up

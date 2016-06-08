@@ -14,7 +14,7 @@ OUT
 
 %}
 
-prob_ixM = econ_lh.extreme_value_decision([v1S.value_jV,  vWorkS.valueHsg_jV], paramS.prefScaleEntry, cS.dbg);
+prob_ixM = econLH.extreme_value_decision([v1S.value_jV,  vWorkS.valueHsg_jV], paramS.prefScaleEntry, cS.dbg);
 
 probCollege_jV = prob_ixM(:, 1);
 

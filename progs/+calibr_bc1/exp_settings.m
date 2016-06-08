@@ -86,6 +86,9 @@ expS.pMeanChange = 0;
 % Change in CG premium (log points)
 expS.cgPremChange = 0;
 expS.cdPremChange = 0;
+% Change in alphaAM (multiplier, such as factor 2)
+expS.alphaAmFactor = 1;
+expS.alphaAqFactor = 1;
 
 
 %%  Settings for each case
@@ -161,7 +164,13 @@ function pure_counterfactuals
       expS.cdPremChange = 0.1;
       % output dir
       expS.outDir = 'collprem_up';
-
+      
+   elseif expNo == 311
+      % Add arbitrary amount of noise to abilities
+      expS.expStr = 'Higher signal noise';
+      expS.outDir = 'noise_up';
+      expS.alphaAmFactor = 0;
+      
    else
       error('Invalid');
    end

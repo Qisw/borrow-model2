@@ -56,6 +56,8 @@ aggrS.qyUniverseHsgS = aggr_bc1.aggr_qy('hsg', aggrS, paramS, cS);
 
 %% By school
 
+aggrS.aggr_sS = aggr_bc1.aggr_s(aggrS, paramS, cS);
+
 aggrS.mass_sV = sum(aggrS.aggr_jS.mass_sjM, 2);
 aggrS.mass_sV = aggrS.mass_sV(:);
 
@@ -91,6 +93,7 @@ if dbg > 10
    validateattributes(aggrS.pvEarnMeanLog_sV, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', ...
       'size', [cS.nSchool, 1]})
 end
+
 
 
 %% By graduation status

@@ -16,7 +16,7 @@ entrantYear2S.consCollMean = sum(aggrS.iqYear2S.consCollMean_qV .* fracColl_qV(:
 entrantYear2S.earnCollMean = sum(aggrS.iqYear2S.earnCollMean_qV .* fracColl_qV(:));
 entrantYear2S.transferMean = sum(aggrS.iqYear2S.transferMean_qV .* fracColl_qV(:));
 entrantYear2S.hoursCollMean = sum(aggrS.iqYear2S.hoursCollMean_qV .* fracColl_qV(:));
-[entrantYear2S.pStd, entrantYear2S.pMean] = stats_lh.std_w(aggrS.iqYear2S.pMean_qV, fracColl_qV(:), cS.dbg);
+[entrantYear2S.pStd, entrantYear2S.pMean] = statsLH.std_w(aggrS.iqYear2S.pMean_qV, fracColl_qV(:), cS.dbg);
 
 entrantYear2S.debtMean = sum(aggrS.iqYear2S.debtMean_qV .* fracColl_qV);
 entrantYear2S.debtFrac = sum(aggrS.iqYear2S.debtFrac_qV .* fracColl_qV);

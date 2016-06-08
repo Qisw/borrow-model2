@@ -1,7 +1,9 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 474
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass article
 \begin_preamble
 
@@ -20,16 +22,16 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
-\font_math auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
+\font_sf_scale 100 100
+\font_tt_scale 100 100
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -184,6 +186,13 @@ Notation
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $\abilSignal$
+\end_inset
+
+: ability signal (needed? why not just have type?)
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $\age$
 \end_inset
 
@@ -316,6 +325,10 @@ Each agent draws
 \end_inset
 
  from a joint normal distribution.
+\end_layout
+
+\begin_layout Itemize
+change: copula +++
 \end_layout
 
 \begin_layout Standard
@@ -1013,6 +1026,10 @@ Compute present value of transfers
 
 \begin_layout Itemize
 Loop over ability
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -1154,6 +1171,10 @@ Try
 \end_inset
 
 
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -1172,6 +1193,10 @@ if Euler deviation > 0: done
 \end_deeper
 \begin_layout Enumerate
 Interior solution
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -2254,6 +2279,10 @@ p,m and (p,y): would like to match mean
 \end_inset
 
  by IQ quartile and by yp quartile (HSB)
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -2698,6 +2727,10 @@ Interesting counterfactuals
 
 \begin_layout Enumerate
 Vary one observable input at a time
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -2730,6 +2763,10 @@ Hold all parameters fixed, except those taken directly from data (e.g.
 \end_inset
 
 , borrowing limits)
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -2859,10 +2896,6 @@ Aggregation: All we need is
 
 \begin_layout Subsection
 Endowments
-\end_layout
-
-\begin_layout Subsubsection
-
 \end_layout
 
 \begin_layout Subsection
@@ -3043,6 +3076,10 @@ Sidestep this problem by detrending the model.
 
 \begin_layout Enumerate
 Compute average earnings for the baseline cohort
+\begin_inset Separator latexpar
+\end_inset
+
+
 \end_layout
 
 \begin_deeper

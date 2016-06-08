@@ -25,11 +25,11 @@ end
 prA_jgradM = hh_bc1.prob_a_jgrad(prGrad_aV, pr_jV, prA_jM, dbg);
 
 nSim = 5e6;
-jV = random_lh.rand_discrete(pr_jV, rand([nSim,1]), dbg);
+jV = randomLH.rand_discrete(pr_jV, rand([nSim,1]), dbg);
 iAbilV = nan([nSim, 1]);
 for j = 1 : nTypes
    jIdxV = find(jV == j);
-   iAbilV(jIdxV) = random_lh.rand_discrete(prA_jM(:,j), rand([length(jIdxV), 1]), dbg);
+   iAbilV(jIdxV) = randomLH.rand_discrete(prA_jM(:,j), rand([length(jIdxV), 1]), dbg);
 end
 
 gradV = nan([nSim, 1]);

@@ -40,7 +40,7 @@ aggr_jS.probS_jM = aggr_jS.mass_sjM ./ (ones([cS.nSchool,1]) * aggr_jS.mass_jV(:
 aggr_jS.ypClassHsg_jV = distrib_lh.class_assign(paramS.yParent_jV, massHsPlus_jV, cS.ypUbV, cS.dbg);
 
 % IQ classes
-aggr_jS.iqClassHsg_jV = distrib_lh.class_assign(paramS.iq_jV, massHsPlus_jV, cS.iqUbV, cS.dbg);
+aggr_jS.iqClassHsg_jV = distrib_lh.class_assign(paramS.endowS.iq_jV, massHsPlus_jV, cS.iqUbV, cS.dbg);
 
 
 

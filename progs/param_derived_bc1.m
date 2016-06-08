@@ -147,6 +147,14 @@ clear ic;
 
 %% Endowments by type
 
+% Derived
+if cS.expS.alphaAmFactor ~= 1
+   paramS.alphaAM = paramS.alphaAM .* cS.expS.alphaAmFactor;
+end
+if cS.expS.alphaAqFactor ~= 1
+   paramS.alphaAQ = paramS.alphaAQ .* cS.expS.alphaAqFactor;
+end
+
 paramS = calibr_bc1.param_endow(paramS, cS);
 
 

@@ -1,4 +1,5 @@
 function aggr_show(saveFigures, setNo, expNo)
+% table with aggregates
 
 cS = const_bc1(setNo, expNo);
 % figS = const_fig_bc1;
@@ -30,6 +31,8 @@ if 1
    fprintf(fp, fmtStr, tgS.schoolS.betaIq_cV(cS.iCohort), tgS.schoolS.betaYp_cV(cS.iCohort));
 end
 
+fprintf(fp, '\nEndowment stats:\n');
+fprintf(fp, 'Var(x | j): %.3f \n',  mean(paramS.endowS.abilStd_jV .^ 2));
 
 fclose(fp);
 type(outFn);
@@ -48,7 +51,12 @@ function school_stats(fp, aggrS, paramS, cS)
    fprintf(fp, '%.2f   ',  statS.abilMean_sV);
    fprintf(fp, '\n');
    
-   fprintf(fp, 'Mean log lifetime earnings, discounted to work start: \n');
+   
+   fprintf(fp, '\nE(IQ | s)  ');
+   fprintf(fp, '%6.2f  ',  aggrS.aggr_sS.iqMean_sV);
+   fprintf(fp, '\n');
+
+   fprintf(fp, '\nMean log lifetime earnings, discounted to work start: \n');
    fprintf(fp, '    %.2f',  aggrS.pvEarnMeanLog_sV);
    fprintf(fp, '\n');
    fprintf(fp, '    fixed(s):  ');

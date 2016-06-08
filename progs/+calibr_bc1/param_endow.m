@@ -2,6 +2,8 @@ function paramS = param_endow(paramInS, cS)
 % Endowment grids by type
 %{
 Packs newer params into endowS
+
+this code needs to be cleaned up +++++
 %}
 
 dbg = cS.dbg;
@@ -22,6 +24,7 @@ paramS.prob_jV = ones([cS.nTypes, 1]) ./ cS.nTypes;
 
 
 %% Make grids
+% This code should be far more general: draw named endowments given parameters that define wtM +++++
 
 % Order is 
 %  y, z, m, IQ, ability
@@ -51,7 +54,7 @@ wtM(iIq, [iYp, iTransfer, iSignal]) = [paramS.alphaQY, paramS.alphaQZ, paramS.al
 wtM(iAbil, [iYp, iTransfer, iSignal, iIq]) = [paramS.alphaAY, paramS.alphaAZ, paramS.alphaAM, paramS.alphaAQ];
 
 % Multivariate normal object
-mS = random_lh.MultiVarNormal(meanV, stdV);
+mS = randomLH.MultiVarNormal(meanV, stdV);
 
 % Covariance matrix implied by wtM (matching stdV)
 endowS.covMatM = cov_from_weights(mS, wtM, dbg);
@@ -94,8 +97,9 @@ gridM = gridM(sortIdxV, :);
 paramS.yParent_jV = exp(gridM(:,iYp));
 paramS.transfer_jV = exp(gridM(:,iTransfer));
 paramS.m_jV = gridM(:,iSignal);
-paramS.iq_jV = gridM(:, iIq);
-paramS.abil_jV = gridM(:, iAbil);
+endowS.iq_jV = gridM(:, iIq);
+% This is not needed
+% paramS.abil_jV = gridM(:, iAbil);
 
 
 %% Check endowment grid
@@ -133,7 +137,7 @@ ngS = distrib_lh.NormalGrid(linspace(1, 2, cS.nAbil)', dbg);
 
 % Make grid with equal probabilities
 %  This grid could be too narrow +++
-ngS = ngS.set_grid_equal_prob(cS.nAbil, 0, 1, dbg);
+ngS.set_grid_equal_prob(cS.nAbil, 0, 1, dbg);
 paramS.abilGrid_aV = ngS.gridV;
 
 
@@ -219,7 +223,7 @@ end
 
 %% IQ classes
 
-endowS.iqClass_jV = distrib_lh.class_assign(paramS.iq_jV, paramS.prob_jV, cS.iqUbV, cS.dbg);
+endowS.iqClass_jV = distrib_lh.class_assign(endowS.iq_jV, paramS.prob_jV, cS.iqUbV, cS.dbg);
 if cS.dbg > 10
    validateattributes(endowS.iqClass_jV, {'double'}, {'finite', 'nonnan', 'nonempty', 'integer', ...
       'positive', '<=', length(cS.iqUbV)})

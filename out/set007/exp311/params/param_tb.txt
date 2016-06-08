@@ -1,0 +1,18 @@
+
+------------------------------------------------------------------------
+         Parameter                   Description                   Value
+------------------------------------------------------------------------
+        Endowments                                                      
+                    Marginal distribution of $z$              1.65, 0.35
+       Preferences                                                      
+      $\omega_{l}$             Weight on leisure                    0.12
+      $\omega_{w}$        Weight on u(c) at work                    9.92
+      $\bar{\eta}$             Preference for HS                   23.96
+   $\bar{c}_{max}$          Max free consumption                     9.7
+   $\bar{l}_{max}$              Max free leisure                    0.17
+              Work                                                      
+     $\bar{Y}_{s}$              Log skill prices  6.14, 6.46, 6.52, 6.72
+             Other                                                      
+           $w_{c}$                  College wage                    29.1
+                          High school graduation       0.58, 2.25, -0.70
+------------------------------------------------------------------------
