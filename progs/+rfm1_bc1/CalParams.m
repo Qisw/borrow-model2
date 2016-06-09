@@ -49,7 +49,7 @@ methods
       for i1 = 1 : length(fnV)
          pStr = fnV{i1};
          if strncmp(pStr, 'alpha', 5)
-            p1 = pstructLH(pStr, pStr, pStr, 0.2, -3, 3, doCal);
+            p1 = pstructLH(pStr, pStr, pStr, 0.5, 0, 3, doCal);
             pv.add(p1);
          end
       end

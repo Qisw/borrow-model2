@@ -39,21 +39,23 @@ fprintf('Calibration done with terminal value %.3g \n',  fVal);
 
 %% Save
 
-[~, outS] = cal_dev_nested(solnV);
+[~, outS, outEarlyS] = cal_dev_nested(solnV);
+saveS = rfm1_bc1.CalResults(outS, outEarlyS);
 
-var_save_bc1(outS, c0S.vRfmSolution, c0S);
+var_save_bc1(saveS, c0S.vRfmSolution, c0S);
 var_save_bc1(paramS, c0S.vRfmParameters, c0S);
 
 
 %% Nested deviation
-   function [devOut, outS] = cal_dev_nested(guessV)
+   function [devOut, outS, outEarlyS] = cal_dev_nested(guessV)
       if any(guessV < pvector.guessMin)  ||  any(guessV > pvector.guessMax)
          devOut = 1e6;
          outS = [];
+         outEarlyS = [];
       else
          paramS = pvector.guess_extract(guessV, paramS, doCal);
          % paramS = pvector.struct_update(paramS, doCal);
-         [devOut, outS] = rfm1_bc1.cal_dev(paramS, tgS, cS);
+         [devOut, outS, outEarlyS] = rfm1_bc1.cal_dev(paramS, tgS, cS);
       end
    end
 

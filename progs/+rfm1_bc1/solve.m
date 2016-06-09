@@ -95,9 +95,14 @@ if cS.dbg > 10
    end
 end
 
+% These are computed like the corresponding calibration targets
+[outS.fracHsg_qV, outS.fracEnter_qV] = frac_enter_hsg('q', outS, cS);
+[outS.fracHsg_yV, outS.fracEnter_yV] = frac_enter_hsg('y', outS, cS);
+
+
 
 %% Diagnostics
-if 1
+if 0
    corrM = corrcoef(outS.eaV, randM(:, cS.idxA));
    fprintf('Corr a, E(a): %.3f \n', corrM(1,2));
    corrM = corrcoef(randM(:, cS.idxQ),  outS.eaV);
@@ -109,4 +114,26 @@ if 1
    mdl = fitlm(outS.eaV,  randM(:, cS.idxA))
 end
 
+end
+
+
+
+%% Local: implied stats about schooling given q or y
+function [fracHsgV, fracEnterV] = frac_enter_hsg(caseStr, outS, cS)
+   switch caseStr
+      case 'q'
+         % Joint prob object, for easy computation of conditionals
+         syS = statsLH.ProbMatrix2D('pr_xyM', outS.frac_sqM);
+      case 'y'
+         % Joint prob object, for easy computation of conditionals
+         syS = statsLH.ProbMatrix2D('pr_xyM', outS.frac_syM);
+      otherwise
+         error('Invalid');
+   end
+
+   % Model: frac enter | y
+   fracEnterV = sum(syS.prX_yM(cS.iCD : end, :))';
+
+   % Model: frac hsg or more | y
+   fracHsgV = sum(syS.prX_yM(cS.iHSG : end, :))';
 end

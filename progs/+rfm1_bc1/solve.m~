@@ -95,11 +95,42 @@ if cS.dbg > 10
    end
 end
 
+[outS.fracHsg_qV, outS.fracEnterV] = frac_enter_hsg(caseStr, outS, cS)
+
 
 %% Diagnostics
+if 0
+   corrM = corrcoef(outS.eaV, randM(:, cS.idxA));
+   fprintf('Corr a, E(a): %.3f \n', corrM(1,2));
+   corrM = corrcoef(randM(:, cS.idxQ),  outS.eaV);
+   fprintf('Corr q, E(a): %.3f \n', corrM(1,2));
+   corrM = corrcoef(randM(:, cS.idxQ),  outS.sClassV);
+   fprintf('Corr q, s: %.3f \n', corrM(1,2));
 
-corrM = corrcoef(outS.eaV, randM(:, cS.idxA));
-fprintf('Corr a, E(a): %.3f \n', corrM(1,2));
-corrM = corrcoef(randM(:, cS.idxQ),  
+   fprintf('Regress a on E(a): \n');
+   mdl = fitlm(outS.eaV,  randM(:, cS.idxA))
+end
 
+end
+
+
+
+%% Local: implied stats about schooling given q or y
+function [fracHsgV, fracEnterV] = frac_enter_hsg(caseStr, outS, cS)
+   switch caseStr
+      case 'q'
+         % Joint prob object, for easy computation of conditionals
+         syS = statsLH.ProbMatrix2D('pr_xyM', outS.frac_sqM);
+      case 'y'
+         % Joint prob object, for easy computation of conditionals
+         syS = statsLH.ProbMatrix2D('pr_xyM', outS.frac_syM);
+      otherwise
+         error('Invalid');
+   end
+
+   % Model: frac enter | y
+   fracEnterV = sum(syS.prX_yM(cS.iCD : end, :))';
+
+   % Model: frac hsg or more | y
+   fracHsgV = sum(syS.prX_yM(cS.iHSG : end, :))';
 end

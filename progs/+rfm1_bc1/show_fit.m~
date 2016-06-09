@@ -1,0 +1,73 @@
+function show_fit(saveFigures)
+
+cS = rfm1_bc1.Const;
+nq = length(cS.qClUbV);
+ny = length(cS.yClUbV);
+
+c0S = const_bc1(cS.setNo, cS.expNo);
+tgS = var_load_bc1(c0S.vCalTargets, c0S);
+% frac_sV = tgS.schoolS.frac_scM(:, cS.iCohort);
+
+% paramS = var_load_bc1(c0S.vRfmParameters, c0S);
+outS = var_load_bc1(c0S.vRfmSolution, c0S);
+
+
+%% Base cohort
+
+iCohort = cS.iCohort;
+
+for caseStr = 'qy'
+   switch caseStr
+      case 'q'
+         n = nq;
+         model_sqM = outS.frac_sqM;
+         data_sqM = tgS.schoolS.frac_sqcM(:,:,iCohort);
+      case 'y'
+         n = ny;
+         model_sqM = outS.frac_syM;
+         data_sqM = tgS.schoolS.frac_sycM(:,:,iCohort);
+      otherwise
+         error('Invalid');
+   end
+
+   fS = FigureLH('visible', ~saveFigures, 'figType', 'bar');
+   fS.new;
+   hold on;
+
+   for iq = 1 : n
+      subplot(2,2,iq);
+      bar([model_sqM(:,iq), data_sqM(:,iq)]);
+      xlabel(sprintf('Schooling  --  %s %i', caseStr, iq));
+      ylabel('Fraction');
+      fS.format;
+   end
+
+   fS.save(fullfile(cS.outDir, ['fit_base_s', caseStr]), saveFigures);
+end
+
+
+%% Earlier cohort
+
+iCohort = cS.iCohortEarly;
+
+for caseStr = 'qy'
+   switch caseStr
+      case 'q'
+         % Mass enter / total mass (given q)
+         fracEnter_yV = tgS.schoolS.fracEnter_qcM(:, iCohort);
+         % Frac at least HSG (given q)
+         fracHsg_yV = tgS.schoolS.fracHsg_qcM(:, iCohort);
+         modelEnter_yV = outS.fracEnter_qV;
+         modelHsg_yV = outS.fracHsg_qV;
+      case 'y'
+         fracEnter_yV = tgS.schoolS.fracEnter_ycM(:, iCohort);
+         fracHsg_yV = tgS.schoolS.fracHsg_ycM(:, iCohort);
+         modelEnter_yV = outS.fracEnter_yV;
+         modelHsg_yV = outS.fracHsg_yV;
+      otherwise
+         error('Invalid');
+   end
+   
+end
+
+end

@@ -1,9 +1,0 @@
-function counterfactuals
-
-cS = rfm1_bc1.Const;
-
-c0S = const_bc1(cS.
-solS = var_load_bc1(c0S.vRfmSolution, c0S);
-
-
-end

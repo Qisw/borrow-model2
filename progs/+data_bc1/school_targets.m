@@ -23,6 +23,8 @@ schoolS.frac_scM = nan(cS.nSchool, cS.nCohorts);
 
 % Fraction enter / graduate by IQ
 %  frac grad not conditional on entry
+%  frac enter = Mass(CD + CG) / Mass(all)
+%  frac grad = Mass(CG) / Mass(all)
 schoolS.fracEnter_qcM = nan([nIq, cS.nCohorts]);
 schoolS.fracGrad_qcM  = nan([nIq, cS.nCohorts]);
 % Frac at least HSG | q
