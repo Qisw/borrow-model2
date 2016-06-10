@@ -1,12 +1,15 @@
 function calibrate
+% Run calibration
+%{
+No testing required. It just runs minimizer on cal_dev
+%}
 
 cS = rfm1_bc1.Const;
 doCal = 1;
 
 % Random initial guesses
-%  can load them later +++
-rng(40);
 paramS = rfm1_bc1.CalParams;
+%rng(40);
 paramS.initialize_random;
 pvector = paramS.pvector;
 guessV = pvector.guess_make(paramS, doCal);
@@ -49,10 +52,17 @@ var_save_bc1(paramS, c0S.vRfmParameters, c0S);
 %% Nested deviation
    function [devOut, outS, outEarlyS] = cal_dev_nested(guessV)
       if any(guessV < pvector.guessMin)  ||  any(guessV > pvector.guessMax)
+         % Invalid guess
          devOut = 1e6;
          outS = [];
          outEarlyS = [];
+         
       else
+         if randomLH.rand_time < 0.1
+            cS.dbg = 111;
+         else
+            cS.dbg = 0;
+         end
          paramS = pvector.guess_extract(guessV, paramS, doCal);
          % paramS = pvector.struct_update(paramS, doCal);
          [devOut, outS, outEarlyS] = rfm1_bc1.cal_dev(paramS, tgS, cS);

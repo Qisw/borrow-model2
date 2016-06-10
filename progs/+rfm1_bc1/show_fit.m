@@ -1,4 +1,8 @@
-function show_fit(saveFigures)
+function show_fit(cohortStr, saveFigures)
+% Show fit: One cohort
+%{
+No test
+%}
 
 cS = rfm1_bc1.Const;
 nq = length(cS.qClUbV);
@@ -11,12 +15,20 @@ tgS = var_load_bc1(c0S.vCalTargets, c0S);
 % paramS = var_load_bc1(c0S.vRfmParameters, c0S);
 calResultS = var_load_bc1(c0S.vRfmSolution, c0S);
 
+switch cohortStr
+   case 'base'
+      iCohort = cS.iCohort;
+      outS = calResultS.solBaseS;
+   case 'early'
+      iCohort = cS.iCohortEarly;
+      outS = calResultS.solEarlyS;
+   otherwise 
+      error('Invalid');
+end
 
 
-%% Base cohort
 
-iCohort = cS.iCohort;
-outS = calResultS.solBaseS;
+%% frac s|q, s|y
 
 for caseStr = 'qy'
    switch caseStr
@@ -31,27 +43,25 @@ for caseStr = 'qy'
       otherwise
          error('Invalid');
    end
+   
+   if all(~isnan(data_sqM(:)))
+      fS = FigureLH('visible', ~saveFigures, 'figType', 'bar');
+      fS.new;
 
-   fS = FigureLH('visible', ~saveFigures, 'figType', 'bar');
-   fS.new;
+      for iq = 1 : n
+         subplot(2,2,iq);
+         bar([model_sqM(:,iq), data_sqM(:,iq)]);
+         xlabel(sprintf('Schooling  --  %s %i', caseStr, iq));
+         ylabel('Fraction');
+         fS.format;
+      end
 
-   for iq = 1 : n
-      subplot(2,2,iq);
-      bar([model_sqM(:,iq), data_sqM(:,iq)]);
-      xlabel(sprintf('Schooling  --  %s %i', caseStr, iq));
-      ylabel('Fraction');
-      fS.format;
+      fS.save(fullfile(cS.outDir, ['fit_' cohortStr, '_s', caseStr]), saveFigures);
    end
-
-   fS.save(fullfile(cS.outDir, ['fit_base_s', caseStr]), saveFigures);
 end
 
 
-%% Earlier cohort
-
-iCohort = cS.iCohortEarly;
-outS = calResultS.solEarlyS;
-
+%% Frac HSG or college | q or y
 % 4 subplots
 % row: by q or y
 % col: hsg or college entry fractions
@@ -98,7 +108,7 @@ for iSub = 1 : 4
    fS.format;
 end
 
-fS.save(fullfile(cS.outDir, ['fit_early_s', caseStr]), saveFigures);
+fS.save(fullfile(cS.outDir, ['fit_', cohortStr, '_qy']), saveFigures);
 
 
 end

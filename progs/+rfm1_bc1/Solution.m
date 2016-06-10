@@ -1,10 +1,12 @@
 % Holds solution to the model
 %{
 cal_dev fills this
+does not contain individual realizations
 %}
 classdef Solution < handle
    
 properties
+   % Cov matrix of endowments (order defined in Const)
    covM  double
    
    % For each "type":
@@ -25,6 +27,7 @@ properties
    fracEnter_qV   double
    % Mean IQ by s
    iqMean_sV   double
+   yMean_sV    double
    
    % Var(a | info), with and without observing IQ
    condVarAbil    double
@@ -33,7 +36,7 @@ end
    
 methods
    function sS = Solution
-   end
+   end   
 end
    
 end

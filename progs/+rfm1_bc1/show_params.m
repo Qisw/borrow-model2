@@ -29,7 +29,6 @@ fprintf('\nConditioning on IQ reduces Var(a | info) from %.2f to %.2f  (factor %
 fprintf('\nCorrelation matrix of endowments\n');
 
 cM = statsLH.CovMatrix(calResultS.solBaseS.covM, cS.endowNameV);
-
 disp(cM.cell_array('%.2f'))
 
 

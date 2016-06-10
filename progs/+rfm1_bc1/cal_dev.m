@@ -6,7 +6,7 @@ IN
       calibrated parameter object
    tgS
       calibration targets
-   cS
+   cS :: Const
       constants
 
 OUT
@@ -34,6 +34,11 @@ else
    devVarAbilNoIq = 0;
 end
 
+% Minimum correlation (a, q)
+% Cov = corr
+corrAQ = outS.covM(cS.idxA, cS.idxQ);
+devCorrAQ = max(0, cS.minCorrAQ - corrAQ);
+
 [devBaseV, devSQ, devSY] = rfm1_bc1.deviations(outS, tgS, cS.iCohort, cS);
 
 
@@ -48,12 +53,13 @@ out2S = rfm1_bc1.solve(false, tgS.schoolS.frac_scM(:, iCohort), paramS, cS);
 
 %% Finish up
 
-dev = sum(devBaseV) + sum(devEarlyV) + devVarAbilNoIq;
+dev = sum(devBaseV) + sum(devEarlyV) + devVarAbilNoIq + devCorrAQ;
 validateattributes(dev, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'scalar'})
 
 if rTime < 0.1
    fprintf('\nDeviation %.3g \n', dev);
-   fprintf('  Dev sq: %.3g    sy: %.3g    varAbilNoIq: %.3g \n',   devSQ, devSY, devVarAbilNoIq);   
+   fprintf('  Dev sq: %.3g    sy: %.3g    early: %.3g    varAbilNoIq: %.3g    corrAQ: %.3g \n',   ...
+      devSQ, devSY, sum(devEarlyV), devVarAbilNoIq, devCorrAQ);   
 end
 
 

@@ -35,6 +35,9 @@ properties
    % Target var(a | info), ratio when students condition on IQ and when they don't?
    tgVarAbilRatio = true;
    
+   % Penalize corr (a, q) below this value
+   minCorrAQ = 0.5;
+   
    % *** Directories
    outDir
 end

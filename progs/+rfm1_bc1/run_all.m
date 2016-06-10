@@ -9,7 +9,8 @@ rfm1_bc1.prep;
 rfm1_bc1.calibrate;
 
 % Show model fit
-rfm1_bc1.show_fit(saveFigures);
+rfm1_bc1.show_fit('base', saveFigures);
+rfm1_bc1.show_fit('early', saveFigures);
 
 % Show parameters
 rfm1_bc1.show_params;

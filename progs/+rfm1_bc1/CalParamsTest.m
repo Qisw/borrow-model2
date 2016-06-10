@@ -1,4 +1,5 @@
 function CalParamsTest
+% Only syntax testing is required. The class just does housekeeping.
 
 cS = rfm1_bc1.Const;
 

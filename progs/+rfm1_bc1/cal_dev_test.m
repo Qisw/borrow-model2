@@ -1,4 +1,5 @@
 function cal_dev_test
+% Only syntax testing required
 
 rng(40);
 cS = rfm1_bc1.Const;

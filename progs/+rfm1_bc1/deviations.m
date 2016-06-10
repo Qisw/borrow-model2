@@ -11,6 +11,8 @@ IN
 OUT
    devV
       vector of deviations; just sum it get a scalar deviation
+
+No test.
 %}
 
 
@@ -19,14 +21,14 @@ OUT
 
 if ~isnan(tgS.schoolS.frac_sqcM(1,1,iCohort))
    devM = outS.frac_sqM - tgS.schoolS.frac_sqcM(:,:,iCohort);
-   devSQ = mean(devM(:) .^ 2);
+   devSQ = 50 .* mean(devM(:) .^ 2);
 else
    devSQ = 0;
 end
 
 if ~isnan(tgS.schoolS.frac_sycM(1,1,iCohort))
    devM = outS.frac_syM - tgS.schoolS.frac_sycM(:,:,iCohort);
-   devSY = mean(devM(:) .^ 2);
+   devSY = 50 .* mean(devM(:) .^ 2);
 else
    devSY = 0;
 end

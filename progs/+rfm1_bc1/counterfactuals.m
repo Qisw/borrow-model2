@@ -24,6 +24,12 @@ fprintf('E(IQ | s) no IQ:       ');
 fprintf('%8.2f', out2S.iqMean_sV);
 fprintf('\n');
 
+fprintf('\nE(y | s) baseline:    ');
+fprintf('%8.2f', outS.yMean_sV);
+fprintf('\n');
+fprintf('E(y | s) no IQ:       ');
+fprintf('%8.2f', out2S.yMean_sV);
+fprintf('\n');
 % keyboard;
 
 end

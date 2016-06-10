@@ -1,7 +1,7 @@
 % Calibrated parameters
 %{
 alphaXY determines correlation matrix of endowments
-ordering: a, g, q, y
+ordering: a, g, q, y (defined in Const)
 %}
 classdef CalParams < handle
 
@@ -21,6 +21,7 @@ methods
    function pS = CalParams
    end
    
+   
    %% Validate
    function validate(pS)
       fnV = properties(pS);
@@ -28,6 +29,7 @@ methods
          validateattributes(pS.(fnV{i1}), {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'scalar'})
       end
    end
+   
    
    %% Initialize with random values (for testing)
    % Using positive values for all (b/c it is most plausible a priori)
@@ -41,11 +43,11 @@ methods
    
    %% Default pvector
    function pv = pvector(pS)
+      fnV = properties(pS);
       doCal = 1;
-      nCal = 6;
+      nCal = length(fnV);
       pv = pvectorLH(nCal, doCal);
       
-      fnV = properties(pS);
       for i1 = 1 : length(fnV)
          pStr = fnV{i1};
          if strncmp(pStr, 'alpha', 5)
@@ -58,16 +60,17 @@ methods
    
    %% Make lower triangular weight matrix for multivariate normal
    function wtM = weight_matrix(pS, cS)
+      % Check that endowment ordering is as expected
+      assert(isequal([cS.idxA, cS.idxG, cS.idxQ, cS.idxY], 1:4));
+      
       n = cS.nEndow;
       wtM = eye(n);
       wtM(cS.idxG, cS.idxA) = pS.alphaAG;
       wtM(cS.idxQ, [cS.idxA, cS.idxG]) = [pS.alphaAQ, pS.alphaGQ];
       wtM(cS.idxY, [cS.idxA, cS.idxG, cS.idxQ]) = [pS.alphaAY, pS.alphaGY, pS.alphaQY];
-%       wtM(cS.idxA, [cS.idxG, cS.idxQ, cS.idxY]) = [pS.alphaAG, pS.alphaAQ, pS.alphaAY];
-%       wtM(cS.idxG, [cS.idxQ, cS.idxY]) = [pS.alphaGQ, pS.alphaGY];
-%       wtM(cS.idxQ, cS.idxY) = pS.alphaQY;
       
       validateattributes(wtM, {'double'}, {'finite', 'nonnan', 'nonempty', 'real', 'size', [4,4]})
+      assert(isequal(tril(wtM), wtM));
    end
    
 end
